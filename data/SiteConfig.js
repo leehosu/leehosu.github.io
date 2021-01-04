@@ -53,7 +53,7 @@ const config = {
   searchWidgetTitle: "Looking for?",
   searchWidgetPlaceHolder: "Enter keyword",
   //searchEngineID: "008548374781244864787:9ybvtnkbt7o",
-  hasSearch: false,
+  hasSearch: true,
   // Use for links widget
   sidebarSticky: true,
   // sidebarLinks: [
