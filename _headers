@@ -67,18 +67,6 @@
   Link: </component---src-templates-post-template-jsx-38ec27114bc1620430d3.js>; rel=preload; as=script
   Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
   Link: </page-data/review-work/page-data.json>; rel=preload; as=fetch; crossorigin
-/about
-  Link: </webpack-runtime-56c06865fbaef42372c4.js>; rel=preload; as=script
-  Link: </framework-eb684e3e828ad13b3940.js>; rel=preload; as=script
-  Link: </app-b1e82b5247fb2385d6ba.js>; rel=preload; as=script
-  Link: </styles-08bc34de4ea872a98d93.js>; rel=preload; as=script
-  Link: </5a689306-e871787a89aeac54132f.js>; rel=preload; as=script
-  Link: </cb1608f2-811ce018594d77a5e6a0.js>; rel=preload; as=script
-  Link: </a9a7754c-1b502b31c573488a695a.js>; rel=preload; as=script
-  Link: </e5ddc9d07ff53122a1bea9b3e73594ce6812cb5e-47ee873e354e7cacf2c7.js>; rel=preload; as=script
-  Link: </component---src-templates-page-template-jsx-0c32b6b423d96f25c347.js>; rel=preload; as=script
-  Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/about/page-data.json>; rel=preload; as=fetch; crossorigin
 /contact
   Link: </webpack-runtime-56c06865fbaef42372c4.js>; rel=preload; as=script
   Link: </framework-eb684e3e828ad13b3940.js>; rel=preload; as=script
@@ -127,6 +115,18 @@
   Link: </component---src-templates-page-template-jsx-0c32b6b423d96f25c347.js>; rel=preload; as=script
   Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
   Link: </page-data/search/page-data.json>; rel=preload; as=fetch; crossorigin
+/about
+  Link: </webpack-runtime-56c06865fbaef42372c4.js>; rel=preload; as=script
+  Link: </framework-eb684e3e828ad13b3940.js>; rel=preload; as=script
+  Link: </app-b1e82b5247fb2385d6ba.js>; rel=preload; as=script
+  Link: </styles-08bc34de4ea872a98d93.js>; rel=preload; as=script
+  Link: </5a689306-e871787a89aeac54132f.js>; rel=preload; as=script
+  Link: </cb1608f2-811ce018594d77a5e6a0.js>; rel=preload; as=script
+  Link: </a9a7754c-1b502b31c573488a695a.js>; rel=preload; as=script
+  Link: </e5ddc9d07ff53122a1bea9b3e73594ce6812cb5e-47ee873e354e7cacf2c7.js>; rel=preload; as=script
+  Link: </component---src-templates-page-template-jsx-0c32b6b423d96f25c347.js>; rel=preload; as=script
+  Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </page-data/about/page-data.json>; rel=preload; as=fetch; crossorigin
 /tag/develop
   Link: </webpack-runtime-56c06865fbaef42372c4.js>; rel=preload; as=script
   Link: </framework-eb684e3e828ad13b3940.js>; rel=preload; as=script
