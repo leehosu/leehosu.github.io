@@ -3,8 +3,9 @@ $sidebar-desktop-width: 330px;
 .main-container {
   display: flex;
   display: -webkit-flex;
-  flex-direction: column;
-
+  flex-direction: column; 
+  min-height : 750px;
+  
   .content-wrapper {
     width: 100%;
   }

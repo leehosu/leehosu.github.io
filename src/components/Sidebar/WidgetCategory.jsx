@@ -4,6 +4,7 @@ import WidgetContainer from "./WidgetContainer";
 import WidgetTitle from "./WidgetTitle";
 import { getCategoryPath } from "../../utils/helpers";
 import config from "../../../data/SiteConfig";
+import "./WidgetCategory.scss";
 
 const WidgetCategory = ({ categoryList }) => (
   <WidgetContainer extraClass="categories-container">
@@ -14,7 +15,7 @@ const WidgetCategory = ({ categoryList }) => (
           <AutoLink 
             key={category} 
             to={getCategoryPath(category)}
-            className="block border-bottom border-color-light-grey padding-top-half padding-bottom-half"
+            className="block border-bottom border-color-light-grey padding-top-half padding-bottom-half category"
           >
             <span>{category}</span>
           </AutoLink>
