@@ -34,7 +34,7 @@ class Index extends React.Component {
     );
 
     const headerTitle = config.homeHeader 
-      ? `${config.siteTitle} - ${config.homeHeader}`
+      ? `${config.homeHeader}`
       : `${config.siteTitle}`;
 
     return (
@@ -80,6 +80,7 @@ export const pageQuery = graphql`
             tags
             categories
             date
+            summary
             cover {
               childImageSharp {
                 fluid(maxWidth: 660, quality: 100) {
