@@ -10,10 +10,10 @@ const config = {
   siteRss: "/rss.xml", // Path to the RSS file.
   siteLang: "en",
 //  siteFBAppID: "399626517562189", // FB Application ID for using app insights
-  googleAnalyticsID: "G-YSY6SQ3VYZ", // GA tracking ID.
+  googleAnalyticsID: "G-2ZF5F3414R", // GA tracking ID.
   postDefaultCategoryID: "", // Default category for posts.
   // Common for tag, category pages and widget
-  numberLatestPost: 8,
+  numberLatestPost: 5,
   postsPerPage: 6,
   // Use for post
   dateFromFormat: "YYYY-MM-DDTHH:mm:ssZ", // Date format used in the frontmatter.
