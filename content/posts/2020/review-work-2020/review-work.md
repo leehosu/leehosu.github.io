@@ -7,7 +7,6 @@ slug: "review-work"
 keywords: "Review Work For 2020"
 categories: 
     - develop
-    - work
 tags:
     - develop
     - programming
