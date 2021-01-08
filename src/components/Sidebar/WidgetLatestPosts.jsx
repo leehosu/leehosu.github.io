@@ -7,7 +7,6 @@ import config from "../../../data/SiteConfig";
 
 const WidgetLatesPosts = ({ latestPostEdges }) => {
   const postList = getPostList(latestPostEdges);
-
   return (
     <WidgetContainer extraClass="latest-posts-container">
       <WidgetTitle title={config.latestPostsWidgetTitle} />

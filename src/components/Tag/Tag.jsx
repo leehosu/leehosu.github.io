@@ -10,7 +10,7 @@ const Tag = ({ content }) => (
     className="inline-block margin-right-half margin-bottom-half 
       border border-color-light-grey padding-left-half padding-right-half tags"
   >
-    <span class="content">{content}</span>
+    <span className="content">{content}</span>
   </AutoLink>
 )
 

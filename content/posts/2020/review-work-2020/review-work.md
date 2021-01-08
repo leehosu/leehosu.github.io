@@ -9,7 +9,6 @@ categories:
     - develop
 tags:
     - develop
-    - programming
     - vue
     - spring
     - mysql
