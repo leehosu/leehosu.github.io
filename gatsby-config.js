@@ -16,6 +16,12 @@ module.exports = {
   },
   plugins: [
     "gatsby-plugin-react-helmet",
+    {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: config.googleAnalyticsID
+      }
+    },
     "gatsby-plugin-lodash",
     {
       resolve: "gatsby-source-filesystem",
@@ -70,12 +76,6 @@ module.exports = {
           '/sw.js': ['cache-control: public, max-age=0, must-revalidate'],
         },
       },
-    },
-    {
-      resolve: "gatsby-plugin-google-analytics",
-      options: {
-        trackingId: config.googleAnalyticsID
-      }
     },
     {
       resolve: "gatsby-plugin-nprogress",
