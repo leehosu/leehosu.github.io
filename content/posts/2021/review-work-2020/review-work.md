@@ -3,7 +3,7 @@ template: "post"
 title: "📊 2020년 회고"
 cover: "./cover.png"
 date: "2021-01-04"
-slug: "review-work"
+slug: "review2020"
 keywords: "Review Work For 2020"
 categories: 
     - develop
