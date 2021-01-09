@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import WidgetContainer from './WidgetContainer';
 import WidgetTitle from './WidgetTitle';
 import config from '../../../data/SiteConfig';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class WidgetSearch extends Component {
   render() {
@@ -11,7 +11,7 @@ class WidgetSearch extends Component {
         {config.hasSearch && (
           <WidgetContainer extraClass="search-container">
             <WidgetTitle title={config.searchWidgetTitle} />
-            <form className="margin-bottom-none" action="/search/" method="get">
+            {/* <form className="margin-bottom-none" action="/search/" method="get">
               <div className="container-full row padding-none margin-bottom-none">
                 <div className="padding-none padding-right-half col-xs-10">
                   <input
@@ -32,7 +32,19 @@ class WidgetSearch extends Component {
                   </button>
                 </div>
               </div>
-            </form>
+            </form> */}
+             <div className="container-full row padding-none margin-bottom-none">
+                <div className="padding-none padding-right-half col-xs-10">
+                  <input
+                    className="margin-bottom-none"
+                    type="text"
+                    name="q"
+                    placeholder={config.searchWidgetPlaceHolder}
+                    required
+                    spellCheck="false"
+                  />
+                </div>
+              </div>
           </WidgetContainer>
         )}
       </>

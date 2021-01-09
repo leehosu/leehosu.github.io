@@ -1,0 +1,28 @@
+.search {
+    width: 100%;
+    position: relative;
+    margin-top : 30px;
+
+
+    .search-input{
+        display: flex;
+
+
+        .search-icon{
+//            padding : 10px;
+            margin : 5px 20px 5px 5px;
+        }
+    }
+}
+
+.search-result-container{
+    //position: absolute;
+    width: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    max-height: 20vh;
+    overflow-y: scroll;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}

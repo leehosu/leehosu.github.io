@@ -11,6 +11,7 @@ import config from "../../data/SiteConfig";
 
 const PageTemplate = ({ data, pageContext }) => {
   const { slug, tagList, categoryList, latestPostEdges } = pageContext;
+
   const postNode = data.markdownRemark;
   const title = postNode.frontmatter.title;
   const content = <Page postNode={postNode} slug={slug} />;

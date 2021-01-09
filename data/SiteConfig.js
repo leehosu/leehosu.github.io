@@ -51,9 +51,9 @@ const config = {
   linksWidgetTitle: "Links",
   // Use for Google custom search
   searchWidgetTitle: "Looking for?",
-  searchWidgetPlaceHolder: "Enter keyword",
+  searchWidgetPlaceHolder: "Keyword..",
   searchEngineID: "dd3256ddf4ea108f4",
-  hasSearch: true,
+  hasSearch: false,
   // Use for links widget
   sidebarSticky: true,
   // sidebarLinks: [

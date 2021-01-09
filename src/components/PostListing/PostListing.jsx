@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Article from "./Article";
+import Search from "../Search/Search";
 
 class PostListing extends Component {
   state = {
@@ -25,6 +26,8 @@ class PostListing extends Component {
     return (
       <>
         <div className="post-listing-container">
+          <Search />
+
           {postList.map((post, index) => {
             if (index < maxPosts) return (
               <Article key={post.title} post={post} hasThumbnail={hasThumbnail} />
