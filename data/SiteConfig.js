@@ -17,10 +17,10 @@ const config = {
   postsPerPage: 6,
   // Use for post
   dateFromFormat: "YYYY-MM-DDTHH:mm:ssZ", // Date format used in the frontmatter.
-  dateFormat: "MMMM Do, YYYY", // Date format for display.
+  dateFormat: "yy년 M월 D일", // Date format for display.
   postTagged: "",
   postInCategories: "",
-  postOnDate: "Posted on",
+  postOnDate: "",
   // Use for comment
   lazyLoadComments: true,
   disqusShortname: "lakescript", // Disqus shortname.
@@ -51,11 +51,11 @@ const config = {
   linksWidgetTitle: "Links",
   // Use for Google custom search
   searchWidgetTitle: "Looking for?",
-  searchWidgetPlaceHolder: "Keyword..",
+  searchWidgetPlaceHolder: "Keyword,,",
   searchEngineID: "dd3256ddf4ea108f4",
   hasSearch: false,
   // Use for links widget
-  sidebarSticky: true,
+  sidebarSticky: false,
   // sidebarLinks: [
   //   {
   //     label: "Complete JavaScript",

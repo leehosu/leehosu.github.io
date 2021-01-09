@@ -1,6 +1,6 @@
 import React from "react";
 import AutoLink from "../AutoLink/AutoLink";
-import PostDate from "../Post/PostDate";
+import PostListDate from "../Post/PostListDate";
 
 const PostInfo = ({ post, extraClass = "" }) => (
   <div className={`post-info-wrapper ${extraClass}`}>
@@ -8,7 +8,7 @@ const PostInfo = ({ post, extraClass = "" }) => (
       <h2><small>{post.title}</small></h2>
     </AutoLink> 
     <div className="margin-bottom-half">{post.summary}</div>
-    <small><PostDate date={post.date} /></small>
+    <small><PostListDate date={post.date} /></small>
   </div>
 )
 

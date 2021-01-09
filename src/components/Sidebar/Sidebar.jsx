@@ -9,9 +9,10 @@ import config from '../../../data/SiteConfig';
 const Sidebar = ({ tagList, categoryList, latestPostEdges, links }) => {
   return (
     <aside
-      className={`sidebar-container width-full ${
+      className={`sidebar-container ${
         config.sidebarSticky ? 'height-full' : ''
       }`}
+      style={{ position : 'fixed'}}
     >
       <WidgetSearch />
 

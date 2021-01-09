@@ -24,17 +24,17 @@ const Post = ({ postNode, config, slug }) => {
         <PostShare extraClass="share-wrapper" postPath={slug} postNode={postNode} />
       </div>
       <PostDivider />
-      <div 
-        className="padding-top padding-bottom" 
-        dangerouslySetInnerHTML={{ __html: postNode.html }} 
-      />
-      <PostDivider />
       <div className="padding-top padding-bottom">
         <small>
           <PostCategories categories={post.categories} extraClass="block" iconColor="#555" />
           <PostTags tags={post.tags} extraClass="block padding-top-half" iconColor="#555" />
         </small>
       </div>
+      <PostDivider />
+      <div 
+        className="padding-top padding-bottom" 
+        dangerouslySetInnerHTML={{ __html: postNode.html }} 
+      />
       <PostDivider />
       <Comment 
         postNode={postNode} 
