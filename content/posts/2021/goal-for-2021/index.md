@@ -1,7 +1,7 @@
 ---
 template: "post"
 title: " 2021년 목표 정리"
-date: "2021-01-10"
+date: "2021-01-10 11:30"
 slug: "goal2021"
 keywords: "Goal for 2021"
 cover : './cover.png'
@@ -9,8 +9,6 @@ categories:
     - develop
 tags:
     - develop
-summary : "다사다난 했던 2020년이 지나고 드디어 2021년을 맞이했습니다. 20년 2월에 대학을 졸업하고 취업을 준비하면서 코로나를 겪어 심히 불안했었고 운 좋게 스타트업에서 저를 필요로하여 비교적 짧은 취준 시간을 갖고 취업을 하였습니다.."
-
 ---
 
 

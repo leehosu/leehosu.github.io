@@ -16,8 +16,7 @@ export const getPostList = postEdges => postEdges.map(postEdge => ({
   date: postEdge.node.fields.date,
   slug: postEdge.node.fields.slug,
   excerpt: postEdge.node.excerpt,
-  timeToRead: postEdge.node.timeToRead,
-  summary : postEdge.node.frontmatter.summary
+  timeToRead: postEdge.node.timeToRead
 }));
 
 export const getTagCategoryList = postList => {

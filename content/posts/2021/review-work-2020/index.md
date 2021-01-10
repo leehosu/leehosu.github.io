@@ -2,7 +2,7 @@
 template: "post"
 title: " 2020년 회고"
 cover: "./cover.png"
-date: "2021-01-04"
+date: "2021-01-04 16:30"
 slug: "review2020"
 keywords: "Review Work For 2020"
 categories: 
@@ -14,8 +14,6 @@ tags:
     - mysql
     - jsp
     - db
-summary : "위의 이미지가 보이시나요? 저게 바로 수습이 끝난 후 열심히 달려온 제가 개발하면서 경험했던 프레임워크, 라이브러리, 도구(?) 들입..."
-
 ---
 
 

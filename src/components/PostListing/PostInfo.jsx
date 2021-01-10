@@ -7,7 +7,7 @@ const PostInfo = ({ post, extraClass = "" }) => (
     <AutoLink to={post.slug}>
       <h2><small>{post.title}</small></h2>
     </AutoLink> 
-    <div className="margin-bottom-half">{post.summary}</div>
+    <div className="margin-bottom-half">{post.excerpt}</div>
     <small><PostListDate date={post.date} /></small>
   </div>
 )
