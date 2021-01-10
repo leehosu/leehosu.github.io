@@ -1,6 +1,6 @@
 ---
 template: "post"
-title: "📊 2020년 회고"
+title: " 2020년 회고"
 cover: "./cover.png"
 date: "2021-01-04"
 slug: "review2020"

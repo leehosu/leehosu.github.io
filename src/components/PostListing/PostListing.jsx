@@ -48,7 +48,6 @@ class PostListing extends Component {
     const { filteredData } =  this.state
     const { maxPosts } = this.state;
 
-
     return (
       <>
         <div className="post-listing-container">
@@ -70,8 +69,10 @@ class PostListing extends Component {
                 spellCheck="false"
                 onChange={this.handleInputChange}
               />
+            </div>
           </div>
-        </div>
+
+
           {filteredData.map((post, index) => {
             if (index < maxPosts) return (
               <Article key={index} post={post} hasThumbnail={hasThumbnail} />

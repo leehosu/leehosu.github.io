@@ -12,9 +12,9 @@ const WidgetLatesPosts = ({ latestPostEdges }) => {
       <WidgetTitle title={config.latestPostsWidgetTitle} />
       <div>
         {
-          postList.map(post => (
+          postList.map((post,index) => (
             <AutoLink
-              key={post.title}
+              key={index}
               to={post.slug}
               className="block border-bottom border-color-light-grey padding-top-half padding-bottom-half"
             >

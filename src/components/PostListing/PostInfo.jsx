@@ -4,7 +4,7 @@ import PostListDate from "../Post/PostListDate";
 
 const PostInfo = ({ post, extraClass = "" }) => (
   <div className={`post-info-wrapper ${extraClass}`}>
-    <AutoLink to={post.slug} key={post.title}>
+    <AutoLink to={post.slug}>
       <h2><small>{post.title}</small></h2>
     </AutoLink> 
     <div className="margin-bottom-half">{post.summary}</div>
