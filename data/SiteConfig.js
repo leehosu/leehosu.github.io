@@ -51,7 +51,7 @@ const config = {
   linksWidgetTitle: "Links",
   // Use for Google custom search
   searchWidgetTitle: "Looking for?",
-  searchWidgetPlaceHolder: "Keyword,,",
+  searchWidgetPlaceHolder: "Search",
   searchEngineID: "dd3256ddf4ea108f4",
   hasSearch: false,
   // Use for links widget
