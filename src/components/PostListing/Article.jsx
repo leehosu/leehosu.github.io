@@ -5,7 +5,6 @@ import "./Article.scss";
 
 const Article = ({ post, hasThumbnail }) => (
   <article 
-    key={post.title} 
     className="article-container padding-bottom-2 padding-top-2 border-bottom border-color-light-grey"
   >
     {hasThumbnail && <Thumbnail post={post} />}
