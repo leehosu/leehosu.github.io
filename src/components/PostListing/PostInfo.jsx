@@ -5,7 +5,8 @@ import "./PostInfo.scss";
 
 const PostInfo = ({ post, extraClass = "" }) => {
 
-  console.log(post.tags)
+  const categories = post.categories;
+  
   return (
     <div className={`post-info-wrapper ${extraClass}`}>
     <AutoLink to={post.slug}>
@@ -15,12 +16,13 @@ const PostInfo = ({ post, extraClass = "" }) => {
     <div className="post-info-bottom" >
       <small><PostListDate date={post.date}/></small>
       <span className="separator">·</span>
-      {post.categories.map((category, index) => (
-        <small key={index}> {category} </small>
-        ))
-      }
-    </div>
-   
+      { categories && (
+          categories.map((category, index) => (
+            <small key={index}> {category} </small>
+          ))
+      )
+    }
+   </div> 
   </div>
   )
 }
