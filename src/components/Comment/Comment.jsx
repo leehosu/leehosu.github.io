@@ -18,7 +18,7 @@ class Comment extends Component {
     return (
       <div className={`comment-container text-center ${extraClass}`}>
         {!this.state.isShow && (
-          <button className="btn-primary" onClick={this.handleClick}>
+          <button className="tags" onClick={this.handleClick}>
             {btnLoadComments}
           </button>
         )}

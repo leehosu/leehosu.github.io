@@ -85,7 +85,7 @@ class PostListing extends Component {
           <div 
             className="loadmore-wrapper margin-top padding-top-half text-center"
           >
-            <button className="btn-primary" onClick={this.handleLoadmore}>
+            <button className="tags" onClick={this.handleLoadmore}>
               {this.props.btnLoadmore}
             </button>
           </div>
