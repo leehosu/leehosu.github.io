@@ -23,24 +23,45 @@ slug: "about"
         Skills
     </h2>
     <ul style="display: block; margin: 0 auto; padding: 0; max-width: 800px;">
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">JavaScript</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">TypeScript</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">Python</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">Node.JS</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">React.JS</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">Vue.JS</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">Jquery.JS</li> 
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">JAVA</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">C</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">C++</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">Spring</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">JSP</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">JDBC</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">MySQL</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">MariaDB</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">R</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">Linux</li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px; color: #374054; background: #e4e4ea; list-style: none; cursor: default; font-size: 1.2em;">Git</li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/javascript.png">
+        </li>
+         <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/typescript.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/python.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/nodejs.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/react.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/vuejs.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/jquery.png">
+        </li> 
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/java.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/spring.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/jsp.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/mysql.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/maria.png">
+        </li>
+        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/git.png">
+        </li>
     </ul>
 </div>
 
