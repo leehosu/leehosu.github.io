@@ -23,43 +23,43 @@ slug: "about"
         Skills
     </h2>
     <ul style="display: block; margin: 0 auto; padding: 0; max-width: 800px;">
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/javascript.png">
         </li>
-         <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+         <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/typescript.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/python.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/nodejs.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/react.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/vuejs.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/jquery.png">
         </li> 
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/java.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/spring.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/jsp.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/mysql.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/maria.png">
         </li>
-        <li style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/git.png">
         </li>
     </ul>
