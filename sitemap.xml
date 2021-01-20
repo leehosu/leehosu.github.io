@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://leehosu.github.io/cron_scheduler</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/redux-over</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/introduce_db</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/goal2021</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/review2020</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/about</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/tag/develop</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/tag/java</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/tag/cron</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/reactjs</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/reduxjs</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/javascript</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/database</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://leehosu.github.io/tag/develop</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/vue</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/spring</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/mysql</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/jsp</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/db</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/category/java</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/reactjs</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/database</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/develop</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
