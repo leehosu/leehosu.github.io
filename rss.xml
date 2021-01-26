@@ -1,4 +1,231 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Wed, 20 Jan 2021 11:48:21 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[ Redux.js 완벽 정복 ]]></title><description><![CDATA[Flux…]]></description><link>https://leehosu.github.io/redux-over</link><guid isPermaLink="false">https://leehosu.github.io/redux-over</guid><category><![CDATA[React.js]]></category><category><![CDATA[Redux.js]]></category><category><![CDATA[Javascript]]></category><pubDate>Sun, 17 Jan 2021 07:00:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;flux&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#flux&quot; aria-label=&quot;flux permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Flux?&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Tue, 26 Jan 2021 07:33:52 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[ cron 과 properties를 이용한 Java Scheduler ]]></title><description><![CDATA[들어가며 회사에서 주기적으로 AWS 비밀번호 변경 프로그램을 만들라는,, 업무 아닌 업무가 떨어져서 한번 찾아보면서 개발 해본 내용입니다 !
+많이 부족한 내용일 수도 있으니 피드백 언제든지 환영합니다! java scheduler 특정 시간에 일괄적으로 처리를 해야하는 부분을 코드로 만들어 처리하는 Job…]]></description><link>https://leehosu.github.io/cron_scheduler</link><guid isPermaLink="false">https://leehosu.github.io/cron_scheduler</guid><category><![CDATA[develop]]></category><category><![CDATA[Java]]></category><category><![CDATA[Spring]]></category><category><![CDATA[cron]]></category><pubDate>Tue, 26 Jan 2021 07:30:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+&lt;p&gt;회사에서 주기적으로 AWS 비밀번호 변경 프로그램을 만들라는,, 업무 아닌 업무가 떨어져서 한번 찾아보면서 개발 해본 내용입니다 !
+많이 부족한 내용일 수도 있으니 피드백 언제든지 환영합니다!&lt;/p&gt;
+&lt;h2 id=&quot;java-scheduler&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#java-scheduler&quot; aria-label=&quot;java scheduler permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;java scheduler&lt;/h2&gt;
+&lt;p&gt;특정 시간에 일괄적으로 처리를 해야하는 부분을 코드로 만들어 처리하는 Job입니다.&lt;/p&gt;
+&lt;p&gt;예를 들어, 기본적으로 서비스 내에서 생성되는 필요없는 log데이터를 정해진 시간에 일괄로 삭제한다던가 매일 오전 10시에 사용들에게 알림 문자나 메일을 보내야할때 사용하는 것이 이러한 스케줄러입니다.&lt;/p&gt;
+&lt;p&gt;오늘은 scheduler 구현했던 경험에 대해 포스팅을 하겠습니다.&lt;/p&gt;
+&lt;h3 id=&quot;scheduler&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#scheduler&quot; aria-label=&quot;scheduler permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;@Scheduler&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;scheduler&lt;/code&gt;를 구현하려면 &lt;code class=&quot;language-text&quot;&gt;@scheduler&lt;/code&gt;라는 어노테이션을 이용해야합니다. &lt;del&gt;( 이 어노테이션 설정은 여기서 따로 설명하지 않겠습니다! )&lt;/del&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;java&quot;&gt;&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@Component&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;PasswordScheduler&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token annotation punctuation&quot;&gt;@Scheduled&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;cron &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;*/2 * * * * ? &quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 2분 마다 실행&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SchedulerMain&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;    
+        &lt;span class=&quot;token class-name&quot;&gt;Date&lt;/span&gt; today &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;스캐쥴링 !&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; today&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;결과&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%B0%EA%B3%BC&quot; aria-label=&quot;결과 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;결과&lt;/h5&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 612px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 44.242424242424235%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAABYlAAAWJQFJUiTwAAABsUlEQVQoz22S227TQBCG/Q6VaNPGhzopIHEBlMSOd+312utDTiQkqCBUmlCp7/8Kf2emAQnBxWgP9n7+5l97WVHi7vsPpCpHv1xhkmbI8gJJpqHoWaI0Up2jalrMdIG8rGAqh8JWsK5FNL7BVXiNIB7Bvx7Bm+UG94ejHPz8ZY8PkymywgiQP8KQj9ME7XxJoFqAhaWRgFXb4WIY4Ox88Kc8fuHh+IusDLb7r5hmSg4pU0KXFtpYmffLNSxZMsS6how7dNRREI8FehlEVCE8PiRAstrs9tIyf13RmsG8zy1zHNwq75W1o2rQ9HP4UYzzKx8DPxSwGP48GQpwlokZr3/bMXS+WktmBbXNQJ53i6Xk9heQL+X+4SBZrbc7MWQI58eg2emCmn4hVgxjUx5d12P4f8OjHJQMyTAvX8z0qRjMLXN+NdU/hsMX4MAnoDY1Do9PlJnFdneHT4miW3TUsiVwLWOquOUNgVp5xqN1HVmv6JeJ8erSJ8tAyjMuxe5bj9vkFotNhUS/hyoT2HZKeSU0n0DbCUzNEaS0l5J9Qh2lcH2O1+9GCMch4jcRRm8jPAOFZi21bvnBTgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;image_1&quot;
+        title=&quot;image_1&quot;
+        src=&quot;/static/70b45a5e31b72ad1e3c143c8ee256523/dbf98/img_1.png&quot;
+        srcset=&quot;/static/70b45a5e31b72ad1e3c143c8ee256523/103f2/img_1.png 165w,
+/static/70b45a5e31b72ad1e3c143c8ee256523/748ba/img_1.png 330w,
+/static/70b45a5e31b72ad1e3c143c8ee256523/dbf98/img_1.png 612w&quot;
+        sizes=&quot;(max-width: 612px) 100vw, 612px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;위의 결과를 확인해보면 2초마다 &lt;code class=&quot;language-text&quot;&gt;scheduler&lt;/code&gt; 가 반복되어 실행되는 것을 확인 하실 수 있습니다.&lt;/p&gt;
+&lt;h3 id=&quot;cron&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cron&quot; aria-label=&quot;cron permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;cron&lt;/h3&gt;
+&lt;p&gt;이제 &lt;code class=&quot;language-text&quot;&gt;schduler&lt;/code&gt;라는게 무엇인지 알게 되었는데 어노테이션의 &lt;code class=&quot;language-text&quot;&gt;cron=&amp;quot;*/2 * * * * *&amp;quot;&lt;/code&gt; 이건 뭐지? 라는 생각을 하실 겁니다. &lt;/p&gt;
+&lt;h5 id=&quot;cron-이란&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cron-%EC%9D%B4%EB%9E%80&quot; aria-label=&quot;cron 이란 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;cron 이란?&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;cron&lt;/code&gt;이란 원래 윈도우에서 예약된 작업과 같이 리눅스 시스템에서 예약 작업을 실행하기 위한 프로그램입니다.&lt;/p&gt;
+&lt;h5 id=&quot;cron-표현식&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cron-%ED%91%9C%ED%98%84%EC%8B%9D&quot; aria-label=&quot;cron 표현식 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;cron 표현식&lt;/h5&gt;
+&lt;p&gt;cron 표현식은 공백 (&quot; &quot;)으로 구분되는 문자열입니다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;항목값&lt;/th&gt;
+&lt;th&gt;필수값 여부&lt;/th&gt;
+&lt;th&gt;허용 범위&lt;/th&gt;
+&lt;th&gt;허용 특수 문자&lt;/th&gt;
+&lt;th&gt;비고&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;초&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;0~59&lt;/td&gt;
+&lt;td&gt;* , -&lt;/td&gt;
+&lt;td&gt;일부 표현식에서 사용되는 필드&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;분&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;0~59&lt;/td&gt;
+&lt;td&gt;* , -&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;시&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;0~23&lt;/td&gt;
+&lt;td&gt;* , -&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;일&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;1~31&lt;/td&gt;
+&lt;td&gt;* , - ? L W&lt;/td&gt;
+&lt;td&gt;? L W 는 일부 표현식에서만 사용됨&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;월&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;1~12 / JAN ~ DEC&lt;/td&gt;
+&lt;td&gt;* , -&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;요일&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;0~6 / MON~SUN&lt;/td&gt;
+&lt;td&gt;* , - ? L #&lt;/td&gt;
+&lt;td&gt;? L # 는 일부 표현식에서만 사용됨&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;년&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;1970~2099&lt;/td&gt;
+&lt;td&gt;* , -&lt;/td&gt;
+&lt;td&gt;standard / default 표현식에는 사용되지 않음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;*&lt;/code&gt; : 와일드 카드로 모든 값을 의미&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;?&lt;/code&gt; : 설정값 없음을 의미&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;-&lt;/code&gt; : 범위 지정&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&quot;cron-표현식-예제&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cron-%ED%91%9C%ED%98%84%EC%8B%9D-%EC%98%88%EC%A0%9C&quot; aria-label=&quot;cron 표현식 예제 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;cron 표현식 예제&lt;/h5&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;cron식&lt;/th&gt;
+&lt;th&gt;설명&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;*/1 * * * * ?&lt;/td&gt;
+&lt;td&gt;1초마다&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30 0/10 * * * ?&lt;/td&gt;
+&lt;td&gt;30초 뒤부터 10분마다&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;0 0 10 * * ?&lt;/td&gt;
+&lt;td&gt;매일 10시마다&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;0 30 10 * * ?&lt;/td&gt;
+&lt;td&gt;매일 10시 30분마다&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;0 * 10 * * ?&lt;/td&gt;
+&lt;td&gt;매일 10:00부터 10:59까지 매분마다&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;0 0-30 10 * * ?&lt;/td&gt;
+&lt;td&gt;매일 10:00부터 10:30까지 매분마다&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;property&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#property&quot; aria-label=&quot;property permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Property&lt;/h2&gt;
+&lt;h3 id=&quot;property란&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#property%EB%9E%80&quot; aria-label=&quot;property란 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Property란?&lt;/h3&gt;
+&lt;p&gt;기본적으로 &lt;code class=&quot;language-text&quot;&gt;property&lt;/code&gt;는 어떤 값을 나타냅니다. 소스내에서 사용가능한 &lt;code class=&quot;language-text&quot;&gt;parameter&lt;/code&gt; 들을 저장하기 위한 파일이며 &lt;code class=&quot;language-text&quot;&gt;key, value&lt;/code&gt; 형태로 저장되어 있습니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;property&lt;/code&gt; 를 왜 사용하냐면 &lt;code class=&quot;language-text&quot;&gt;JAVA&lt;/code&gt;는 파일을 실행하기 위해선 &lt;code class=&quot;language-text&quot;&gt;class&lt;/code&gt;를 생성 후 &lt;code class=&quot;language-text&quot;&gt;java Bean&lt;/code&gt;을 생성한 후 해당 값을 찾아오게 됩니다. 하지만 코딩을 하다보면 매번 코드를 돌렸다 멈췄다 하기에 번거롭습니다. 특히 서버에 관련된 &lt;code class=&quot;language-text&quot;&gt;setting&lt;/code&gt; 이라면 더더욱 그렇지요. &lt;/p&gt;
+&lt;p&gt;그럴때 &lt;code class=&quot;language-text&quot;&gt;config&lt;/code&gt; 설정을 &lt;code class=&quot;language-text&quot;&gt;property&lt;/code&gt;에 정의해놓고 해당 &lt;code class=&quot;language-text&quot;&gt;class&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;property&lt;/code&gt;에서 값을 가져오게 한다면 설정이 바뀌어 수정을 한다해도 &lt;code class=&quot;language-text&quot;&gt;property&lt;/code&gt;에서 해당 값만 수정하면 되어 서버를 멈출 필요도 없습니다. &lt;/p&gt;
+&lt;h3 id=&quot;property-설정&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#property-%EC%84%A4%EC%A0%95&quot; aria-label=&quot;property 설정 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Property 설정&lt;/h3&gt;
+&lt;p&gt;먼저 &lt;code class=&quot;language-text&quot;&gt;config&lt;/code&gt; 파일을 만들 폴더를 생성해줍니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 482px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 38.18181818181819%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAABYlAAAWJQFJUiTwAAABhElEQVQoz4WSy07CQBSGeQMXhnBpaTstpeVSWnob2kKRiygG8LIm0YULExe6wODCB3DnI//OTBfGmODim3N6pufkn/mnpDXbCHs67pZrbO92WMyH6LoB3CBm0Ue3P0DH8Vj04UdJUWe1/iAUkdPzAqi6CUkhKEmkjRnV8PV6hjidwA0TDEcTJGP+nbOcxzECmoJmRZ1muSDNp0jYPmX/kaaFekNFSWEKU1fD59MDWpYLx/cwni4Yc0zm58hnRc7JJlMsr9Yin1+sBKvNNZxBgHKtjhofWGVLQ9PgGjIO+z22N7fwIiqGBZSrzdkxI6hNE8S0YFht6C1b5KRlQbdsNIiBqqwIxEBNIzgxKnj7OOBxdw8vHgo1XF2cjmB3+yhXJdFQkRp/4HWuTig8ravIXQvvLwHMuIteP0KYjDCIuLopU0fZ3WiQVf0IBLJSUCJmGx3bxPOlg8APETEDuAn88q2OI9zjTZLy03QMNtCG3TKxyWz02DMJaSYcDYdZ4Zys/lLwH98FjfZykql1bwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;img_3&quot;
+        title=&quot;img_3&quot;
+        src=&quot;/static/850084a7b4fcdcbe47da1301ceeab9ec/b58a3/img_3.png&quot;
+        srcset=&quot;/static/850084a7b4fcdcbe47da1301ceeab9ec/103f2/img_3.png 165w,
+/static/850084a7b4fcdcbe47da1301ceeab9ec/748ba/img_3.png 330w,
+/static/850084a7b4fcdcbe47da1301ceeab9ec/b58a3/img_3.png 482w&quot;
+        sizes=&quot;(max-width: 482px) 100vw, 482px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;폴더를 생성하고 &lt;code class=&quot;language-text&quot;&gt;config.xml&lt;/code&gt; 파일을 생성했다면 &lt;code class=&quot;language-text&quot;&gt;property&lt;/code&gt;를 작성해줍니다! &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;xml&quot;&gt;&lt;pre class=&quot;language-xml&quot;&gt;&lt;code class=&quot;language-xml&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;properties&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;comment&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;comment&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+	&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;entry&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;message&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt; property로 설정한 문구 ! &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;entry&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;properties&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;그 후 &lt;code class=&quot;language-text&quot;&gt;root-context.xml&lt;/code&gt; 파일에서 해당 &lt;code class=&quot;language-text&quot;&gt;config&lt;/code&gt; 파일을 읽을 수 있게 경로를 명시해줍니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;xml&quot;&gt;&lt;pre class=&quot;language-xml&quot;&gt;&lt;code class=&quot;language-xml&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token namespace&quot;&gt;util:&lt;/span&gt;properties&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;config&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;classpath:#{systemProperties[&lt;span class=&quot;token punctuation&quot;&gt;&apos;&lt;/span&gt;spring.profiles.active&lt;span class=&quot;token punctuation&quot;&gt;&apos;&lt;/span&gt;]}/../scheduler/config.xml&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;property-적용&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#property-%EC%A0%81%EC%9A%A9&quot; aria-label=&quot;property 적용 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Property 적용&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;java&quot;&gt;&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@Component&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;PasswordScheduler&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+
+	&lt;span class=&quot;token annotation punctuation&quot;&gt;@Value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;#{config[&apos;message&apos;]}&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt; config_message&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;token annotation punctuation&quot;&gt;@Scheduled&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;cron &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;*/2 * * * * ? &quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 2분 마다 실행&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SchedulerMain&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;    
+        &lt;span class=&quot;token class-name&quot;&gt;Date&lt;/span&gt; today &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;out&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;스캐쥴링 !&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; today &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; config_message&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;결과-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%B0%EA%B3%BC-1&quot; aria-label=&quot;결과 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;결과&lt;/h5&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 22.424242424242426%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA0UlEQVQY02WPy5KCMBRE+Qp1FBERH+up8gHySEggMYCg8P+/0oa7cmoWp/quTvd1TPtE9x4gKo3bPUVeCItEZrPUD/CyQjFRKdTPHnGaIzic4O/22Fi8IKTbDw/Y7o9wlGnQdC8wIXGOYiQ5tzCkvCDxVMBlRXdjhedbjKXnY7Z0MV+t/zBbuXB03aLtehL+Xq60IM5yJIxbUUniqSRlBUzb4RLd4foBFq6Hn/XmH07djxjGN6Q2JJvWMFHaNxW9LJSGMjWkzX4YESXZl9Cj/OYD3tCCyJXAjOQAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;img_2&quot;
+        title=&quot;img_2&quot;
+        src=&quot;/static/9d5ae6e437e4516797b817cf6b532723/7c811/img_2.png&quot;
+        srcset=&quot;/static/9d5ae6e437e4516797b817cf6b532723/103f2/img_2.png 165w,
+/static/9d5ae6e437e4516797b817cf6b532723/748ba/img_2.png 330w,
+/static/9d5ae6e437e4516797b817cf6b532723/7c811/img_2.png 660w,
+/static/9d5ae6e437e4516797b817cf6b532723/d28e0/img_2.png 990w,
+/static/9d5ae6e437e4516797b817cf6b532723/5ba5e/img_2.png 1166w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이제 &lt;code class=&quot;language-text&quot;&gt;cron 표현식&lt;/code&gt;으로 특별한 날짜 및 시간을 정해서 해당 &lt;code class=&quot;language-text&quot;&gt;class&lt;/code&gt;에 &lt;code class=&quot;language-text&quot;&gt;scheduler&lt;/code&gt; 어노테이션으로 명시를 해주시면 설정해 놓은 날짜에 자동으로 실행되는 &lt;code class=&quot;language-text&quot;&gt;scheduler&lt;/code&gt;를 구현하실 수 있습니다.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://m.blog.naver.com/PostView.nhn?blogId=agapeuni&amp;#x26;logNo=60102461641&amp;#x26;proxyReferer=https:%2F%2Fwww.google.com%2F&quot;&gt;https://m.blog.naver.com/PostView.nhn?blogId=agapeuni&amp;#x26;logNo=60102461641&amp;#x26;proxyReferer=https:%2F%2Fwww.google.com%2F&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mingmi-programming.tistory.com/132&quot;&gt;https://mingmi-programming.tistory.com/132&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[ Redux.js 완벽 정복 ]]></title><description><![CDATA[Flux…]]></description><link>https://leehosu.github.io/redux-over</link><guid isPermaLink="false">https://leehosu.github.io/redux-over</guid><category><![CDATA[React.js]]></category><category><![CDATA[Redux.js]]></category><category><![CDATA[Javascript]]></category><pubDate>Sun, 17 Jan 2021 07:00:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;flux&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#flux&quot; aria-label=&quot;flux permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Flux?&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Redux&lt;/code&gt;를 좀 더 쉽게 이해하기 위해 &lt;code class=&quot;language-text&quot;&gt;Flux&lt;/code&gt; 패턴을 이해해야 합니다.&lt;/p&gt;
 &lt;p&gt;먼저 &lt;code class=&quot;language-text&quot;&gt;React.js&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;MVC&lt;/code&gt; 패턴에서 &lt;code class=&quot;language-text&quot;&gt;View&lt;/code&gt; 에 집중해있습니다.&lt;/p&gt;
 &lt;p&gt;&lt;span
