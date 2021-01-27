@@ -121,7 +121,7 @@ cron 표현식은 공백 (" ")으로 구분되는 문자열입니다.
 그 후 `root-context.xml` 파일에서 해당 `config` 파일을 읽을 수 있게 경로를 명시해줍니다.
 
 ```xml
-<util:properties id="config" location="classpath:#{systemProperties['spring.profiles.active']}/../scheduler/config.xml"/>
+<util:properties id="config" location="classpath:/scheduler/config.xml"/>
 ```
 
 
