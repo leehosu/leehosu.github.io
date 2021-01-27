@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDate } from "../../utils/helpers";
 
 const PostListDate = ({ date, extraClass = "" }) => {
 
@@ -17,12 +18,13 @@ const PostListDate = ({ date, extraClass = "" }) => {
         return `${betweenTimeHour}시간전`;
     }
 
-    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-    if (betweenTimeDay < 365) {
-        return `${betweenTimeDay}일전`;
-    }
+    // const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    // if (betweenTimeDay < 365) {
+    //     return `${betweenTimeDay}일전`;
+    // }
 
-    return `${Math.floor(betweenTimeDay / 365)}년전`;
+    // return `${Math.floor(betweenTimeDay / 365)}년전`;
+    return `${formatDate(value)}`;
   }
 
   return (
