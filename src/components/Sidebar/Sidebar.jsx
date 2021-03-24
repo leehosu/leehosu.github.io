@@ -12,7 +12,7 @@ const Sidebar = ({ tagList, categoryList, latestPostEdges, links }) => {
       className={`sidebar-container ${
         config.sidebarSticky ? 'height-full' : ''
       }`}
-      style={{ position : 'fixed', width : '300px'}}
+      style={{ width : '300px'}}
     >
       <WidgetSearch />
 
