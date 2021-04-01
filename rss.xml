@@ -1,4 +1,238 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Wed, 31 Mar 2021 08:39:42 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[ git 완벽 정복 !! (2)]]></title><description><![CDATA[들어가며 이번 포스팅에서는 저장소를 만들고 설정하는 방법, 파일을 추적()하거나 추적을 그만 두는 방법에 대해 알아 보겠습니다 ! Git의 기초 Git 저장소 만들기 의 저장소를 만드는 방법은 두 가지 입니다.  기존 프로젝트나 디렉토리를  저장소로 만드는 방법 다른 서버에 있는 저장소를 하는 방법 기존 디렉토리를 Git…]]></description><link>https://leehosu.github.io/over_git_2</link><guid isPermaLink="false">https://leehosu.github.io/over_git_2</guid><category><![CDATA[git]]></category><category><![CDATA[github]]></category><pubDate>Tue, 30 Mar 2021 03:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Thu, 01 Apr 2021 06:24:19 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[ git 완벽 정복 !! (3)]]></title><description><![CDATA[들어가며 이번 포스팅에는  상태인 파일들을 저장소에  하고 관리해보는 내용을 포스팅하려고합니다 ! Git Commit…]]></description><link>https://leehosu.github.io/over_git_2</link><guid isPermaLink="false">https://leehosu.github.io/over_git_2</guid><category><![CDATA[git]]></category><category><![CDATA[github]]></category><pubDate>Thu, 01 Apr 2021 06:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+&lt;p&gt;이번 포스팅에는 &lt;code class=&quot;language-text&quot;&gt;Staged&lt;/code&gt; 상태인 파일들을 저장소에 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt; 하고 관리해보는 내용을 포스팅하려고합니다 !&lt;/p&gt;
+&lt;h2 id=&quot;git-commit&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#git-commit&quot; aria-label=&quot;git commit permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Git Commit&lt;/h2&gt;
+&lt;h5 id=&quot;변경사항-커밋하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD-%EC%BB%A4%EB%B0%8B%ED%95%98%EA%B8%B0&quot; aria-label=&quot;변경사항 커밋하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;변경사항 커밋하기&lt;/h5&gt;
+&lt;p&gt;수정한 것을 커밋하기 위해 &lt;code class=&quot;language-text&quot;&gt;Staging Area&lt;/code&gt;에 파일을 정리했습니다. &lt;code class=&quot;language-text&quot;&gt;Unstaged&lt;/code&gt; 상태의 파일은 커밋되지 않는다는 것을 기억해야합니다. &lt;code class=&quot;language-text&quot;&gt;Git&lt;/code&gt;은 생성하거나 수정하고 나서 &lt;code class=&quot;language-text&quot;&gt;git add&lt;/code&gt; 명령으로 추가하지 않은 파일은 커밋하지 않습니다. 그 파일은 여전히 &lt;code class=&quot;language-text&quot;&gt;Unstaged&lt;/code&gt; 상태로 남아 있습니다. 커밋하기전에 &lt;code class=&quot;language-text&quot;&gt;git status&lt;/code&gt;명령으로 모든 것이&lt;code class=&quot;language-text&quot;&gt;Staged&lt;/code&gt; 상태인지 확인할 수 있습니다. 그 후 &lt;code class=&quot;language-text&quot;&gt;git commit&lt;/code&gt; 명령을 통해 커밋합니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; commit&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 86.66666666666667%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAARCAYAAADdRIy+AAAACXBIWXMAABYlAAAWJQFJUiTwAAAB00lEQVQ4y62UyY7TQBCG+8IiTRZsJxJjO3bbbseeJM6KlHi8ZJU45ArHeQjEIyDx2j/VFRJGYgQB5fCpqrq6/+4q2SXKskJV1cjzR5RlidUqR1GUvFZVFc557f+Kf6eua0akaQwpXYShjyDwGO1HkWQbx8FlXaNjKbXvc/6M6zpwHAdiNIoxHvcxHCpoXzOdJlgsHi42y/qYz1OOl8shJpOEz0wmp/XZLCVB9ySob9I38k1kI3qFTtj2ift7m+Mzeu15/ozjuCwqlJLQ6FJURCVGPif+B35hrAISkYjohYOB4t7Y7224lHSdPx9+KRYyCeAPQvh9CU/58GIJSbGXSLg92mhTya5zOfQ3hEc9c4MeknGG4fwD0vEIQaLwMF8gyaaQoTptvlawRxttaryUISKVUMn0Oo8+oajPaMF/6aPodruwOhYsS2Oy7XQ6P2PrEl+LMAwThvGOMG6CME2THW1vwe0FLarbpD5prFsINt6+xt2bV2g07ogGms0m2+e0Wi202+2rEMev33H88g31xyOq4hGrPMd6vWY2mw2PpCzLaGiMrkLsPz9h/+kJ1XaPDYkUZcnzbbfb4XA4YLvd0nwsaOosaKrMaNos6RcdIE3TF/kBtAbPWmlDMRoAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_commit&quot;
+        title=&quot;git_commit&quot;
+        src=&quot;/static/744d86fac0e4cff8d9d91bec92872b76/7c811/git_commit.png&quot;
+        srcset=&quot;/static/744d86fac0e4cff8d9d91bec92872b76/103f2/git_commit.png 165w,
+/static/744d86fac0e4cff8d9d91bec92872b76/748ba/git_commit.png 330w,
+/static/744d86fac0e4cff8d9d91bec92872b76/7c811/git_commit.png 660w,
+/static/744d86fac0e4cff8d9d91bec92872b76/d28e0/git_commit.png 990w,
+/static/744d86fac0e4cff8d9d91bec92872b76/fcbeb/git_commit.png 1206w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;자동으로 생성되는 커밋 메시지의 첫 라인은 비어 있고 둘째 라인부터 &lt;code class=&quot;language-text&quot;&gt;git status&lt;/code&gt; 명령의 결과가 채워집니다. 커밋한 내용을 쉽게 기억할 수 있도록 이 메시지를 포함할 수도 있고 메시지를 전부 지우고 새로 작성할 수 있습니다. 내용을 저장하고 편집기를 종료하면 Git은 입력된 내용으로 새 커밋을 하나 완성합니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 14.545454545454545%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAADCAYAAACTWi8uAAAACXBIWXMAABYlAAAWJQFJUiTwAAAApklEQVQI133MzQsBQQBA8bEa2h0zzUrYLd8HLkpuDk5KDg5OIpt8hSgtLvLPP9xx+PVuT+hsFVk444YHUoU96eKORO7CcNzhsBOcji7btSQMLZ7S+L7FcRyEEN/ZXA0v2GBKK7xihAoWpPJbBqM2y0iyXmnmM5dms4KUaZLJP7OPfNjC1h/49eu7N7KNGFV+Mpn2uMcu95tPfLH0+12UMmidwRjz0wvzplIgo+b7oQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_commit1&quot;
+        title=&quot;git_commit1&quot;
+        src=&quot;/static/c83f4f4d6d90d0838e5f5a4155365f87/7c811/git_commit_1.png&quot;
+        srcset=&quot;/static/c83f4f4d6d90d0838e5f5a4155365f87/103f2/git_commit_1.png 165w,
+/static/c83f4f4d6d90d0838e5f5a4155365f87/748ba/git_commit_1.png 330w,
+/static/c83f4f4d6d90d0838e5f5a4155365f87/7c811/git_commit_1.png 660w,
+/static/c83f4f4d6d90d0838e5f5a4155365f87/d28e0/git_commit_1.png 990w,
+/static/c83f4f4d6d90d0838e5f5a4155365f87/fcbeb/git_commit_1.png 1206w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;메시지를 직접 인라인으로 첨부하고 싶다면 &lt;code class=&quot;language-text&quot;&gt;-m&lt;/code&gt; 옵션을 사용하면 됩니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; commit -m &lt;span class=&quot;token string&quot;&gt;&quot;message&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 24.848484848484848%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA90lEQVQY043OzUrDQBRA4SlNMskkM5PJmDaxP4tUCiULN7XaLvoEPoWbWhGkunNZwY0PfQwVdCV08XHhcjlcMSgjlN8Q1S/Iek86fiYonxi3DzzuLPtdyNtBst0WSGlxzpIkCXEck6YpWZZhjEEI8ePCG7K8QRV3mMGafLhBuVuq6Q3rjWe5VKxWMU2T0+9HRGHYzf5JEAQnYbf7DVpbUHbR0kvGtWHUsbpHWSgKXdMT6u/4HM5p8uISP2yxfk41uUbnM1w1x105kolEeEEQBucFq4EkH92jZ1/o5oiZHdHTT/TylezdoT66Tw+eRbtARhKVKpT63zeqeHscAxS7MwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_commit2&quot;
+        title=&quot;git_commit2&quot;
+        src=&quot;/static/03be15356d851d06c575130ea94b126e/7c811/git_commit_2.png&quot;
+        srcset=&quot;/static/03be15356d851d06c575130ea94b126e/103f2/git_commit_2.png 165w,
+/static/03be15356d851d06c575130ea94b126e/748ba/git_commit_2.png 330w,
+/static/03be15356d851d06c575130ea94b126e/7c811/git_commit_2.png 660w,
+/static/03be15356d851d06c575130ea94b126e/d28e0/git_commit_2.png 990w,
+/static/03be15356d851d06c575130ea94b126e/fcbeb/git_commit_2.png 1206w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;위와 같이 첫번째 커밋을 작성해보았습니다. &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt; 명령은 몇 가지 정보를 출력하는데 1) &lt;code class=&quot;language-text&quot;&gt;master branch&lt;/code&gt;에 커밋을 했고, 2) 체크섬은 &lt;code class=&quot;language-text&quot;&gt;2305efd&lt;/code&gt; 라는 것을 알려줍니다. 그리고 수정한 파일이 몇개이고 삭제됐거나 추가된 라인이 몇 라인인지 알려줍니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Git&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;Staging Area&lt;/code&gt;에 속한 스냅샷만을 커밋해야한다는 것을 명심해야 합니다. 즉, 수정은 했지만 아직 &lt;code class=&quot;language-text&quot;&gt;Staging Area&lt;/code&gt;에 넣지 않은 것은 다음에 커밋을 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;추가로 커밋할 때마다 프로젝트의 스탭샷을 기록하기 때문에 나중에 스냅샷끼리 비교하거나 예전 스냅샷으로 되돌릴 수 있습니다.&lt;/em&gt;&lt;/p&gt;
+&lt;h5 id=&quot;staging-area-생략하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#staging-area-%EC%83%9D%EB%9E%B5%ED%95%98%EA%B8%B0&quot; aria-label=&quot;staging area 생략하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Staging Area 생략하기&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Staging Area&lt;/code&gt;는 커밋할 파일을 정리한다는 점에서 매우 유용하지만 복잡하고 필요하지 않을때도 있습니다. 그럴 때 아주 쉽게 생략할 수 있는데 &lt;code class=&quot;language-text&quot;&gt;git commit -a&lt;/code&gt; 명령을 실행하면 됩니다. 그래서 git add를 하는 수고를 덜 수 있습니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 44.84848484848485%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAABYlAAAWJQFJUiTwAAABm0lEQVQoz42RPW/UQBRFx/aud23P99ib2ApKFhaiEBpAEQ2RkiCUAkUUaUCBCJH8AAoKpEDDHz/MeFOyiOLozZNm7rv3jWjbBr9Y0fSfMDsfmXeXCHlBGS44PZe8ORe8ey84OMiZTCq0VsxmM4QQf6frAl3XYWxHaPux5pM5ZSlpdU1dCOqJoJyuH2RZtlksEUJ7L6jxwdMP24TgUFqirUcZh9SWRiqUUshYm6bBOYf3nul0Sp7nI6NgXdfxssQoHR0ZvI1i8ZGLvapKnI4r8RZrDcYY2raNonI8J0Gt9dinIfei6whVxETmkUlERop/RduEbOZo9wC59ZZ6cUKzOKW0x5jhhKNXmtfHNWdnNfv7KeraVXKU4qfYyWFVVRRFsd5vvx13t3hMM9wSljfI4Zq6/4Lbvebzh56ry4yvVxkvX+RxXym+G+Oln041RU8DrLXjPoWNn6FNoDF7bA1PUXYZz7vosGT2qEUMJULHKNn0/yIPg2Gx8xy7+k14codb/cQ9/IU/vCN828P/UPjvlmdHhwQX4nA9utrEH1Nb1yM6Y3ZkAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_commit_3&quot;
+        title=&quot;git_commit_3&quot;
+        src=&quot;/static/b5bbce25e678dc994939a43305f4652e/7c811/git_commit_3.png&quot;
+        srcset=&quot;/static/b5bbce25e678dc994939a43305f4652e/103f2/git_commit_3.png 165w,
+/static/b5bbce25e678dc994939a43305f4652e/748ba/git_commit_3.png 330w,
+/static/b5bbce25e678dc994939a43305f4652e/7c811/git_commit_3.png 660w,
+/static/b5bbce25e678dc994939a43305f4652e/d28e0/git_commit_3.png 990w,
+/static/b5bbce25e678dc994939a43305f4652e/fcbeb/git_commit_3.png 1206w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h5 id=&quot;파일-삭제하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%8C%8C%EC%9D%BC-%EC%82%AD%EC%A0%9C%ED%95%98%EA%B8%B0&quot; aria-label=&quot;파일 삭제하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;파일 삭제하기&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Git&lt;/code&gt; 에서 파일을 제거하려면 &lt;code class=&quot;language-text&quot;&gt;git rm&lt;/code&gt; 명령으로 &lt;code class=&quot;language-text&quot;&gt;Tracked&lt;/code&gt; 상태의 파일을 삭제한 후 커밋해야 합니다. 이 명령은 &lt;code class=&quot;language-text&quot;&gt;working directory&lt;/code&gt;에 있는 파일도 삭제하기 때문에 실제로 파일도 지워집니다.&lt;/p&gt;
+&lt;p&gt;커밋하면 파일은 삭제되고 &lt;code class=&quot;language-text&quot;&gt;Git&lt;/code&gt;은 이 파일을 더이상 추적하지 않습니다. 이미 파일을 수정했거나, 수정한 파일을 추적하고 있다면 &lt;code class=&quot;language-text&quot;&gt;-f&lt;/code&gt; 옵션을 주어 강제로 삭제할 수도 있습니다.&lt;/p&gt;
+&lt;p&gt;또, &lt;code class=&quot;language-text&quot;&gt;Staging Area&lt;/code&gt;에서만 제거하고 &lt;code class=&quot;language-text&quot;&gt;working Directory&lt;/code&gt;에 있는 파일은 지우지 않고 남겨둘 수도 있습니다. 다시말해서 하드디스크에 있는 파일은 그대로 두고 &lt;code class=&quot;language-text&quot;&gt;Git&lt;/code&gt;만 추적하지 않게 합니다. &lt;/p&gt;
+&lt;p&gt;=&gt; &lt;code class=&quot;language-text&quot;&gt;.gitignore&lt;/code&gt; 파일에 추가하는 것을 빼먹었다거나, 대용량 로그 파일이나 컴파일된 파일인 .a 파일 같은 것을 실수로 추가했을 때 아주 유용합니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;rm&lt;/span&gt; --cached 파일명&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 43.03030303030303%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAABYlAAAWJQFJUiTwAAABWklEQVQoz6WSzUvDQBDFdzff2Y9strVRLLUGvFS82H+gPXvzUESliLSKCCL14J//nI1prYoiePgFZpI83sw85npHyA9WkPUKqn5BNnyGqV8Rnh2D3Qrwe4lgpBGyDHESIc9zGGOglGqQUiLLMjDG3pG2hhw8IusvkffvwNwVWDnHYLKPkwuG0YzhdMqw1wvBRYQ0TZEkCYIg2CCE+BA07hDp7gK6v0C0MwdT59S8xnQyxPKS4WbG8fTAMB6TW56hKHQjuBH4SlVV6JQSXacbSiuhZdR+IFp4A+fsZ6GNQ21gygKy1HDdDrQpoKl2PQdlc6olOYpoT2mzM+ccwjD8TZQeMaGJkPAuJJG3iD+42sZaC1uUKIylC0oIv2Qak9OIAQ8aN9sHWB/B99fvPgkqTaNSDCpboGM0Olo1S4/iuImDj4iPho/LOiq+r+k/b8bX30YOiZSIW9g/eAMoXsvELoMnPwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_rm&quot;
+        title=&quot;git_rm&quot;
+        src=&quot;/static/30498b0b036e952357e80cbaaa00c7c6/7c811/git_rm.png&quot;
+        srcset=&quot;/static/30498b0b036e952357e80cbaaa00c7c6/103f2/git_rm.png 165w,
+/static/30498b0b036e952357e80cbaaa00c7c6/748ba/git_rm.png 330w,
+/static/30498b0b036e952357e80cbaaa00c7c6/7c811/git_rm.png 660w,
+/static/30498b0b036e952357e80cbaaa00c7c6/d28e0/git_rm.png 990w,
+/static/30498b0b036e952357e80cbaaa00c7c6/fcbeb/git_rm.png 1206w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h5 id=&quot;파일-이름-변경하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%8C%8C%EC%9D%BC-%EC%9D%B4%EB%A6%84-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0&quot; aria-label=&quot;파일 이름 변경하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;파일 이름 변경하기&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Git&lt;/code&gt;은 파일 이름의 변경이나 파일의 이동을 명시적으로 관리하지 않습니다. 다시 말해서 파일 이름이 변경되었다는 별도의 정보를 저장하지 않습니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;mv&lt;/span&gt; file_from file_to&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어는 아래의 명령어를 수행한 것과 완전 똑같습니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;mv&lt;/span&gt; file_from file_to
+$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;rm&lt;/span&gt; file_from
+$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; file_to&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;커밋-히스토리-조회하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%BB%A4%EB%B0%8B-%ED%9E%88%EC%8A%A4%ED%86%A0%EB%A6%AC-%EC%A1%B0%ED%9A%8C%ED%95%98%EA%B8%B0&quot; aria-label=&quot;커밋 히스토리 조회하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;커밋 히스토리 조회하기&lt;/h3&gt;
+&lt;p&gt;새로 저장소를 만들어서 몇 번 커밋했을 수도 있고, 커밋 히스토리가 있는 저장소를 &lt;code class=&quot;language-text&quot;&gt;clone&lt;/code&gt;했을 수도 있습니다. 그럴때 조회를 할 수 있는 &lt;code class=&quot;language-text&quot;&gt;git log&lt;/code&gt; 명령어가 있습니다.&lt;/p&gt;
+&lt;h5 id=&quot;예제&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%98%88%EC%A0%9C&quot; aria-label=&quot;예제 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;예제&lt;/h5&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; clone https://github.com/schacon/simplegit-progit&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 프로젝트를 &lt;code class=&quot;language-text&quot;&gt;clone&lt;/code&gt;해서 받아온 후 &lt;code class=&quot;language-text&quot;&gt;git log&lt;/code&gt; 명령어를 실행하면 아래와 같이 출력됩니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 50.303030303030305%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAABBUlEQVQoz51SwY6FIBADFBUQBpDoW13N+yH//3P6Rnaz2asems4cppk2FetKWBaPfffYtoBt9TiOiPc7MQe8XgYpd6D9GzYTxi+PyTscRFiDR3YWRyTsMaDrNMQ4eh56OOcxDJZ5rDNRgvcEISRD3IGAMRZ9b6B1z+JD3R8I/cA5iRg1UmqQc8vzxbqy95I/lfz5DcFlKXxoUEpEmQjznDi3ifOcmQt/qyHlrS9lzW4YXEXf22r7ikAI9cxyCPrX6mVZIVKDxDuRqLD2hmApCeNoWCxg4lqUctnOWNeZ65TZcgulbghqrdlix4cGbavRNO0flGruWz7Pk0u987FikeZZVf7hA9H21emaPVR2AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_log&quot;
+        title=&quot;git_log&quot;
+        src=&quot;/static/c9dc33cb81421eb3276dc0d1518fb4b0/7c811/git_log.png&quot;
+        srcset=&quot;/static/c9dc33cb81421eb3276dc0d1518fb4b0/103f2/git_log.png 165w,
+/static/c9dc33cb81421eb3276dc0d1518fb4b0/748ba/git_log.png 330w,
+/static/c9dc33cb81421eb3276dc0d1518fb4b0/7c811/git_log.png 660w,
+/static/c9dc33cb81421eb3276dc0d1518fb4b0/d28e0/git_log.png 990w,
+/static/c9dc33cb81421eb3276dc0d1518fb4b0/bb51b/git_log.png 1320w,
+/static/c9dc33cb81421eb3276dc0d1518fb4b0/8cbfd/git_log.png 1560w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;특별한 옵션없이 git log 명령을 실행하면 저장소의 커밋 히스토리를 시간 순으로 보여줍니다. 그리고 각 커밋의 SHA-1 체크섬, 저자 이름, 저자 이메일, 커밋한 날짜, 커밋 메시지를 보여줍니다.&lt;/p&gt;
+&lt;p&gt;원하는 히스토리를 검색할 수 있도록 git log 명령은 매우 다양한 옵션을 지원합니다. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; log -p
+$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; log -p -2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 65.45454545454545%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAABYlAAAWJQFJUiTwAAABZklEQVQ4y51TW3KDMAwEEoOf2MZAeAbICTLp/c+2FU7Tn86kpR+Ld4y9lrRSMk0efW+xLBbz7DBNFuta4XYLtDoMg0KoOfxyha49ytGisQar95icRW001spjqRw4L5BobZDnBZQytCEhpY7cWg+tSyRJSkiOIIEQgkRznE4nMMYi/3EwfS+cvnioA5xzaNsW1+sVXddh2zaK0B6N7IllnvHxeOBxv0exXXgcR5zP5/8JyrpGvyxoCUxIMBLaxbTWEUopZFn2d0HGOXRp4ZsWrqpQNw36YYjRNsQ5/T9silUClj+NEDlDsCYak5IRaXo0bbrAeIrCUFqRZ8hFFh3/Vw33j/MVSutiz0mp0JAxl0sHY0pqozzWcH/ghbeCe0pKFihLSYcTSjUjIRGhVEErp0c4iqKI/fprTUOQCIFTRAJDr9FdJI2iptYpaU/BeypBfiDldd0oMvY9evu47dwY+zV62aEafgIRKBfRwdeqDQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_log_p_2&quot;
+        title=&quot;git_log_p_2&quot;
+        src=&quot;/static/aa9ad48d53ce78a55d449890263f12dc/7c811/git_log_p_2.png&quot;
+        srcset=&quot;/static/aa9ad48d53ce78a55d449890263f12dc/103f2/git_log_p_2.png 165w,
+/static/aa9ad48d53ce78a55d449890263f12dc/748ba/git_log_p_2.png 330w,
+/static/aa9ad48d53ce78a55d449890263f12dc/7c811/git_log_p_2.png 660w,
+/static/aa9ad48d53ce78a55d449890263f12dc/d28e0/git_log_p_2.png 990w,
+/static/aa9ad48d53ce78a55d449890263f12dc/bb51b/git_log_p_2.png 1320w,
+/static/aa9ad48d53ce78a55d449890263f12dc/8cbfd/git_log_p_2.png 1560w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;-p 옵션은 각 커밋의 diff 결과만을 보여주고 -2 옵션은 최근 2개의 결과만 보여주는 옵션입니다. 직접 diff를 실행한 것과 같은 결과를 출력하기 때문에 동료가 무엇을 커밋했는지 리뷰하고 조회하는데 유용합니다. 또, git log 명령에는 히스토리의 통계를 보여주는 옵션이 있습니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; log --stat&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 65.45454545454545%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAABYlAAAWJQFJUiTwAAABS0lEQVQ4y52TyW7DMAxEFVv7Ykleszi1kf//xynlIG3RQ1HlMBChw4jDJ7J1zbhcIrYt4n5PWNeIfe/xeAx0JlyvDsOokbcP+DGju0VMMWDPGWuKGIPH3mdsfYLWCsz7ACkVnAt0YWCtPxRjhvcdGDuRWI0YjDFkpqGUOk7nLJrml9Hpb+PTq7bWoesimVpwwcFbASEkGbZfqupSa0HRNEV00IZTXEkdKhpDc9RdZ6nm/zecJoc+S8yzxvlsscyGIPkDzrI45NRAyYoZFhiKYIQQDzBdlxBI31CaeijWmgO5MZriCUiapZSy1uipAqNASSmToYNRRJuLd77LU5yfUMCEoMmQU2xBHRNpztC2jIgzcF5huMyBulMYaRvm2WGeCMwScLuVLfEEhdODrObbmGNDCoyyIQVM2Z4XpGoowzBQLH4Aadvmvbn90CdIJhPFHoL63gAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_log_stat&quot;
+        title=&quot;git_log_stat&quot;
+        src=&quot;/static/82f55116ca2abc848955304bb524cfdc/7c811/git_log_stat.png&quot;
+        srcset=&quot;/static/82f55116ca2abc848955304bb524cfdc/103f2/git_log_stat.png 165w,
+/static/82f55116ca2abc848955304bb524cfdc/748ba/git_log_stat.png 330w,
+/static/82f55116ca2abc848955304bb524cfdc/7c811/git_log_stat.png 660w,
+/static/82f55116ca2abc848955304bb524cfdc/d28e0/git_log_stat.png 990w,
+/static/82f55116ca2abc848955304bb524cfdc/bb51b/git_log_stat.png 1320w,
+/static/82f55116ca2abc848955304bb524cfdc/8cbfd/git_log_stat.png 1560w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h5 id=&quot;조회-제한-조건&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%A1%B0%ED%9A%8C-%EC%A0%9C%ED%95%9C-%EC%A1%B0%EA%B1%B4&quot; aria-label=&quot;조회 제한 조건 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;조회 제한 조건&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;-n&lt;/code&gt; : 최근 n개의 커밋만 조회한다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;--since&lt;/code&gt; , &lt;code class=&quot;language-text&quot;&gt;--after&lt;/code&gt; : 명시한 날짜 이후의 커밋만 검색한다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;--until&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;--before&lt;/code&gt; : 명시한 날짜 이전의 커밋만 검색한다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;--author&lt;/code&gt; : 입력한 저자의 커밋만 보여준다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;--committer&lt;/code&gt; : 입력한 커미터의 커밋만 보여준다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;--grep&lt;/code&gt; : 커밋 메시지 안의 텍스트를 검색한다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;-S&lt;/code&gt;: 커밋 변경(추가/삭제)내용 안의 텍스트를 검색한다.&lt;/li&gt;
+&lt;/ol&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[ git 완벽 정복 !! (2)]]></title><description><![CDATA[들어가며 이번 포스팅에서는 저장소를 만들고 설정하는 방법, 파일을 추적()하거나 추적을 그만 두는 방법에 대해 알아 보겠습니다 ! Git의 기초 Git 저장소 만들기 의 저장소를 만드는 방법은 두 가지 입니다.  기존 프로젝트나 디렉토리를  저장소로 만드는 방법 다른 서버에 있는 저장소를 하는 방법 기존 디렉토리를 Git…]]></description><link>https://leehosu.github.io/over_git_2</link><guid isPermaLink="false">https://leehosu.github.io/over_git_2</guid><category><![CDATA[git]]></category><category><![CDATA[github]]></category><pubDate>Tue, 30 Mar 2021 03:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
 &lt;p&gt;이번 포스팅에서는 저장소를 만들고 설정하는 방법, 파일을 추적(&lt;code class=&quot;language-text&quot;&gt;Track&lt;/code&gt;)하거나 추적을 그만 두는 방법에 대해 알아 보겠습니다 !&lt;/p&gt;
 &lt;h2 id=&quot;git의-기초&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#git%EC%9D%98-%EA%B8%B0%EC%B4%88&quot; aria-label=&quot;git의 기초 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Git의 기초&lt;/h2&gt;
 &lt;h3 id=&quot;git-저장소-만들기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#git-%EC%A0%80%EC%9E%A5%EC%86%8C-%EB%A7%8C%EB%93%A4%EA%B8%B0&quot; aria-label=&quot;git 저장소 만들기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Git 저장소 만들기&lt;/h3&gt;
