@@ -1,8 +1,8 @@
 ---
 template: "post"
-title: " git 완벽 정복 !! (3)"
-date: "2021-04-01 15:30"
-slug: "over_git_2"
+title: " git 완벽 정복 !! (3) -  commit "
+date: "2021-05-09 18:30"
+slug: "over_git_3"
 keywords: "git"
 cover : './cover.png'
 categories: 
@@ -114,7 +114,11 @@ $ git log -p -2
 
 ![git_log_p_2](./git_log_p_2.png)
 
--p 옵션은 각 커밋의 diff 결과만을 보여주고 -2 옵션은 최근 2개의 결과만 보여주는 옵션입니다. 직접 diff를 실행한 것과 같은 결과를 출력하기 때문에 동료가 무엇을 커밋했는지 리뷰하고 조회하는데 유용합니다. 또, git log 명령에는 히스토리의 통계를 보여주는 옵션이 있습니다.
+-p 옵션은 각 커밋의 diff 결과만을 보여주고 -2 옵션은 최근 2개의 결과만 보여주는 옵션입니다. 
+
+직접 diff를 실행한 것과 같은 결과를 출력하기 때문에 동료가 무엇을 커밋했는지 리뷰하고 조회하는데 유용합니다.
+
+또, git log 명령에는 히스토리의 통계를 보여주는 옵션이 있습니다.
 
 ```bash
 $ git log --stat
@@ -137,3 +141,37 @@ $ git log --stat
 6. `--grep` : 커밋 메시지 안의 텍스트를 검색한다.
 
 7. `-S `: 커밋 변경(추가/삭제)내용 안의 텍스트를 검색한다.
+
+
+### Git 되돌리기
+만약 commit 한 내용을 수정하고 싶다면 `--amend` 옵션을 사용하면 됩니다. 바로 앞의 `commit`을 수정할 수 있는 옵션입니다.
+
+```bash
+$ git commit -m "user info update"
+$ git add userInfo
+$ git commit --amend 
+```
+
+여기서 실행한 3개의 명령어는 모두 하나의 `commit`으로 기록됩니다.
+
+### 파일 상태를 Unstage로 변경하기
+
+이 방법은 `Staged Area`와 `Working Directory` 사이를 제어할 수 있는 방법입니다.
+ 
+```bash
+$ git resert HEAD <file> ...
+```
+
+위의 명령어를 사용하면 해당 파일은 `staged` 상태에서 `unstaged` 상태로 변경됩니다.
+
+만약 `commit` 후 해당 파일을 수정해야한다거나, 해당 `commit`에서 제외해야할때 사용하면 유용한 옵션입니다!
+
+
+### Modified 파일 되돌리기
+
+어떤 파일을 수정했는데, 다시 초기 상태로 되돌리고 싶을 떄 사용하는 옵션입니다.
+
+```bash
+$ git checkout -- <file>
+```
+

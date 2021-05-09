@@ -1,6 +1,6 @@
 ---
 template: "post"
-title: " git 완벽 정복 !! (2)"
+title: " git 완벽 정복 !! (2) - git의 기초 "
 date: "2021-03-30 12:30"
 slug: "over_git_2"
 keywords: "git"
