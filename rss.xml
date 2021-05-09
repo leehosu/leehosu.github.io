@@ -1,4 +1,135 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sun, 09 May 2021 10:17:38 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[👾 git 완벽 정복 - commit ]]></title><description><![CDATA[들어가며 이번 포스팅에는  상태인 파일들을 저장소에  하고 관리해보는 내용을 포스팅하려고합니다 ! Git Commit…]]></description><link>https://leehosu.github.io/git_commit</link><guid isPermaLink="false">https://leehosu.github.io/git_commit</guid><category><![CDATA[git]]></category><category><![CDATA[github]]></category><pubDate>Sun, 09 May 2021 09:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sun, 09 May 2021 11:04:42 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[👾 git 완벽 정복 - remote 저장소]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/git_remote</link><guid isPermaLink="false">https://leehosu.github.io/git_remote</guid><category><![CDATA[git]]></category><category><![CDATA[github]]></category><pubDate>Sun, 09 May 2021 10:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소를 관리할 줄 알아야 다른 사람들과 성공적인 협업을 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소란 인터넷이나 네트워크 어딘가에 있는 저장소를 말합니다.
+어떤 저장소는 읽기만 가능 할 수 있고, 어떤 저장소는 읽기와 쓰기가 모두 가능 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;이번 포스팅에는 이러한 저장소를 관리하는 방법에 대해 설명합니다.&lt;/p&gt;
+&lt;h2 id=&quot;리모트-저장소&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%A0%80%EC%9E%A5%EC%86%8C&quot; aria-label=&quot;리모트 저장소 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;리모트 저장소&lt;/h2&gt;
+&lt;h3 id=&quot;리모트-저장소-확인하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%A0%80%EC%9E%A5%EC%86%8C-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0&quot; aria-label=&quot;리모트 저장소 확인하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;리모트 저장소 확인하기&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;git remote&lt;/code&gt; 명령으로 현재 프로젝트에 등록된 &lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소를 확인할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;저장소를 처음 &lt;code class=&quot;language-text&quot;&gt;clone&lt;/code&gt; 하면 &lt;code class=&quot;language-text&quot;&gt;origin&lt;/code&gt; 이라는 &lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소가 자동으로 등록되기 때문에 &lt;code class=&quot;language-text&quot;&gt;origin&lt;/code&gt;이라는 이름을 볼 수 있습니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 27.272727272727277%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAt0lEQVQY05XOuU7DQBhF4d+zyWN7xrPYRGFpoKKLkChCg9JFIs/Ao1Dx3gfHghIFik+3uzoybx+pt0fq9Z7NVSGlzDAMhBDw3q/atl3XOYcx5nfWICUPlLFhri21TowxUnIhjpG+71FKobVeichlabonbl6J09NymEg5E2Kg6zqstatz2dnFs2bRzy+Ymw9k+sQ+nNDvDrVr8Mpjnf1b1Q+98OEOE/dId0K2B+StIT4HrPzz7LvwCwQ6bm8EtQJuAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_remote&quot;
+        title=&quot;git_remote&quot;
+        src=&quot;/static/b5035dc5a0a08dbf503fabfe5842de6b/7c811/git_remote.png&quot;
+        srcset=&quot;/static/b5035dc5a0a08dbf503fabfe5842de6b/103f2/git_remote.png 165w,
+/static/b5035dc5a0a08dbf503fabfe5842de6b/748ba/git_remote.png 330w,
+/static/b5035dc5a0a08dbf503fabfe5842de6b/7c811/git_remote.png 660w,
+/static/b5035dc5a0a08dbf503fabfe5842de6b/d28e0/git_remote.png 990w,
+/static/b5035dc5a0a08dbf503fabfe5842de6b/bb51b/git_remote.png 1320w,
+/static/b5035dc5a0a08dbf503fabfe5842de6b/c29d8/git_remote.png 1780w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;-v&lt;/code&gt; 옵션을 주어 이름과 &lt;code class=&quot;language-text&quot;&gt;URL&lt;/code&gt;을 함께 볼 수 있습니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 11.515151515151516%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAACCAYAAABYBvyLAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAXElEQVQI143MsQ2EMAxAUSOT6M5SCBBDD6JkAAQlSHSUt/8m/1ageO2TXGaacSePN/1ykM8WXx1vneKFlBJmhoi8821mYn8Rux+f6aR+IsPmWDC0VkIIqOq7rBL+pjEtKDXQDKAAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_remote_v&quot;
+        title=&quot;git_remote_v&quot;
+        src=&quot;/static/7b63dc2d0aaf44bb8ef4b2ea1b6c9008/7c811/git_remote_v.png&quot;
+        srcset=&quot;/static/7b63dc2d0aaf44bb8ef4b2ea1b6c9008/103f2/git_remote_v.png 165w,
+/static/7b63dc2d0aaf44bb8ef4b2ea1b6c9008/748ba/git_remote_v.png 330w,
+/static/7b63dc2d0aaf44bb8ef4b2ea1b6c9008/7c811/git_remote_v.png 660w,
+/static/7b63dc2d0aaf44bb8ef4b2ea1b6c9008/d28e0/git_remote_v.png 990w,
+/static/7b63dc2d0aaf44bb8ef4b2ea1b6c9008/bb51b/git_remote_v.png 1320w,
+/static/7b63dc2d0aaf44bb8ef4b2ea1b6c9008/c29d8/git_remote_v.png 1780w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&quot;리모트-저장소-추가하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A6%AC%EB%AA%A8%ED%8A%B8-%EC%A0%80%EC%9E%A5%EC%86%8C-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0&quot; aria-label=&quot;리모트 저장소 추가하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;리모트 저장소 추가하기&lt;/h3&gt;
+&lt;p&gt;새 &lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소는 쉽게 추가 하실 수 있는데, 아래의 명령어로 가능합니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; remote &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;이름&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;url&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 19.393939393939394%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAm0lEQVQY043MsQrCMBSF4SRDG02apPfeaihFpLM6iog+gqNuvoOv0Cc/ljqIIOLwbef8KqQFivaBeTvA7e9wQ4F4SpAgqKmGcw7WWhhjvlJKvelRiARPW9DyAO43kCOh6RtILSAipJSm6MfxF2ZCrDNYOkgerQS5yxB+BZkZ3vv/g3ZWQccLTHWDWZ+hrgrVLqA05TTQWv8fGz0Bmw9aYC7flkEAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_remote_add&quot;
+        title=&quot;git_remote_add&quot;
+        src=&quot;/static/bb9035afbd9a91ef697358d6d483bdc7/7c811/git_remote_add.png&quot;
+        srcset=&quot;/static/bb9035afbd9a91ef697358d6d483bdc7/103f2/git_remote_add.png 165w,
+/static/bb9035afbd9a91ef697358d6d483bdc7/748ba/git_remote_add.png 330w,
+/static/bb9035afbd9a91ef697358d6d483bdc7/7c811/git_remote_add.png 660w,
+/static/bb9035afbd9a91ef697358d6d483bdc7/d28e0/git_remote_add.png 990w,
+/static/bb9035afbd9a91ef697358d6d483bdc7/bb51b/git_remote_add.png 1320w,
+/static/bb9035afbd9a91ef697358d6d483bdc7/c29d8/git_remote_add.png 1780w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이제 &lt;code class=&quot;language-text&quot;&gt;URL&lt;/code&gt; 대신 &lt;code class=&quot;language-text&quot;&gt;lake&lt;/code&gt;라는 이름으로 사용할 수 있습니다. &lt;/p&gt;
+&lt;p&gt;예를 들어 로컬 저장소에는 없는 &lt;code class=&quot;language-text&quot;&gt;lake branch&lt;/code&gt;를 가져오려면 아래의 명령어를 사용하면 됩니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; fetch lake&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 12.121212121212121%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAACCAYAAABYBvyLAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAWElEQVQI15XMsQmAMBBA0QheRCS5CEFEsNIi4AJiGxAsdP9tvhYOoMVrn2m7RBgy2l+4eUMPxSdPDBENiohgjPmmeNQ6UcdMFU7KcaXcBbc4Gtsg9kf2hjeA+iyv8Cr8EgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git_fetch&quot;
+        title=&quot;git_fetch&quot;
+        src=&quot;/static/d4256131cda9384067e9b08fe77dda93/7c811/git_fetch.png&quot;
+        srcset=&quot;/static/d4256131cda9384067e9b08fe77dda93/103f2/git_fetch.png 165w,
+/static/d4256131cda9384067e9b08fe77dda93/748ba/git_fetch.png 330w,
+/static/d4256131cda9384067e9b08fe77dda93/7c811/git_fetch.png 660w,
+/static/d4256131cda9384067e9b08fe77dda93/d28e0/git_fetch.png 990w,
+/static/d4256131cda9384067e9b08fe77dda93/bb51b/git_fetch.png 1320w,
+/static/d4256131cda9384067e9b08fe77dda93/c29d8/git_fetch.png 1780w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&quot;remote-저장소-pull-fetch&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#remote-%EC%A0%80%EC%9E%A5%EC%86%8C-pull-fetch&quot; aria-label=&quot;remote 저장소 pull fetch permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;remote 저장소 Pull, Fetch&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소에서 새로운 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;를 가져오려면 &lt;code class=&quot;language-text&quot;&gt;fetch&lt;/code&gt; 명령어를 사용하면 됩니다.&lt;/p&gt;
+&lt;p&gt;이 명령은 &lt;code class=&quot;language-text&quot;&gt;local&lt;/code&gt;에는 없지만 &lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소에 있는 모든 데이터를 가져옵니다.&lt;/p&gt;
+&lt;p&gt;저장소를 &lt;code class=&quot;language-text&quot;&gt;Clone&lt;/code&gt; 하면 명령은 자동으로 &lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소를 &lt;code class=&quot;language-text&quot;&gt;origin&lt;/code&gt; 이라는 이름으로 추가됩니다. &lt;/p&gt;
+&lt;p&gt;그래서 나중에 &lt;code class=&quot;language-text&quot;&gt;git fetch origin&lt;/code&gt;을 실행하면 &lt;code class=&quot;language-text&quot;&gt;Clone&lt;/code&gt;한 이후에 수정한 모든 것을 가져옵니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;git fetch&lt;/code&gt; 명령은 리모트 저장소의 데이터를 모두 로컬로 가져오지만, 자동으로 &lt;code class=&quot;language-text&quot;&gt;Merge&lt;/code&gt;하지는 않습니다. 그래서 로컬에서 작업하던 것은 직접 &lt;code class=&quot;language-text&quot;&gt;Merge&lt;/code&gt;해야 합니다.&lt;/p&gt;
+&lt;p&gt;그래서 &lt;code class=&quot;language-text&quot;&gt;git pull&lt;/code&gt; 명령으로 &lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;에서 데이터를 가져올 뿐 아니라 자동으로 &lt;code class=&quot;language-text&quot;&gt;local branch&lt;/code&gt;와 &lt;code class=&quot;language-text&quot;&gt;Merge&lt;/code&gt; 시킬 수 있습니다.&lt;/p&gt;
+&lt;p&gt;정리 하자면,,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;git clone&lt;/code&gt; 명령은 자동으로 &lt;code class=&quot;language-text&quot;&gt;local&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;master branch&lt;/code&gt;가 &lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소의 &lt;code class=&quot;language-text&quot;&gt;master branch&lt;/code&gt;를 추적하게 합니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;git pull&lt;/code&gt; 명령은 &lt;code class=&quot;language-text&quot;&gt;clone&lt;/code&gt;한 서버의 데이터를 가져오고 그 데이터를 자동으로 현재 작업하는 코드와 &lt;code class=&quot;language-text&quot;&gt;Merge&lt;/code&gt; 시킵니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;remote-저장소에-push-하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-push-%ED%95%98%EA%B8%B0&quot; aria-label=&quot;remote 저장소에 push 하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;remote 저장소에 Push 하기&lt;/h3&gt;
+&lt;p&gt;프로젝트를 공유하고 싶을 때 &lt;code class=&quot;language-text&quot;&gt;Upstream&lt;/code&gt; 저장소에 &lt;code class=&quot;language-text&quot;&gt;Push&lt;/code&gt; 할 수 있습니다. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; push &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;remote 이름&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;branch 이름&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;mater&lt;/code&gt; 브랜치를 &lt;code class=&quot;language-text&quot;&gt;origin&lt;/code&gt; 서버에 &lt;code class=&quot;language-text&quot;&gt;push&lt;/code&gt; 하려면 아래와 같이 명령어를 사용합니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; push origin master&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위 명령은 &lt;code class=&quot;language-text&quot;&gt;clone&lt;/code&gt;한 remote 저장소에 쓰기 권한이 있고, &lt;code class=&quot;language-text&quot;&gt;clone&lt;/code&gt;하고 난 이후 아무도 &lt;code class=&quot;language-text&quot;&gt;Upstream&lt;/code&gt; 저장소에 &lt;code class=&quot;language-text&quot;&gt;Push&lt;/code&gt; 하지 않았을 때만 사용할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;다시 말해, &lt;code class=&quot;language-text&quot;&gt;clone&lt;/code&gt; 한 사람이 여러 명이고 다른 사람이 &lt;code class=&quot;language-text&quot;&gt;push&lt;/code&gt; 했을 경우, 충돌이 발생합니다.&lt;/p&gt;
+&lt;p&gt;그래서 먼저 다른 사람이 작업한 것을 &lt;code class=&quot;language-text&quot;&gt;local&lt;/code&gt;로 가져와 &lt;code class=&quot;language-text&quot;&gt;Merge&lt;/code&gt;한 이후에 &lt;code class=&quot;language-text&quot;&gt;push&lt;/code&gt; 해야합니다.&lt;/p&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[👾 git 완벽 정복 - commit ]]></title><description><![CDATA[들어가며 이번 포스팅에는  상태인 파일들을 저장소에  하고 관리해보는 내용을 포스팅하려고합니다 ! Git Commit…]]></description><link>https://leehosu.github.io/git_commit</link><guid isPermaLink="false">https://leehosu.github.io/git_commit</guid><category><![CDATA[git]]></category><category><![CDATA[github]]></category><pubDate>Sun, 09 May 2021 09:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
 &lt;p&gt;이번 포스팅에는 &lt;code class=&quot;language-text&quot;&gt;Staged&lt;/code&gt; 상태인 파일들을 저장소에 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt; 하고 관리해보는 내용을 포스팅하려고합니다 !&lt;/p&gt;
 &lt;h2 id=&quot;git-commit&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#git-commit&quot; aria-label=&quot;git commit permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Git Commit&lt;/h2&gt;
 &lt;h5 id=&quot;변경사항-커밋하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD-%EC%BB%A4%EB%B0%8B%ED%95%98%EA%B8%B0&quot; aria-label=&quot;변경사항 커밋하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;변경사항 커밋하기&lt;/h5&gt;
