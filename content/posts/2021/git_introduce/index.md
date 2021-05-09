@@ -1,8 +1,8 @@
 ---
 template: "post"
-title: " git 완벽 정복 !! (1) - git 이란?"
+title: "👾 git 완벽 정복 - git 이란?"
 date: "2021-03-29 14:30"
-slug: "over_git_1"
+slug: "git_introduce"
 keywords: "git"
 cover : './cover.png'
 categories: 

@@ -1,8 +1,8 @@
 ---
 template: "post"
-title: " git 완벽 정복 !! (3) -  commit "
+title: "👾 git 완벽 정복 - commit "
 date: "2021-05-09 18:30"
-slug: "over_git_3"
+slug: "git_commit"
 keywords: "git"
 cover : './cover.png'
 categories: 
