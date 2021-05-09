@@ -55,7 +55,7 @@
   Link: </component---node-modules-gatsby-plugin-offline-app-shell-js-4e364838b550723a2458.js>; rel=preload; as=script
   Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
   Link: </page-data/offline-plugin-app-shell-fallback/page-data.json>; rel=preload; as=fetch; crossorigin
-/over_git_3
+/git_commit
   Link: </webpack-runtime-1008f1a1c3e55c8a9fa2.js>; rel=preload; as=script
   Link: </framework-eb684e3e828ad13b3940.js>; rel=preload; as=script
   Link: </app-e11d97931372e1a4858d.js>; rel=preload; as=script
@@ -66,8 +66,8 @@
   Link: </e5ddc9d07ff53122a1bea9b3e73594ce6812cb5e-a00df4921171f0d03969.js>; rel=preload; as=script
   Link: </component---src-templates-post-template-jsx-9a794b3d6c48bbbf493d.js>; rel=preload; as=script
   Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/over_git_3/page-data.json>; rel=preload; as=fetch; crossorigin
-/over_git_2
+  Link: </page-data/git_commit/page-data.json>; rel=preload; as=fetch; crossorigin
+/git_basic
   Link: </webpack-runtime-1008f1a1c3e55c8a9fa2.js>; rel=preload; as=script
   Link: </framework-eb684e3e828ad13b3940.js>; rel=preload; as=script
   Link: </app-e11d97931372e1a4858d.js>; rel=preload; as=script
@@ -78,8 +78,8 @@
   Link: </e5ddc9d07ff53122a1bea9b3e73594ce6812cb5e-a00df4921171f0d03969.js>; rel=preload; as=script
   Link: </component---src-templates-post-template-jsx-9a794b3d6c48bbbf493d.js>; rel=preload; as=script
   Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/over_git_2/page-data.json>; rel=preload; as=fetch; crossorigin
-/over_git_1
+  Link: </page-data/git_basic/page-data.json>; rel=preload; as=fetch; crossorigin
+/git_introduce
   Link: </webpack-runtime-1008f1a1c3e55c8a9fa2.js>; rel=preload; as=script
   Link: </framework-eb684e3e828ad13b3940.js>; rel=preload; as=script
   Link: </app-e11d97931372e1a4858d.js>; rel=preload; as=script
@@ -90,7 +90,7 @@
   Link: </e5ddc9d07ff53122a1bea9b3e73594ce6812cb5e-a00df4921171f0d03969.js>; rel=preload; as=script
   Link: </component---src-templates-post-template-jsx-9a794b3d6c48bbbf493d.js>; rel=preload; as=script
   Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/over_git_1/page-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </page-data/git_introduce/page-data.json>; rel=preload; as=fetch; crossorigin
 /cron_scheduler
   Link: </webpack-runtime-1008f1a1c3e55c8a9fa2.js>; rel=preload; as=script
   Link: </framework-eb684e3e828ad13b3940.js>; rel=preload; as=script
