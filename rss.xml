@@ -1,4 +1,292 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sun, 09 May 2021 11:08:01 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[👾 git 완벽 정복 - remote 저장소]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/git_remote</link><guid isPermaLink="false">https://leehosu.github.io/git_remote</guid><category><![CDATA[git]]></category><category><![CDATA[github]]></category><pubDate>Sun, 09 May 2021 10:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Mon, 17 May 2021 12:50:01 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[👾 git 완벽 정복 - git branch ]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/git_branch</link><guid isPermaLink="false">https://leehosu.github.io/git_branch</guid><category><![CDATA[git]]></category><category><![CDATA[github]]></category><pubDate>Mon, 17 May 2021 12:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+&lt;p&gt;이번 포스팅에는 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;의 핵심이라고 볼 수 있는 최대 장점인 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;에 대해 정리해보려고 합니다.&lt;/p&gt;
+&lt;p&gt;여러 사람이 같이 개발을 할 때에 코드를 통째로 복사하고 나서 원래의 코드와 상관없이 독릭적으로 개발을 진행할 수 있는데, 이렇게 독립적으로 개발하는 것이 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;이고 모든 버전 관리 시트템은 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;를 지원합니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;는 매우 가벼워서 다른 버전 관리 시스템과는 다르게 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;를 쉽게 만들어 작업하고 나중에 &lt;code class=&quot;language-text&quot;&gt;merge&lt;/code&gt;하는 방법을 권장합니다.&lt;/p&gt;
+&lt;h2 id=&quot;branch는-무엇인가&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#branch%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80&quot; aria-label=&quot;branch는 무엇인가 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;branch는 무엇인가?&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Git&lt;/code&gt;이 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;를 다루는 과정을 이해하려면 우선 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;이 데이터를 어떻게 저장하는지 알아야합니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;은 데이터를 변경사항(&lt;code class=&quot;language-text&quot;&gt;diff&lt;/code&gt;)로 기록하지 않고 일련의 스냅샷으로 기록합니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt;하면 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;은 현 &lt;code class=&quot;language-text&quot;&gt;staging area&lt;/code&gt;에 있는 데이터의 스탭샷에 대한 &lt;code class=&quot;language-text&quot;&gt;pointer&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;author&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;message&lt;/code&gt;와 같은 메타 데이터, 이전 커밋에 대한 포인터등을 포함하는 커밋 개체(&lt;code class=&quot;language-text&quot;&gt;commit object&lt;/code&gt;)를 저장합니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;git commmit&lt;/code&gt;으로 커밋하면 먼저 &lt;code class=&quot;language-text&quot;&gt;root directory&lt;/code&gt;와 각 하위 &lt;code class=&quot;language-text&quot;&gt;directory&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;tree&lt;/code&gt; 개체를 체크섬과 함께 저장소에 저장합니다.&lt;/p&gt;
+&lt;p&gt;그 다음에 커밋 개체를 만들고 메타데이터와 루트 디렉토리 트리 개체를 가리키는 포인터 정보를 커밋 개체에 넣어 저장합니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 500px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 67.87878787878788%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAIAAACgpqunAAAACXBIWXMAABcSAAAXEgFnn9JSAAACHElEQVQoz5VT2W7aQBSdH+9r1D60VVUlaptuSBDCjsPm2AECLUsIxk4Mxhiz2WAbDJjVRoBNJyTqWxEdHd2Xc8+dO0dnwO6IY1kWrArP3zoctWiERVE+fqOwLPjLHRKbJqwtgrg6Oel4PXWXi7uwt3JZ8ELDBsv615RncZ+mJc+lGkJmsegajQzuC2C1XM3HM3NPH9gbli5FSX7vFEONBK5DMVEEifpvtJLIdUvUmJkbi+fm7XYzGqm6vti/6WluuVwWBMFY6qIgyrKsjTXDWIFXiTevC6cfmB9nDTsvtdYro1aDF2TRaDmOs+lUQxSnstzTJhNd06rJJJeI8+lUv0QMOQ7YhkHHKPSJv3Boocd6hWMZHKe/n9+jERHx83bbI0HI67W+0I0OTafev+24nWrQ3/e5m9cxcMbbf0r+b6LHMQl3RzLcsFTsBDwMHmtgUd7roimypy/nNMM0SXKEBMZhRAsj81Cwg2HgXfXrx7rttG3/orjbAxGK7wtNt5MKI1UIn7tCEMJiMYWOaZLUSibVwp2czXTTqR5JgsyYyAyLEL+UgraYQPFqtZ5O9RnEzJhO9O3GGgz67Xb7yUjTFBVloGlrawdtBLvN7gXbQ/HiG42HfD7ruqS8nmoo1MAxoVgER8VznwKxUiHPP/d8HiXo164CHRz7D3Gf4yS3cxZGzJvrXRxTbxPg+I8xU9V2PicW7oYUOabIQY39A/y/7VWZRZ+jAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;commit-object&quot;
+        title=&quot;commit-object&quot;
+        src=&quot;/static/4df6606b0d75fcb6172e2076aa7b582b/0eb09/commit-object.png&quot;
+        srcset=&quot;/static/4df6606b0d75fcb6172e2076aa7b582b/103f2/commit-object.png 165w,
+/static/4df6606b0d75fcb6172e2076aa7b582b/748ba/commit-object.png 330w,
+/static/4df6606b0d75fcb6172e2076aa7b582b/0eb09/commit-object.png 500w&quot;
+        sizes=&quot;(max-width: 500px) 100vw, 500px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이 작업을 마치고 나면 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt; 저장소에는 각 파일에 대한 &lt;code class=&quot;language-text&quot;&gt;Blob&lt;/code&gt; 파일, 파일과 디렉터리 구조가 들어있는 트리 개체 하나, 메타 데이터와 루트 트리를 가리키는 포인터가 담긴 커밋 개체 하나가 생성됩니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 500px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 44.84848484848485%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAIAAAC9o5sfAAAACXBIWXMAABcSAAAXEgFnn9JSAAAB60lEQVQozzXR+W+aYBjAcf71ZcmybEtajyrpildoFu10MWmqTq0cMlBBSxUsVfECPPEAlUOnQ5P9+s3nzfO8eYDuol/kSJQl+PG7pI0Oh8PpdFI3y1eJQ1icbtdaqrjarZ1o7/eDpUQK5TyD8GNhqCmAi777TPs8b+FbJZqQM5ZpOQ7rUx8Z9zcGhOQHbyfSmAtO3Jhbfy38qex1NQLfx7Go9AjcVII+AfY3YQ8fig9SPbGrqeu8gH1h/FAv5qoGfB2YaJfX6koayyAd8QoRkIevWSiupAFPKXD9AoHNe7B770zm6txiuvjNF75WwbDy64aLQKMHtElMpPFAGYKViO8dvhOjvhacVPNASIpD85/BWeJWjSVGGcs4r42K5Ic/V+560N0IusRwffbmRN3YeEsh549Ov+IDP4aPALmoEjqTHhaKOl1bNmzLdlx7JmYHaJJLZfsYMqdkbeRE0zbxPpUbYEk+lR/ipEQDpm7t1haJl3eaZW7PY8/OsP7ap2qFnSqqtd0fD8dzPZ4cYG72VLFi6La1s4EytcKQSTrVIYlVlVnvDNNR9dcFSazTTy3kWaFIXZLPp9I0o0StcHSSfmpfsAYQ+LSQU3KZPlaYlqmZeTkVy87R52k20y3kJAyZyZfHum78x70Lnv8Dvwi7rhvBZQoAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;commit-before&quot;
+        title=&quot;commit-before&quot;
+        src=&quot;/static/66b084d28897ceac7dca5eb926c7db64/0eb09/commit-before.png&quot;
+        srcset=&quot;/static/66b084d28897ceac7dca5eb926c7db64/103f2/commit-before.png 165w,
+/static/66b084d28897ceac7dca5eb926c7db64/748ba/commit-before.png 330w,
+/static/66b084d28897ceac7dca5eb926c7db64/0eb09/commit-before.png 500w&quot;
+        sizes=&quot;(max-width: 500px) 100vw, 500px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;위의 이미지를 보면 각 스냅샷은 이전의 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt;의 스냅샷을 가리키는 포인터가 저장되어 있는 것을 확인할 수 있습니다.&lt;/p&gt;
+&lt;h3 id=&quot;새-브랜치-생성하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%83%88-%EB%B8%8C%EB%9E%9C%EC%B9%98-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0&quot; aria-label=&quot;새 브랜치 생성하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;새 브랜치 생성하기&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; branch testing&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;브랜치를 새로 만들면 지금 작업하고 있던 마지막 커밋을 가리킵니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 445px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 50.303030303030305%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAIAAAA7N+mxAAAACXBIWXMAABcSAAAXEgFnn9JSAAABS0lEQVQoz5VS226CQBDd//+Mpi+thoiiotZbm6YqriDFom2Um65CvIBbcQHBbkNfWl/qycnkzMnMZDIZcP4fkiShUTf0gSy1nh6lkQJFCK5q1nRNkGC91RrIQwH2r2v2PM+2bVVVEUJUABKR4BREcUQjCUladIpP1A/jkPIYHWmajkiFJEuH44EKUHHKJZtjptnikuNQQUd6HMTKSskvcwWT/abD9syuj32MP5vzJrdiM+/3hTlb3fCggWtVt3yr3HCrfGVXEmTBWTgdrcPjEqNlMx93NZ+vj+vG1DAN82FR490iM8vkLKZFGsDaWtbOQhjN3YW5MdPFMMH6xkB7RKmtDc/30rWdvWMf7DZs62sdeQhcHibFHzOOYyrCICQ+magTd+sGPgHJb/xUn5NLUH+macKg/9x5gUOx2++Ba59EHr0KIlTGb1ASvwBfZSsa/nC/VwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;branch-create&quot;
+        title=&quot;branch-create&quot;
+        src=&quot;/static/f8702ce48567ec6722d42c32b341a73f/a6969/branch-create.png&quot;
+        srcset=&quot;/static/f8702ce48567ec6722d42c32b341a73f/103f2/branch-create.png 165w,
+/static/f8702ce48567ec6722d42c32b341a73f/748ba/branch-create.png 330w,
+/static/f8702ce48567ec6722d42c32b341a73f/a6969/branch-create.png 445w&quot;
+        sizes=&quot;(max-width: 445px) 100vw, 445px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;그렇다면 현재 작업중인 브랜치가 무엇인지 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;은 어떻게 파악할까요 ? &lt;/p&gt;
+&lt;p&gt;다른 버전관리 시스템과는 달리 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;HEAD&lt;/code&gt;라는 특수한 포인터가 있습니다. 이 포인터는 지금 작업하는 로컬 브랜치를 가리킵니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 445px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 69.6969696969697%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAIAAACgpqunAAAACXBIWXMAABcSAAAXEgFnn9JSAAABoElEQVQoz5VS207bQBD110FFeQRaLhL9BypB/wdBJARJFHAuBEiLQ2I7jnEIWFChXAjZTdbeteP1xmmDy0JUqVVe4tHR6Gg058xoZ4U/s8V4POY5FostLH7c/raz+WXz0+pnIZJ4b39v7sP81tettY31pZXlWcVhGPIMAFBUJZVKSUXJqBmziv+1ME2TMcZJtMnNVlOuKFLpStU1WZWjiVvtVsWoFiSpemNouhZN7FMf29i8MyGAxMaCPbAsz8KM2J7N8RK+8KbgV4AGCPuYA7mIjYYTCy/w6G9a1ssAAzdwhbyby5FMsh3P4nQandw37gMv0J91kRyL8A0ZV5QaEu5jgkmhe5EhJ8mnOO88o3mhQM9Oncx+fVfsH3OX+kPdQU6lXcl56UTz8PDnQd7PXj7+gB0IAOTirCPGHw8SraPvw3MBEggdiCjquT3OJ2uzEetiwDdHHnrGXTqkk7WJ75ChU9SKHatjUVuYfphJTBffTBlzHde8Nfuwx4kQ/h/TLu/V8O+p2lVDLynydb2m6dVop2o0G2VV5p9E0dSSXH4FbIoEsabzy4wAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;branch-head&quot;
+        title=&quot;branch-head&quot;
+        src=&quot;/static/4f266a923910c726a2cd6d60daca038c/a6969/branch-head.png&quot;
+        srcset=&quot;/static/4f266a923910c726a2cd6d60daca038c/103f2/branch-head.png 165w,
+/static/4f266a923910c726a2cd6d60daca038c/748ba/branch-head.png 330w,
+/static/4f266a923910c726a2cd6d60daca038c/a6969/branch-head.png 445w&quot;
+        sizes=&quot;(max-width: 445px) 100vw, 445px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;즉, &lt;code class=&quot;language-text&quot;&gt;git branch&lt;/code&gt; 명령어는 브랜치를 생성만 할 뿐이지 작업하는 브랜치를 바꾸진 않습니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout testing&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어를 실행하면 &lt;code class=&quot;language-text&quot;&gt;HEAD&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;testing&lt;/code&gt; 브랜치를 가리킵니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 392px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 78.7878787878788%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAIAAACZeshMAAAACXBIWXMAABcSAAAXEgFnn9JSAAAB3UlEQVQoz5VSW3OTUBDm/6lPTqfVmUbtk+kPsP/HPjhIJpWWEGNCUzvTpja3Bg6XAoKQhIQQrkEJWIhYxoy3h3BmZ2dn9/t29+wutNrgJUmSat/3aY7pU+T5xQVgmU63A21O9jyP5bkeOag3T2mea3fbUJKG1nIPytD/+sPlEjAgLd696QGWHpA3f1eO43id4ndn5s9CZJ8MgzA1INEQJUeSHVkwBcVUMrTmTPg5L7uybMu3+u0iWGQpJFMWLbHeqfMG/3kuQe9NvDwqweKbinlcGWIURema/kGu4e4JIsPouIw56NngTFM1QRarOpbCEAmuWlhJRaCaUUWHZYSHK8ZxbVhVviiu5TaVU9w8KYlvUfUIm6Ntoe2ajqoNa1Mc01FEgPEZdqSWIc2eTL2pvtA1RzM8I2vb9u2xPdYX0zQ0ssbLaPlziqtk5s0m3oRoESNrlNr5BnYXfU/uEpqiv/lfkzj+c1WrX6ta/WdVQRCQgBwA8ur6U6o7vVxH4roUR7f73eb5xz4gW9dXG5GzF4Uhy7GpXLYuGZahaZCDvG4BABCG90eSo3IUEQRRwfHXh4fvULTRaOT4s+u6O0+fPN7aenVwsL2z/eDRw3zk4n5x91nh5X7x+d6L3ULhB7K4bvTj1CTRAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;checkout-head&quot;
+        title=&quot;checkout-head&quot;
+        src=&quot;/static/b7322e69d514afa9543bc7a20ca8da63/c4bf7/checkout-head.png&quot;
+        srcset=&quot;/static/b7322e69d514afa9543bc7a20ca8da63/103f2/checkout-head.png 165w,
+/static/b7322e69d514afa9543bc7a20ca8da63/748ba/checkout-head.png 330w,
+/static/b7322e69d514afa9543bc7a20ca8da63/c4bf7/checkout-head.png 392w&quot;
+        sizes=&quot;(max-width: 392px) 100vw, 392px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;커밋을 새로 해보겠습니다!&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;vim&lt;/span&gt; test.rb
+$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; test.rb
+$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; commit -m &lt;span class=&quot;token string&quot;&gt;&apos;made a change&apos;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 500px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 57.57575757575757%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAABcSAAAXEgFnn9JSAAABgUlEQVQoz5VSy07CQBSdXxP+QPYE/QDc4TcIoWKUjS40ceHKRONGA7S1PI285VHb8qyCtKUtlRJApnWQR5DERE4mN/eenDNzczLA/AOGYaBardfIaJiIUKh2BGHJzwAMNP6cuWcxzkQNvhF5TuBRKpZ6EkQRMdCASw1YPGT+aox5Y0ygIshsmR3rYziBa0qAd6mQREak+Gg4kvRuSCQJiQp2CVpmzC+zpjUexNBN5Y6Qw23tw4RmUsoEJAIXHkklDLy876COnckXuUw+08z6JL+7gvlU/zV7y5f5AI9jyrGHO8Skk0AhJDaFy/crb+fIzWGno3NQ1l5LPZpRObSGPtaLSpnWmIJa6ujTeMRB90UpTRmlpA0/EfM2aKc7WZKhuEENrMa7miTqIYRr+SP0tX6Lb9FFWpN7wFhgVbF2yyqZymcCFH5PBBPZJDA3RLVWTeey0XiMZpmNzQiqonIsO/0k//fM1nZ73I7dHeee0+6wb2Ce5efad21Zrds2m8Vq+QYW9JNtTcpzJwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;commit-a&quot;
+        title=&quot;commit-a&quot;
+        src=&quot;/static/11a53fb1239201b90cd119d297ef0962/0eb09/commit-a.png&quot;
+        srcset=&quot;/static/11a53fb1239201b90cd119d297ef0962/103f2/commit-a.png 165w,
+/static/11a53fb1239201b90cd119d297ef0962/748ba/commit-a.png 330w,
+/static/11a53fb1239201b90cd119d297ef0962/0eb09/commit-a.png 500w&quot;
+        sizes=&quot;(max-width: 500px) 100vw, 500px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;새로 커밋해서 &lt;code class=&quot;language-text&quot;&gt;testing&lt;/code&gt; 브랜치는 앞으로 이동했습니다. 하지만 &lt;code class=&quot;language-text&quot;&gt;master&lt;/code&gt; 브랜치는 여전히 이전 커밋을 가리킵니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout master&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 500px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 57.57575757575757%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAABcSAAAXEgFnn9JSAAABi0lEQVQoz41S207CQBDt/2EI8SfwBX9F0IrxgQcSjTExXgoKCQUhgEQCFORuuZQWbIFy6Q0M0q5buYoheDbZzJyZs7M7swjYAlVV4Y5hmGHPYD4wG43GVCq15GdAdohdmNFkshxaTPumFPFv8QzT6ZRjuTRBKLIC7Y3oVrEGFwB8j8+XivFk4r1CiqKo85q2EmsLzDVrgG6lVsUjIY/f54+EWI7Vr62py4RV5fUjFhU0WZLpBlPIF9tcZ6SMNivXxUZNpGiBgc7467M2pCiJrg5r/dEAMtJELvNktBRjlNZooos5qV0d1usiBTMRG3t69HHi6DuzmVyazqC9MyuDovL5LYk1S02ceT4W7NYGauvZ8VyAZ7qXrevjvt1Ko46JE3FznvuWC+8Gx8q4I3ddnAdrPj203W+9PJiA8oCEts6wj4zQBCqI8fEb+u6icOUTAsiyuZsG+M2s8XBsNEXrb1bh2GELF0EVaHPmpzHawl0y2WIu/BoNvoSTWWLHJ/mLBJH0BnxunzcSj30DyFuTNsRNMdcAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;checkout-b&quot;
+        title=&quot;checkout-b&quot;
+        src=&quot;/static/700b416ee1a5d5c542c10aebcabf198e/0eb09/checkoout-b.png&quot;
+        srcset=&quot;/static/700b416ee1a5d5c542c10aebcabf198e/103f2/checkoout-b.png 165w,
+/static/700b416ee1a5d5c542c10aebcabf198e/748ba/checkoout-b.png 330w,
+/static/700b416ee1a5d5c542c10aebcabf198e/0eb09/checkoout-b.png 500w&quot;
+        sizes=&quot;(max-width: 500px) 100vw, 500px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;위의 명령어는 master 브랜치가 가리키는 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt;을 &lt;code class=&quot;language-text&quot;&gt;HEAD&lt;/code&gt;가 가리키게 하고 &lt;code class=&quot;language-text&quot;&gt;working directory&lt;/code&gt;의 파일도 그 시점으로 되돌려 놓았습니다.&lt;/p&gt;
+&lt;p&gt;앞으로 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt;을 하게되면 다른 브랜치의 작업들과 별개로 진행되기 때문에 &lt;code class=&quot;language-text&quot;&gt;testing&lt;/code&gt; 브랜치에서 작업하고 있었다면 &lt;code class=&quot;language-text&quot;&gt;add&lt;/code&gt;로 &lt;code class=&quot;language-text&quot;&gt;stage&lt;/code&gt;에 올려놓고 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt;을 하고 다른 브랜치로 이동하여 다른 일을 진행 할 수도 있습니다.&lt;/p&gt;
+&lt;h2 id=&quot;branch와-merge의-기초&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#branch%EC%99%80-merge%EC%9D%98-%EA%B8%B0%EC%B4%88&quot; aria-label=&quot;branch와 merge의 기초 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;branch와 merge의 기초&lt;/h2&gt;
+&lt;p&gt;보통 브랜치와 &lt;code class=&quot;language-text&quot;&gt;merge&lt;/code&gt;는 아래와 같이 진행합니다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;새로운 이슈를 처리할 새 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;를 만든다.&lt;/li&gt;
+&lt;li&gt;새로 만든 &lt;code class=&quot;language-text&quot;&gt;branch&lt;/code&gt;에서 작업을 진행한다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;하지만 이와는 별개로 중요한 문제가 생겨서 그것을 해결하는 &lt;code class=&quot;language-text&quot;&gt;hotfit&lt;/code&gt;를 먼저 만들어야합니다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;새로운 이슈를 처리하기 이전의 운영 브랜치로 이동한다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;hotfix&lt;/code&gt; 브랜치를 하나 생성한다.&lt;/li&gt;
+&lt;li&gt;수정한 &lt;code class=&quot;language-text&quot;&gt;hotfix&lt;/code&gt; 를 운영 브랜치로 &lt;code class=&quot;language-text&quot;&gt;merge&lt;/code&gt; 한다.&lt;/li&gt;
+&lt;li&gt;다시 작업하던 브랜치로 이동하여 일을 진행한다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;branch의-기초&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#branch%EC%9D%98-%EA%B8%B0%EC%B4%88&quot; aria-label=&quot;branch의 기초 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;branch의 기초&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 229px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 50.303030303030305%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAIAAAA7N+mxAAAACXBIWXMAABcSAAAXEgFnn9JSAAABUklEQVQoz42OW2+CQBCF+f8/yWgAUS5yUWC5icttYdOQthQRtQhrVzG+9IVJZnLmy545y9wnVN/3QRDACMZJnKS04yiOHNdhppi7rkMInS9tUeTUnOXocr0glE0107T6WOMPXOCiwPh4amj4JPMwDNmzMMZhGKZpmud5kiQMIeT96K3/QzpvtxsVZVm2bUtXepF54J4MN6rJGELGGsjQ0yZ38oLPS/f5bN427XiOSVCiubodOZpnUD2mZXn2gBDQGaXxCxaIrpzKq44GE0gJIwFl+2mzvmCUtrBbxzCqvivRlo3SFA4SOPqCuYYHWFe1aMl6aYrxZvcFREfurh2jBJrX7Gfmwq78tSOtlqsCFYqvgtpn3WX4G4uuzHM8zrHiqeDHWwDObUL1oJ9PZ2bnmqwlyHuVB6uta44/tHybtZZSsOFswXC2IwSBM0IeCKqtU/IHSLIoBPVnu0gAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;branch-a&quot;
+        title=&quot;branch-a&quot;
+        src=&quot;/static/241660fcda4d72ed44ead7f16e5d75e0/d8247/branch-a.png&quot;
+        srcset=&quot;/static/241660fcda4d72ed44ead7f16e5d75e0/103f2/branch-a.png 165w,
+/static/241660fcda4d72ed44ead7f16e5d75e0/d8247/branch-a.png 229w&quot;
+        sizes=&quot;(max-width: 229px) 100vw, 229px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이렇게 진행되고 있는 프로젝트에서 issue-53번을 처리한다고 가정해봅시다.&lt;/p&gt;
+&lt;p&gt;그럼 이 이슈를 처리할 브랜치를 하나 만듭니다. 브랜치를 만들면서 &lt;code class=&quot;language-text&quot;&gt;checkout&lt;/code&gt;까지 함께하기 위해선 &lt;code class=&quot;language-text&quot;&gt;-b&lt;/code&gt; 옵션을 사용합니다!&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout -b issue_53&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 229px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 81.21212121212122%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAIAAACZeshMAAAACXBIWXMAABcSAAAXEgFnn9JSAAABxklEQVQoz41TWY+bMBDm//+Xat+qfWlX202AAFE24bDBYO47oSklFzGkk3V31fahYmSNxp/n84zmEG4ThDHmECeMwziOkySJ4yhOYoyxMIXc9z3QDscOOJR6QRQeT8cojqaSqU/3P/Z5mYNked7+bD3qTSKP4wgxQdIkJYTw5IMwEODhT6d/jA8b9DAMYFRVBSUY30S4jTfWM9Zfh56BDR78YbgCyEBz2v0L8Lyyx8+PXdvx7wQvoIqlbaih4qUXeDyaH/oArj0dNPFdDgZRANdvq/nCUh3qACLIprJurCf08ro1Z2vRwfau3krGYlXrM1e0OjLbiNhCza6RdACNuSuDv2Qpl/NFUGzNau0v+pP+HYuGrCpqmZcK1vQ9fsYvzplK1kKW5KqoFKQZe/TVfDZbopLl6XASDMecW/KSvop4YdgmzxC5+A56qzmSddvgIHZtABVHA3CNN/e0oRiH7sAP1IPXhoNHDrLfIBhwffj0UJf1e7X/7uf/uw26rmuYGY5MGhKQpmmyLIMmu66bpmlRFGVZTiJD2jCMRQmMIi9gPLN6t4VVESZuFcwjLAOQfUrTLDtfzjCwUyMTl0Rvm8hPmqUIoV9BJYSXozElzQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;checkout-a&quot;
+        title=&quot;checkout-a&quot;
+        src=&quot;/static/410d05a3199d3a27038679e6bf317137/d8247/checkout-a.png&quot;
+        srcset=&quot;/static/410d05a3199d3a27038679e6bf317137/103f2/checkout-a.png 165w,
+/static/410d05a3199d3a27038679e6bf317137/d8247/checkout-a.png 229w&quot;
+        sizes=&quot;(max-width: 229px) 100vw, 229px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이렇게 &lt;code class=&quot;language-text&quot;&gt;HEAD&lt;/code&gt;까지 생성된 브랜치인 &lt;code class=&quot;language-text&quot;&gt;issue-53&lt;/code&gt;으로 이동했으면 이슈를 처리해보겠습니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;vim&lt;/span&gt; index.html
+$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; index.html
+$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; commit -m &lt;span class=&quot;token string&quot;&gt;&apos;[add] issue 53&apos;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;index.html&lt;/code&gt; 파일을 추가하고 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt;을 하면해당 브랜치가 앞으로 나아갑니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 309px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 60.60606060606061%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAABcSAAAXEgFnn9JSAAABZklEQVQoz5VSC0+DMBDm//8oH8kYTzHGPZRRCqUtDxnDBTPZKPpNkonLNPFyudy19/W7R7WPS9L3Pex2u41ZzAVnjIlUwD8cDuM07Q9wXddZkaWppBEt16UQfL/f/wCrXg06AGDhd6qDv9vtEp7IVIJTSAFHKXXKP2c+Xn09MebHoeBifPLNnL8UJAmhm3ozlBowAkXBCN/b92XwdKVfM5kAqLqOJlEoaMhC9K+5gTehpk5ta+YUMp/ThU4NW9xZvkuDkDBiJa4R21bk+b6P4qfEmoSGlXgYoeb43vE6cqxHp8zLGZlPI9uV9+bSYZSBAVdG7BiBQwhJs1RfmV72YEZOmqcaqhWZELlsmgZ1Nm8NQp6JalMhxHgRykIWZTH0D8zN5Ba0Xdf9OrDj2JU6298gp/lpw5IGGWeMNzf4oOKco22WMNSP5V/+JBelbVsg69cadl1V+DP/AKP/VbAC4bPvwy6Wi08HGaWuu+nHSAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;commit-b&quot;
+        title=&quot;commit-b&quot;
+        src=&quot;/static/650e3ec5fd31146a96a5dac591a83192/e489c/commit-b.png&quot;
+        srcset=&quot;/static/650e3ec5fd31146a96a5dac591a83192/103f2/commit-b.png 165w,
+/static/650e3ec5fd31146a96a5dac591a83192/e489c/commit-b.png 309w&quot;
+        sizes=&quot;(max-width: 309px) 100vw, 309px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;하지만 이렇게 쉽게 브랜치를 이동하고 사용하려면 주의해야할 점이 있습니다.&lt;/p&gt;
+&lt;p&gt;아직 커밋하지 않은 파일이 &lt;code class=&quot;language-text&quot;&gt;checkout&lt;/code&gt; 할 브랜치와 충돌나면 브랜치를 변경할 수 없습니다. 즉, 브랜치를 변경할 떄는 &lt;code class=&quot;language-text&quot;&gt;working directory&lt;/code&gt;를 정리하는 것이 좋습니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;master&lt;/code&gt; 브랜치로 이동해서 &lt;code class=&quot;language-text&quot;&gt;issue_53&lt;/code&gt; 브랜치를 Merge 해보겠습니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; checkout master
+$ &lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; merge issue_53&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 39.3939393939394%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAABYlAAAWJQFJUiTwAAABVklEQVQoz5WRXWsUMRSGM5uZzbTJzORrvnaUshShtrIXS/1BCqKgoOK1Fyr93Y/JlFYWi+DFQ8Ihec95zyuclbg4U01fqcZPqOUL2/iZ6uYt6qOm+CAQbxLvBepCYZTBtIYQAm3b4p2nqiqEEPf0vaMfZvx0SxMO2OGI7Y+Y+SXxNlK+KCn2BeJKILWklCXb7XZFSrmKFUVxKtjZQJyPdPEV2l1h4wEzXhIOaYrrhvayRZeaPvTEPhJjRGvNZrP5I/SAsxtav0Pu7lDPf1Jf3FENv6hff+Psu6H6IRHvBE3X0HUdIQaapsE5t5InPRFclmfJ8sQ0Tex2S7oPnJ9rfHCM04A6q/+e4l9479OCPf1qJTxt438w5j4xay3DMCbhHqVSmqmeU8z2MnVdr3vLNvPbfObaSSAPgtluFp3neWW/368flmVJTQbGcVzTzKmWZfnIU25+A68Ou1niGCU0AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;merge_a&quot;
+        title=&quot;merge_a&quot;
+        src=&quot;/static/bca4393015a15f74c2f161e1eaeff30d/7c811/merge_a.png&quot;
+        srcset=&quot;/static/bca4393015a15f74c2f161e1eaeff30d/103f2/merge_a.png 165w,
+/static/bca4393015a15f74c2f161e1eaeff30d/748ba/merge_a.png 330w,
+/static/bca4393015a15f74c2f161e1eaeff30d/7c811/merge_a.png 660w,
+/static/bca4393015a15f74c2f161e1eaeff30d/b400b/merge_a.png 988w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Merge&lt;/code&gt; 메시지에서 &lt;code class=&quot;language-text&quot;&gt;fast-forward&lt;/code&gt;가 보일 것입니다. &lt;/p&gt;
+&lt;p&gt;이 단어의 의미는 &lt;code class=&quot;language-text&quot;&gt;A브랜치&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;B브랜치&lt;/code&gt;로 &lt;code class=&quot;language-text&quot;&gt;merge&lt;/code&gt;할 때 &lt;code class=&quot;language-text&quot;&gt;b브랜치&lt;/code&gt;가 &lt;code class=&quot;language-text&quot;&gt;a브랜치&lt;/code&gt; 이후의 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt;을 가리키고 있으면 그저 &lt;code class=&quot;language-text&quot;&gt;A브랜치&lt;/code&gt;가 &lt;code class=&quot;language-text&quot;&gt;B브랜치&lt;/code&gt;와 동일한 커밋을 가리키도록 이동시킨다라는 뜻입니다.&lt;/p&gt;
+&lt;p&gt;이렇게 하면 각 브랜치간의 영향을 끼치지 않는다는 것을 이해하셔야합니다.&lt;/p&gt;
+&lt;p&gt;예를 들어 &lt;code class=&quot;language-text&quot;&gt;issue_53&lt;/code&gt; 브랜치에서 작업을 하던 중 &lt;code class=&quot;language-text&quot;&gt;master&lt;/code&gt; 브랜치에 오류가 생겨 &lt;code class=&quot;language-text&quot;&gt;hotfix&lt;/code&gt; 브랜치를 &lt;code class=&quot;language-text&quot;&gt;master&lt;/code&gt;에서 만들어서 작업 후 &lt;code class=&quot;language-text&quot;&gt;master&lt;/code&gt;에 &lt;code class=&quot;language-text&quot;&gt;merge&lt;/code&gt; 하게 되어도 &lt;code class=&quot;language-text&quot;&gt;issue_53&lt;/code&gt; 브랜치에는 영향이 없다는 것입니다.&lt;/p&gt;
+&lt;p&gt;그 대신 &lt;code class=&quot;language-text&quot;&gt;git merge master&lt;/code&gt; 명령으로 &lt;code class=&quot;language-text&quot;&gt;master&lt;/code&gt; 브랜치를 &lt;code class=&quot;language-text&quot;&gt;issue_53&lt;/code&gt; 브랜치에 &lt;code class=&quot;language-text&quot;&gt;merge&lt;/code&gt;하면 &lt;code class=&quot;language-text&quot;&gt;issue_53&lt;/code&gt; 브랜치에 &lt;code class=&quot;language-text&quot;&gt;hotfix&lt;/code&gt;가 적용됩니다.&lt;/p&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[👾 git 완벽 정복 - remote 저장소]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/git_remote</link><guid isPermaLink="false">https://leehosu.github.io/git_remote</guid><category><![CDATA[git]]></category><category><![CDATA[github]]></category><pubDate>Sun, 09 May 2021 10:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
 &lt;p&gt;다른 사람들과 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;을 사용해서 성공적인 협업을 하려면 &lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소를 관리할 줄 알아야 합니다.&lt;/p&gt;
 &lt;p&gt;여기서 말하는 &lt;code class=&quot;language-text&quot;&gt;remote&lt;/code&gt; 저장소란 인터넷이나 네트워크 어딘가에 있는 저장소를 말합니다.
 어떤 저장소는 읽기만 가능 할 수 있고, 어떤 저장소는 읽기와 쓰기가 모두 가능 할 수 있습니다.&lt;/p&gt;
