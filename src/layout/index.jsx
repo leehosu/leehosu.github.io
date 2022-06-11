@@ -14,6 +14,7 @@ const MainLayout = ({ children, hasFooter = true }) => (
     <Helmet htmlAttributes={{ lang: siteConfig.siteLang }}>
       <meta name="description" content={siteConfig.siteDescription} />
       <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2038621379918916" crossorigin="anonymous"></script>
     </Helmet>
     <Navigation 
       brand={brand}
