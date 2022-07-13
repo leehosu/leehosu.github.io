@@ -35,7 +35,7 @@ const Post = ({ postNode, config, slug }) => {
       <GoogleAdvertise
         client="ca-pub-2038621379918916"
         slot="7085564120"
-        format="fluid"
+        format="auto"
         responsive="true"
         layoutKey="-fz+6a+19-cg+hh"
       />
@@ -46,7 +46,7 @@ const Post = ({ postNode, config, slug }) => {
       <GoogleAdvertise
         client="ca-pub-2038621379918916"
         slot="7085564120"
-        format="fluid"
+        format="auto"
         responsive="true"
         layoutKey="-fz+6a+19-cg+hh"
       />

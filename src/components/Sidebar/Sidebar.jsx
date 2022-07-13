@@ -30,17 +30,13 @@ const Sidebar = ({ tagList, categoryList, latestPostEdges, links }) => {
           <WidgetLinks links={links} />
         </div>
       )}
-
-
-    <GoogleAdvertise
-            client="ca-pub-2038621379918916"
-            slot="7576233308"
-            format="fluid"
-            responsive="true"
-            layoutKey="-fz+6a+19-cg+hh"
-          />
-
-
+      <GoogleAdvertise
+        client="ca-pub-2038621379918916"
+        slot="7576233308"
+        format="auto"
+        responsive="true"
+        layoutKey="-fz+6a+19-cg+hh"
+      />
     </aside>
   );
 };
