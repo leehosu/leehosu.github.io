@@ -2,7 +2,7 @@
 template: "post"
 title: "AWS VPC이란?"
 date: "2022-07-13 17:10"
-slug: "devops"
+slug: "AWS_VPC"
 keywords: "devops"
 cover : './cover.png'
 categories: 
