@@ -1,6 +1,6 @@
 ---
 template: "post"
-title: "Jenkins를 이용한 SSH 통신을 통해 AWS EC2 서버 배포 파이프라인 구성하기"
+title: "🏗️ Jenkins를 이용한 SSH 통신을 통해 AWS EC2 서버 배포 파이프라인 구성하기"
 date: "2022-07-15 16:30"
 slug: "JENKINS_SSH"
 keywords: "devops"
