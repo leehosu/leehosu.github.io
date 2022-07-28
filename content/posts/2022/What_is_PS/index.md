@@ -1,6 +1,6 @@
 ---
 template: "post"
-title: " PS의 모든 것"
+title: "🗿 PS의 기본"
 date: "2022-07-28 12:10"
 slug: "WHAT_IS_PS"
 keywords: "devops"
