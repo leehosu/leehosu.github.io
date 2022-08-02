@@ -16,10 +16,10 @@
 <url> <loc>https://leehosu.github.io/review2020</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/about</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/devops</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/tag/aws</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/linux</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/ubuntu</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/gitlab</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://leehosu.github.io/tag/aws</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/jenkins</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/config</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/terminal</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -39,9 +39,9 @@
 <url> <loc>https://leehosu.github.io/tag/jsp</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/db</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/devops</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/category/aws</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/linux</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/ubuntu</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://leehosu.github.io/category/aws</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/config</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/git</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/java</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
