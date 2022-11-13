@@ -2,7 +2,7 @@
 template: "post"
 title: " 🧵 AWS Console 에서 보여주는 메시지 AWS cli에서 Decode 하기 ! "
 date: "2022-08-02 12:30"
-slug: "AWS_VPC"
+slug: "AWS_CLI_DECODE"
 keywords: "devops"
 cover : './cover.png'
 categories: 
