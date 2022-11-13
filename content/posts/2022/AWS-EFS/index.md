@@ -71,7 +71,7 @@ tags:
 
 그 후 헤딩 파일 시스템과 연동할 서버에 접속하여 폴더를 생성 한 후 `Access Poin`t 를 `mount` 합니다.
 
-```
+``` bash
 sudo mount -t efs -o tls,accesspoint=${ACCESSPOINT_ID} ${EFS_ID}:/ /${PATH}
 ```
 
@@ -79,7 +79,7 @@ sudo mount -t efs -o tls,accesspoint=${ACCESSPOINT_ID} ${EFS_ID}:/ /${PATH}
 
 먼저 `AWS-CSI-Driver`를 설치합니다.
 
-```
+``` bash
 helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
 helm repo update
 helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
@@ -90,14 +90,12 @@ helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
 
 ```
 
-
-
 ### POD 생성하기
 
 > ${} 부분은 직접 작성 해야하는 부분입니다.
 
 #### storageClass
-```
+``` bash
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
@@ -112,7 +110,7 @@ provisioner: efs.csi.aws.com
 
 
 #### PersistentVolume
-```
+```bash
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -142,7 +140,8 @@ spec:
 
 
 #### PersistentVolumeClaim
-```
+
+```bash
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -167,7 +166,7 @@ spec:
 
 #### POD
 
-```
+```bash
 ...
     spec:
       affinity:
