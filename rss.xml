@@ -1,4 +1,276 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sun, 13 Nov 2022 06:45:01 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[ 🧵 AWS Console 에서 보여주는 메시지 AWS cli에서 Decode 하기 ! ]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/aws_cli_decode</link><guid isPermaLink="false">https://leehosu.github.io/aws_cli_decode</guid><category><![CDATA[Devops]]></category><category><![CDATA[AWS]]></category><pubDate>Tue, 02 Aug 2022 03:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sun, 13 Nov 2022 08:08:29 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[📁 AWS EFS를 사용하여 POD Storage 구성하기]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/aws_efs</link><guid isPermaLink="false">https://leehosu.github.io/aws_efs</guid><category><![CDATA[Devops]]></category><category><![CDATA[AWS]]></category><category><![CDATA[Kubernetes]]></category><category><![CDATA[K8s]]></category><category><![CDATA[Storage]]></category><category><![CDATA[EKS]]></category><pubDate>Sun, 13 Nov 2022 07:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+&lt;p&gt;사내에서 &lt;code class=&quot;language-text&quot;&gt;POD&lt;/code&gt;를 생성할 때에 &lt;code class=&quot;language-text&quot;&gt;EFK Stack&lt;/code&gt;으로 구성하기전, &lt;code class=&quot;language-text&quot;&gt;POD&lt;/code&gt;별로 &lt;code class=&quot;language-text&quot;&gt;log&lt;/code&gt;를 저장해야할 이슈가 있었습니다. (물론 파드는 &lt;code class=&quot;language-text&quot;&gt;stateless&lt;/code&gt;하게 관리되어야하지만 어떤 이유 때문에 &lt;code class=&quot;language-text&quot;&gt;Stateful&lt;/code&gt;하게 관리가 되었었습니다 ㅎㅎ,,,)&lt;/p&gt;
+&lt;p&gt;그래서 &lt;code class=&quot;language-text&quot;&gt;Deployment&lt;/code&gt;나 &lt;code class=&quot;language-text&quot;&gt;Replicaset&lt;/code&gt;으로 &lt;code class=&quot;language-text&quot;&gt;POD&lt;/code&gt;를 띄우는 것이 아닌 &lt;code class=&quot;language-text&quot;&gt;Statefule&lt;/code&gt;로 &lt;code class=&quot;language-text&quot;&gt;POD&lt;/code&gt;를 띄우게 되었었는데, 그때 공유 스토리지 볼륨이 필요하였었습니다. 여러 자료를 찾던 중 &lt;code class=&quot;language-text&quot;&gt;AWS&lt;/code&gt;에서 제공되는 서비스인 &lt;code class=&quot;language-text&quot;&gt;EBS(Elastic Block Store)&lt;/code&gt;와 &lt;code class=&quot;language-text&quot;&gt;EFS(Elastic File System)&lt;/code&gt; 사이에 고민을 하였었고, 결국 여러 가용영역을 지원하는 &lt;code class=&quot;language-text&quot;&gt;EFS&lt;/code&gt;를 선택하게 되었습니다.&lt;/p&gt;
+&lt;h2 id=&quot;volum&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#volum&quot; aria-label=&quot;volum permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Volum&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.36363636363636%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAIAAADwazoUAAAACXBIWXMAAAsTAAALEwEAmpwYAAABwklEQVQoz2WQzW7TQBSF/UrwAqA+CCz7DLCCTbfwCt2UrlDSiAVITlS1G4SKXAv5J7GpZ1LbcmI7tSWP65+Z4cxY7YajWZx753z3emwMXO5JEZkzd3GaWHbDpJRiGGRE5W/rYN1WEZEo0WxaiYAzP43MrztSADQ6Icvbn/Hn1/aHF+XFSd2oXN9Lby3XgTowKNGsmTwsTv58fHn/6RWQRyGNUUjq7+fv354dH91cfGMqx5EG5voCB0bDvO3lr9niy/HR7N0bus5HbB5HHtyJ1Y9wdn59eRnj27Ck05tdXx2YTm/Gi66u0vn59ep7AASggvc5j9MxzQbXyxnjaguXSTrQ7SOhLQxXPdky7vt5mvVJCkTDQgjGGkJCSu7S5L7vO84FoodDSUmE8/BQ6nH4EX2axIgR8rdlDUADF3VVOY7rOg6ldBiGXj9xl2We5/mel2UZykFru926KuhWVYWmwbXGcWSMTRguiqLI83y/U4JDOaX7rmvbVmiBUrB8EmBMiePYsizTNJfL5UrLtm00p+WAMbcsS3j8sHEaMwkjcBFFURiGm80mCAIYlGhOC/AJeEhd1woWT5rgycv/9Jx5voX5BzS9W1f/U5emAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;pv&quot;
+        title=&quot;pv&quot;
+        src=&quot;/static/533a589281337f8851cf4b9d69cd5252/7c811/pv.png&quot;
+        srcset=&quot;/static/533a589281337f8851cf4b9d69cd5252/103f2/pv.png 165w,
+/static/533a589281337f8851cf4b9d69cd5252/748ba/pv.png 330w,
+/static/533a589281337f8851cf4b9d69cd5252/7c811/pv.png 660w,
+/static/533a589281337f8851cf4b9d69cd5252/d28e0/pv.png 990w,
+/static/533a589281337f8851cf4b9d69cd5252/bb51b/pv.png 1320w,
+/static/533a589281337f8851cf4b9d69cd5252/42cbc/pv.png 1600w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;kubernetes&lt;/code&gt;에는 데이터를 저장하는 &lt;code class=&quot;language-text&quot;&gt;Storage&lt;/code&gt; 즉, &lt;code class=&quot;language-text&quot;&gt;Volume&lt;/code&gt;을 제공합니다. &lt;code class=&quot;language-text&quot;&gt;Container&lt;/code&gt; 단위가 아니라 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt; 단위이기 때문에 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;에 속해 있는 여러개의 컨테이너가 공유해서 사용할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;여러 볼륨의 종류가 있지만 해당 포스트에서는 &lt;code class=&quot;language-text&quot;&gt;PersistentVolume&lt;/code&gt;에 대해서 다룰려고 합니다.&lt;/p&gt;
+&lt;h2 id=&quot;persistentvolume&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#persistentvolume&quot; aria-label=&quot;persistentvolume permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;PersistentVolume&lt;/h2&gt;
+&lt;h3 id=&quot;pv&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#pv&quot; aria-label=&quot;pv permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;PV&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;PV(PersistenetVolume)&lt;/code&gt;이란 &lt;code class=&quot;language-text&quot;&gt;Kubernetes&lt;/code&gt;에서 관리되는 저장소로 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;와는 다른 수명 주기로 관리됩니다. &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;가 재실행 되더라도, &lt;code class=&quot;language-text&quot;&gt;PV&lt;/code&gt;의 데이터는 정책에 따라 유지/삭제가 됩니다.&lt;/p&gt;
+&lt;h3 id=&quot;pvc&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#pvc&quot; aria-label=&quot;pvc permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;PVC&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;PVC(Persistent Volume Claim)&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;PV&lt;/code&gt;를 추상화하여 개발자가 손쉽게 PV를 사용 가능하게 만들어주는 기능입니다. 개발자는 사용에 필요한 &lt;code class=&quot;language-text&quot;&gt;Volume&lt;/code&gt;의 크기, &lt;code class=&quot;language-text&quot;&gt;Volume&lt;/code&gt;의 정책을 선택하고 요청만 하면 됩니다. 운영자는 개발자의 요청에 맞게 &lt;code class=&quot;language-text&quot;&gt;PV&lt;/code&gt; 를 생성하게 되고, &lt;code class=&quot;language-text&quot;&gt;PVC&lt;/code&gt;는 해당 &lt;code class=&quot;language-text&quot;&gt;PV&lt;/code&gt;를 가져가게 됩니다.
+또한, &lt;code class=&quot;language-text&quot;&gt;PVC&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;Namespace Object&lt;/code&gt;이기 때문에 &lt;code class=&quot;language-text&quot;&gt;Namespace&lt;/code&gt;에 &lt;code class=&quot;language-text&quot;&gt;depedency&lt;/code&gt;가 걸리게 됩니다.&lt;/p&gt;
+&lt;h2 id=&quot;aws-efs&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#aws-efs&quot; aria-label=&quot;aws efs permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;AWS EFS&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;AWS EFS(Amazon Elastic File System)&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;AWSAmazon Web Service&lt;/code&gt;에서 제공하는 매니지드 &lt;code class=&quot;language-text&quot;&gt;NFS&lt;/code&gt; 서버입니다. &lt;code class=&quot;language-text&quot;&gt;NFS&lt;/code&gt;는 여러 서버에서 동시에 같은 파일을 공유할 때 편리하게 사용할 수 있지만, 관리가 어렵다는 단점이 있습니다. 아마존 &lt;code class=&quot;language-text&quot;&gt;EFS&lt;/code&gt;를 사용하면 좀 더 쉽게 &lt;code class=&quot;language-text&quot;&gt;NFS&lt;/code&gt;로 서버들 간에 파일을 공유할 수 있습니다. &lt;code class=&quot;language-text&quot;&gt;Kubernetes&lt;/code&gt;와 같은 분산 환경에서도 같은 용도의 서버들 간에 공유 스토리지로 &lt;code class=&quot;language-text&quot;&gt;EFS&lt;/code&gt;를 사용할 수 있습니다. &lt;/p&gt;
+&lt;h2 id=&quot;설정하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0&quot; aria-label=&quot;설정하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;설정하기&lt;/h2&gt;
+&lt;h3 id=&quot;create-a-aws-efs&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#create-a-aws-efs&quot; aria-label=&quot;create a aws efs permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Create a AWS EFS&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;AWS console&lt;/code&gt;에 접속하여 &lt;code class=&quot;language-text&quot;&gt;AWS EFS&lt;/code&gt; 서비스에서 파일 시스템을 하나 생성합니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 38.78787878787879%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAAsTAAALEwEAmpwYAAABFklEQVQoz6VQyU7FMAzM/38gQk/A49q+lqbNvg6207IcOBHJcmYyHttR07phWjZo46CtH/kfoe73d7xRWOeQc6ZIZ85/4N9vhXIpeWQKFVNCoov1HikRWStyKXQfRoyZFwPhs+gZSy1FiFEw31UkoPUuhLUW0/zAvh+CjTGY50WE/Ma6RFOt6wduL6+C9+PA0/NNOK5RhbqyqWQqdDJpwsXvlpqV0Z2/hXkfAjUdQzjieIhAnBj23jFOR20d7YJ0ck1Y7ITSCmqpMg3ruZG1bmi4AQ0hDvSm8OMMw2/H0jI2v6D2KmJjLFprMuVlWOmPnfNfNYo/NJ4RzhDM6weH5XjQip5Witi0lnV5dU0rs46/iCdnPeNPcu1uWFLzSqEAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;AWS_EFS_SET&quot;
+        title=&quot;AWS_EFS_SET&quot;
+        src=&quot;/static/c739bdfa49b10af63756363e0a2b0088/7c811/AWS_EFS_SET.png&quot;
+        srcset=&quot;/static/c739bdfa49b10af63756363e0a2b0088/103f2/AWS_EFS_SET.png 165w,
+/static/c739bdfa49b10af63756363e0a2b0088/748ba/AWS_EFS_SET.png 330w,
+/static/c739bdfa49b10af63756363e0a2b0088/7c811/AWS_EFS_SET.png 660w,
+/static/c739bdfa49b10af63756363e0a2b0088/d28e0/AWS_EFS_SET.png 990w,
+/static/c739bdfa49b10af63756363e0a2b0088/bb51b/AWS_EFS_SET.png 1320w,
+/static/c739bdfa49b10af63756363e0a2b0088/3c7f1/AWS_EFS_SET.png 1904w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&quot;create-a-aws-efs-accesspoint&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#create-a-aws-efs-accesspoint&quot; aria-label=&quot;create a aws efs accesspoint permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Create a AWS EFS AccessPoint&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;POD&lt;/code&gt;별로 쌓는 데이터를 다 다르게 설정해야하니 &lt;code class=&quot;language-text&quot;&gt;Access Point&lt;/code&gt;를 설정합니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 44.242424242424235%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsTAAALEwEAmpwYAAABCUlEQVQoz4WR23KDMAxE/f+/19c+FCaEO8YYMBjDVhKhpTRNmTkISasd2ahGa2RFAW0MkjRFWdUo6xrxLcHtnqLI7kjf3yQmaYa8LAXTdWhp5orSbYssL8ioApuzkKkbjYZ6FdXzJKZYSn4MdtY+RWnd4iOKEMUx+mHAPM+CXxZ47/cYgsTlqBFfukd+oNhkdA7DOIqh7fd8Pg0xbppE49y094iJ6qI96ZSjAmNtj0CbLJdNGM5NZ+V+WXf02cDSMc96Mdy2DfxwfAa9MM4BYcUv3TVXfJT1D6PvoQ1m9HA+yPcrrRhu/xpCNvSPFV8a8qXy3YV1pXgQfrBSz4z0Y+YF23rpc36qfQJdzb2f/4dPhwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;AWS_EFS_AP&quot;
+        title=&quot;AWS_EFS_AP&quot;
+        src=&quot;/static/21ab03cfb0899081013e91b4a6aa4f4e/7c811/AWS_EFS_AP.png&quot;
+        srcset=&quot;/static/21ab03cfb0899081013e91b4a6aa4f4e/103f2/AWS_EFS_AP.png 165w,
+/static/21ab03cfb0899081013e91b4a6aa4f4e/748ba/AWS_EFS_AP.png 330w,
+/static/21ab03cfb0899081013e91b4a6aa4f4e/7c811/AWS_EFS_AP.png 660w,
+/static/21ab03cfb0899081013e91b4a6aa4f4e/d28e0/AWS_EFS_AP.png 990w,
+/static/21ab03cfb0899081013e91b4a6aa4f4e/bb51b/AWS_EFS_AP.png 1320w,
+/static/21ab03cfb0899081013e91b4a6aa4f4e/f11b4/AWS_EFS_AP.png 1982w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;저는 총 5가지의 &lt;code class=&quot;language-text&quot;&gt;Application&lt;/code&gt;이 있으며 각각 데이터를 따로 수집해야하기 때문에 &lt;code class=&quot;language-text&quot;&gt;AccessPoint&lt;/code&gt;를 5개 생성해두었습니다.&lt;/p&gt;
+&lt;h3 id=&quot;accesspoint-mount&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#accesspoint-mount&quot; aria-label=&quot;accesspoint mount permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;AccessPoint Mount&lt;/h3&gt;
+&lt;p&gt;그 후 헤딩 파일 시스템과 연동할 서버에 접속하여 폴더를 생성 한 후 &lt;code class=&quot;language-text&quot;&gt;Access Poin&lt;/code&gt;t 를 &lt;code class=&quot;language-text&quot;&gt;mount&lt;/code&gt; 합니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo mount -t efs -o tls,accesspoint=${ACCESSPOINT_ID} ${EFS_ID}:/ /${PATH}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;install--aws-csi-driver&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#install--aws-csi-driver&quot; aria-label=&quot;install  aws csi driver permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Install  AWS-CSI-Driver&lt;/h3&gt;
+&lt;p&gt;먼저 &lt;code class=&quot;language-text&quot;&gt;AWS-CSI-Driver&lt;/code&gt;를 설치합니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+helm repo update
+helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
+    --namespace kube-system \
+    --set image.repository=602401143452.dkr.ecr.ap-northeast-2.amazonaws.com/eks/aws-efs-csi-driver \
+    --set controller.serviceAccount.create=false \
+    --set controller.serviceAccount.name=efs-csi-controller-sa&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;pod-생성하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#pod-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0&quot; aria-label=&quot;pod 생성하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;POD 생성하기&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;${} 부분은 직접 작성 해야하는 부분입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&quot;storageclass&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#storageclass&quot; aria-label=&quot;storageclass permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;storageClass&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: ${STORAGECLASS_NAME}
+provisioner: efs.csi.aws.com&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 형식으로 &lt;code class=&quot;language-text&quot;&gt;yaml&lt;/code&gt;파일을 작성 한 후 적용합니다.&lt;/p&gt;
+&lt;h4 id=&quot;result&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#result&quot; aria-label=&quot;result permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;result&lt;/h4&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 10.303030303030305%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAACCAYAAABYBvyLAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAfklEQVQI1z3Muw4CIRSEYYLcYZeA7CVrIbG0sbLw/R/sF7ewOMnkzOQT69KY5oZ1iVoL+3GQt4jNkuOxElIYnaX3Ts4ZpRTe+7GtaK0xxpBSQkqJEAKxLpXr/sT4hRT9yBu3d6G9DPdPZS4T6qLZxz/GiHPuBH/ICYwLIfzBL5vmLjDbLpKqAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;StorageClass&quot;
+        title=&quot;StorageClass&quot;
+        src=&quot;/static/9441411828edb3822edda4f4995053d1/7c811/StoageClass.png&quot;
+        srcset=&quot;/static/9441411828edb3822edda4f4995053d1/103f2/StoageClass.png 165w,
+/static/9441411828edb3822edda4f4995053d1/748ba/StoageClass.png 330w,
+/static/9441411828edb3822edda4f4995053d1/7c811/StoageClass.png 660w,
+/static/9441411828edb3822edda4f4995053d1/d28e0/StoageClass.png 990w,
+/static/9441411828edb3822edda4f4995053d1/bb51b/StoageClass.png 1320w,
+/static/9441411828edb3822edda4f4995053d1/e39d5/StoageClass.png 1672w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&quot;persistentvolume-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#persistentvolume-1&quot; aria-label=&quot;persistentvolume 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;PersistentVolume&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: efs-pv-app
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ${STORAGECLASS_NAME}
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: ${ACCESSPOINT_ID}
+---
+...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;metadat&lt;/code&gt;e에 해당 &lt;code class=&quot;language-text&quot;&gt;PV&lt;/code&gt;의 이름을 작성해주시고, &lt;code class=&quot;language-text&quot;&gt;spec.storageClassName&lt;/code&gt;에 &lt;code class=&quot;language-text&quot;&gt;StorageClass&lt;/code&gt;의 이름을 작성합니다.
+그 후 &lt;code class=&quot;language-text&quot;&gt;spec.csi&lt;/code&gt;에 설정해두었던 &lt;code class=&quot;language-text&quot;&gt;AWS EFS Access Point&lt;/code&gt;에 대한 내용을 작성합니다.&lt;/p&gt;
+&lt;h4 id=&quot;result-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#result-1&quot; aria-label=&quot;result 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;result&lt;/h4&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 11.515151515151516%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAACCAYAAABYBvyLAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAaElEQVQI112NwQoCMQwF063bNA27TaV4EBH8/48csV7Ew8A7DPMkxhVJhohgR2U8nLg71QtzTkopRAQ55+X84u6LLW1oVdrekDlv7Nq/wW70pzJeRm2F8zhJSVbwP7Z8s3X42apKvmTep+crX+AmVNcAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;PV&quot;
+        title=&quot;PV&quot;
+        src=&quot;/static/7cbef27f41d40029db22977438440219/7c811/PersisteneVolume.png&quot;
+        srcset=&quot;/static/7cbef27f41d40029db22977438440219/103f2/PersisteneVolume.png 165w,
+/static/7cbef27f41d40029db22977438440219/748ba/PersisteneVolume.png 330w,
+/static/7cbef27f41d40029db22977438440219/7c811/PersisteneVolume.png 660w,
+/static/7cbef27f41d40029db22977438440219/d28e0/PersisteneVolume.png 990w,
+/static/7cbef27f41d40029db22977438440219/bb51b/PersisteneVolume.png 1320w,
+/static/7cbef27f41d40029db22977438440219/8077d/PersisteneVolume.png 2190w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&quot;persistentvolumeclaim&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#persistentvolumeclaim&quot; aria-label=&quot;persistentvolumeclaim permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;PersistentVolumeClaim&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: efs-pv-app
+  namespaces: ${APP_NAMESPACE}
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ${STORAGECLASS_NAME}
+  resources:
+    requests:
+      storage: 5Gi
+---
+...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;PV&lt;/code&gt;C는 생성해둔 &lt;code class=&quot;language-text&quot;&gt;PV&lt;/code&gt;와 매핑이 되어야합니다. 그렇기 때문에 이름을 같게 설정해두어야 자동으로 매핑되어 생성됩니다.&lt;/p&gt;
+&lt;h4 id=&quot;result-2&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#result-2&quot; aria-label=&quot;result 2 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;result&lt;/h4&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 13.333333333333334%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAADCAYAAACTWi8uAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlElEQVQI11WOvQ7DIBCDD7gUEISfUkDqkqFT177/u7lApKoZLPms8ycTbxa1NmhtQIIgNoJ2G/qzIueEfM8gop9ijDDGoJQCa+1Sa21l+77PH0LvI7Dmr3hDcR0pDmC+AlNKYOYxokJKOYbo5ZVSJ5DtMVY8wJKhvIB7jdJb4fhUxBDhvb8AnXMLNJfOe8JDCMtP4BdFBUJ5m87CKgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;PVC&quot;
+        title=&quot;PVC&quot;
+        src=&quot;/static/b1f31fa8ba9f1871597a4e1c9a7419d4/7c811/PersistentVolumeClaim.png&quot;
+        srcset=&quot;/static/b1f31fa8ba9f1871597a4e1c9a7419d4/103f2/PersistentVolumeClaim.png 165w,
+/static/b1f31fa8ba9f1871597a4e1c9a7419d4/748ba/PersistentVolumeClaim.png 330w,
+/static/b1f31fa8ba9f1871597a4e1c9a7419d4/7c811/PersistentVolumeClaim.png 660w,
+/static/b1f31fa8ba9f1871597a4e1c9a7419d4/d28e0/PersistentVolumeClaim.png 990w,
+/static/b1f31fa8ba9f1871597a4e1c9a7419d4/bb51b/PersistentVolumeClaim.png 1320w,
+/static/b1f31fa8ba9f1871597a4e1c9a7419d4/4e22f/PersistentVolumeClaim.png 1860w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&quot;pod&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#pod&quot; aria-label=&quot;pod permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;POD&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;...
+    spec:
+      affinity:
+        nodeAffinity:
+ ...
+        kubernetes.io/os: linux
+      volumes:
+      - name: data-path
+        persistentVolumeClaim:
+          claimName: efs-pv-app
+---
+...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;spec.containers.volumeMounts.claimName&lt;/code&gt;에 위에서 생성해두었던 &lt;code class=&quot;language-text&quot;&gt;pvc&lt;/code&gt; 명을 적어줍니다.&lt;/p&gt;
+&lt;h2 id=&quot;결과&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%B0%EA%B3%BC&quot; aria-label=&quot;결과 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;결과&lt;/h2&gt;
+&lt;p&gt;그 후 &lt;code class=&quot;language-text&quot;&gt;mount&lt;/code&gt; 했던 디렉토리로 이동하여 데이터들이 잘 쌓여있나 확인합니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 105.45454545454544%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB4klEQVQ4y43VV27EMAxF0em99173v0YFRwAdO+ME+SCskajLR1LSNDabTdrtdmm5XKbxeJym02kaDAap0WikTqeTx61WKzWbzYpZr7XtdpvYbDZL8/k8rdfrNBwO02QyyXBBjEejUTHHzzwTrAKMRZDz+Zyez2feeDqd0vF4TDK4XC45C+vX6zU9Ho9iXRYV4GKxKBRwuN/vWa0x5avVqgAeDocM5fMvICfRpQUGQKF5Y+D9fp/rLajMPupZBtoAaBMVIMBURbrmbrdbHvf7/c+mlIE2BTC+oZCBSNMas+cDSL4UAxj1oSJOABCLNV/2L+Dr9cqKu91u0WXzoVIgpQHUKMes3W5/A01E2jYARuQyUPp+Ww+grz2VTlNYrqENuidqdNm8cRwr6VMqCKsorEvZ7zh3gABRy6gzIB++f3Y5gNQEMNT8BJr7aEzdTQmFNqixOsV5FCRuibGb1Ov1stXeFMDydQtg3GUggaIE/M3z+xWorpzLwLLCAAoat8eeX4HmAhivTXSbQvOh0I2J9doaxpVydMo1BAk1wPF4UOYJLJrzU6H3MBbLr41gOuvLx1pRt7oue2BJf7/fGehZitrFjQCijk+o/nixRdFVXw4cpWvR17kUTBBvoHG88PHfU7YvdtD4taJnysgAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;RESULT&quot;
+        title=&quot;RESULT&quot;
+        src=&quot;/static/415a437672dc958c2d92a6825f97ee78/7c811/AWS_EFS_LOG.png&quot;
+        srcset=&quot;/static/415a437672dc958c2d92a6825f97ee78/103f2/AWS_EFS_LOG.png 165w,
+/static/415a437672dc958c2d92a6825f97ee78/748ba/AWS_EFS_LOG.png 330w,
+/static/415a437672dc958c2d92a6825f97ee78/7c811/AWS_EFS_LOG.png 660w,
+/static/415a437672dc958c2d92a6825f97ee78/d28e0/AWS_EFS_LOG.png 990w,
+/static/415a437672dc958c2d92a6825f97ee78/69dce/AWS_EFS_LOG.png 1194w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://bcho.tistory.com/1259&quot;&gt;https://bcho.tistory.com/1259&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://do-hansung.tistory.com/57&quot;&gt;https://do-hansung.tistory.com/57&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/ko/docs/concepts/storage/storage-classes/&quot;&gt;https://kubernetes.io/ko/docs/concepts/storage/storage-classes/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.44bits.io/ko/post/amazon-efs-on-kubernetes-by-using-efs-provisioner&quot;&gt;https://www.44bits.io/ko/post/amazon-efs-on-kubernetes-by-using-efs-provisioner&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[ 🧵 AWS Console 에서 보여주는 메시지 AWS cli에서 Decode 하기 ! ]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/aws_cli_decode</link><guid isPermaLink="false">https://leehosu.github.io/aws_cli_decode</guid><category><![CDATA[Devops]]></category><category><![CDATA[AWS]]></category><pubDate>Tue, 02 Aug 2022 03:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
 &lt;p&gt;보통 &lt;code class=&quot;language-text&quot;&gt;AWS&lt;/code&gt;를 사용하다보면 &lt;code class=&quot;language-text&quot;&gt;AWS Management Console&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;GUI&lt;/code&gt;식으로 제공되는 화면에서 &lt;code class=&quot;language-text&quot;&gt;Control&lt;/code&gt;하는 경우가 많습니다.&lt;/p&gt;
 &lt;p&gt;특히, 권한과 같은 부분은 이해하기 쉽게 목록화되어있으니 &lt;code class=&quot;language-text&quot;&gt;Management Console&lt;/code&gt;을 주로 사용하는 편입니다.&lt;/p&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;AWS Management Console&lt;/code&gt;에서 작업을 하던 중에 &lt;code class=&quot;language-text&quot;&gt;Error&lt;/code&gt;가 발생하게 되면 암호화되어 &lt;code class=&quot;language-text&quot;&gt;Message&lt;/code&gt;가 노출이 되는데, &lt;code class=&quot;language-text&quot;&gt;AWS cli&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;Decode&lt;/code&gt;하는 방법에 대해 포스팅 해보겠습니다.&lt;/p&gt;
