@@ -147,25 +147,25 @@
 <p>저는 총 5가지의 <code class="language-text">Application</code>이 있으며 각각 데이터를 따로 수집해야하기 때문에 <code class="language-text">AccessPoint</code>를 5개 생성해두었습니다.</p>
 <h3 id="accesspoint-mount" style="position:relative;"><a href="#accesspoint-mount" aria-label="accesspoint mount permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>AccessPoint Mount</h3>
 <p>그 후 헤딩 파일 시스템과 연동할 서버에 접속하여 폴더를 생성 한 후 <code class="language-text">Access Poin</code>t 를 <code class="language-text">mount</code> 합니다.</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">sudo mount -t efs -o tls,accesspoint=${ACCESSPOINT_ID} ${EFS_ID}:/ /${PATH}</code></pre></div>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">mount</span> -t efs -o tls,accesspoint<span class="token operator">=</span><span class="token variable">${ACCESSPOINT_ID}</span> <span class="token variable">${EFS_ID}</span>:/ /<span class="token variable">${<span class="token environment constant">PATH</span>}</span></code></pre></div>
 <h3 id="install--aws-csi-driver" style="position:relative;"><a href="#install--aws-csi-driver" aria-label="install  aws csi driver permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install  AWS-CSI-Driver</h3>
 <p>먼저 <code class="language-text">AWS-CSI-Driver</code>를 설치합니다.</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">helm repo <span class="token function">add</span> aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
 helm repo update
-helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
-    --namespace kube-system \
-    --set image.repository=602401143452.dkr.ecr.ap-northeast-2.amazonaws.com/eks/aws-efs-csi-driver \
-    --set controller.serviceAccount.create=false \
-    --set controller.serviceAccount.name=efs-csi-controller-sa</code></pre></div>
+helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver <span class="token punctuation">\</span>
+    --namespace kube-system <span class="token punctuation">\</span>
+    --set image.repository<span class="token operator">=</span><span class="token number">602401143452</span>.dkr.ecr.ap-northeast-2.amazonaws.com/eks/aws-efs-csi-driver <span class="token punctuation">\</span>
+    --set controller.serviceAccount.create<span class="token operator">=</span>false <span class="token punctuation">\</span>
+    --set controller.serviceAccount.name<span class="token operator">=</span>efs-csi-controller-sa</code></pre></div>
 <h3 id="pod-생성하기" style="position:relative;"><a href="#pod-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0" aria-label="pod 생성하기 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>POD 생성하기</h3>
 <blockquote>
 <p>${} 부분은 직접 작성 해야하는 부분입니다.</p>
 </blockquote>
 <h4 id="storageclass" style="position:relative;"><a href="#storageclass" aria-label="storageclass permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>storageClass</h4>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">kind: StorageClass
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: ${STORAGECLASS_NAME}
+  name: <span class="token variable">${STORAGECLASS_NAME}</span>
 provisioner: efs.csi.aws.com</code></pre></div>
 <p>위의 형식으로 <code class="language-text">yaml</code>파일을 작성 한 후 적용합니다.</p>
 <h4 id="result" style="position:relative;"><a href="#result" aria-label="result permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>result</h4>
@@ -194,7 +194,7 @@ provisioner: efs.csi.aws.com</code></pre></div>
       />
     </span></p>
 <h4 id="persistentvolume-1" style="position:relative;"><a href="#persistentvolume-1" aria-label="persistentvolume 1 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PersistentVolume</h4>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">---
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -206,12 +206,12 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: ${STORAGECLASS_NAME}
+  storageClassName: <span class="token variable">${STORAGECLASS_NAME}</span>
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: ${ACCESSPOINT_ID}
+    volumeHandle: <span class="token variable">${ACCESSPOINT_ID}</span>
 ---
-...</code></pre></div>
+<span class="token punctuation">..</span>.</code></pre></div>
 <p><code class="language-text">metadat</code>e에 해당 <code class="language-text">PV</code>의 이름을 작성해주시고, <code class="language-text">spec.storageClassName</code>에 <code class="language-text">StorageClass</code>의 이름을 작성합니다.
 그 후 <code class="language-text">spec.csi</code>에 설정해두었던 <code class="language-text">AWS EFS Access Point</code>에 대한 내용을 작성합니다.</p>
 <h4 id="result-1" style="position:relative;"><a href="#result-1" aria-label="result 1 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>result</h4>
@@ -240,20 +240,20 @@ spec:
       />
     </span></p>
 <h4 id="persistentvolumeclaim" style="position:relative;"><a href="#persistentvolumeclaim" aria-label="persistentvolumeclaim permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PersistentVolumeClaim</h4>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">apiVersion: v1
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: efs-pv-app
-  namespaces: ${APP_NAMESPACE}
+  namespaces: <span class="token variable">${APP_NAMESPACE}</span>
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ${STORAGECLASS_NAME}
+  storageClassName: <span class="token variable">${STORAGECLASS_NAME}</span>
   resources:
     requests:
       storage: 5Gi
 ---
-...</code></pre></div>
+<span class="token punctuation">..</span>.</code></pre></div>
 <p><code class="language-text">PV</code>C는 생성해둔 <code class="language-text">PV</code>와 매핑이 되어야합니다. 그렇기 때문에 이름을 같게 설정해두어야 자동으로 매핑되어 생성됩니다.</p>
 <h4 id="result-2" style="position:relative;"><a href="#result-2" aria-label="result 2 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>result</h4>
 <p><span
@@ -281,18 +281,18 @@ spec:
       />
     </span></p>
 <h4 id="pod" style="position:relative;"><a href="#pod" aria-label="pod permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>POD</h4>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">...
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token punctuation">..</span>.
     spec:
       affinity:
         nodeAffinity:
- ...
+ <span class="token punctuation">..</span>.
         kubernetes.io/os: linux
       volumes:
       - name: data-path
         persistentVolumeClaim:
           claimName: efs-pv-app
 ---
-...</code></pre></div>
+<span class="token punctuation">..</span>.</code></pre></div>
 <p><code class="language-text">spec.containers.volumeMounts.claimName</code>에 위에서 생성해두었던 <code class="language-text">pvc</code> 명을 적어줍니다.</p>
 <h2 id="결과" style="position:relative;"><a href="#%EA%B2%B0%EA%B3%BC" aria-label="결과 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>결과</h2>
 <p>그 후 <code class="language-text">mount</code> 했던 디렉토리로 이동하여 데이터들이 잘 쌓여있나 확인합니다.</p>
