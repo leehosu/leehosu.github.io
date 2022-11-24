@@ -29,34 +29,25 @@ tags:
 설정된 시간에 대해 백분율 단위로 수집되며 현재 이 `plugin`은 `linux`에서만 사용하실 수 있습니다.
 
 ### key
-
-#### cpu_p
+##### cpu_p
 
 이 값은 사용자 및 커널 공간에 소요된 사간 대비 전체 시스템의 `CPU` 사용량을 요약해서 보여줍니다. ( `CPU` 코어 수를 고려합니다. )
 
-
-#### user_p
-
+##### user_p
 이 값은 사용자 모드에서 `CPU` 사용량을 의미합니다.( `CPU` 코어 수를 고려합니다. )
 
-
-#### system_p
+##### system_p
 커널 모드에서 `CPU` 사용량, 간단히 말해서 커널에 의한 `CPU` 사용량을 의미합니다.( `CPU` 코어 수를 고려합니다. )
-
 
 ### CPU.core
 위에 설명한 `key`외에도 `CPU core`별로 데이터가 수집됩니다. `core`는 0에서 N까지 나열됩니다.
-
-#### cpuN.p_cpu
-
+##### cpuN.p_cpu
 `core` N개의 `CPU` 사용량을 나타냅니다.
 
-
-#### cpuN.p_user
-
+##### cpuN.p_user
 `core` N개의 사용자 모드에서 사용된 총 `CPU` 사용량을 나타냅니다.
 
-#### cpuN.p_system
+##### cpuN.p_system
 
 N번째 `core`와 관련된 시스템 또는 커널 모드에서 사용된 총 `CPU`입니다.
 
@@ -65,7 +56,7 @@ N번째 `core`와 관련된 시스템 또는 커널 모드에서 사용된 총 `
 
 ### INPUT
 
-```
+```bash
 [INPUT]
     Name              cpu
     Tag               my_cpu
@@ -76,7 +67,7 @@ N번째 `core`와 관련된 시스템 또는 커널 모드에서 사용된 총 `
 
 ### OUTPUT
 
-```
+```bash
 [OUTPUT]
     Name              kinesis_firehose
     Match             my_cpu
