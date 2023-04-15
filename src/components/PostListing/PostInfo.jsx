@@ -1,5 +1,6 @@
 import React from "react";
 import AutoLink from "../AutoLink/AutoLink";
+import { getCategoryPath } from "../../utils/helpers";
 import PostListDate from "../Post/PostListDate";
 import "./PostInfo.scss";
 
@@ -18,7 +19,12 @@ const PostInfo = ({ post, extraClass = "" }) => {
       <span className="separator">·</span>
       { categories && (
           categories.map((category, index) => (
-            <small key={index}> {category} </small>
+              <AutoLink 
+              key={index}
+              to={getCategoryPath(category)}
+              className="category"
+              > {category} 
+              </AutoLink>
           ))
       )
     }
