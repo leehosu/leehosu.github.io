@@ -1,8 +1,8 @@
 ---
 template: "page"
-title: "About"
-description: "저에 대해 소개합니다."
-slug: "about"
+title: "About-old"
+description: "저에대해 소개합니다."
+slug: "about-old"
 ---
 
 
@@ -17,7 +17,7 @@ slug: "about"
 ## 🌃 About l2h
 ---
 
-`AWS`를 활용한 `Cloud Engineering` 에 관심이 있으며, 현재는 `Kubernetes`를 활용한 `Container` 환경에서 서버 운영 관리를 하고 있습니다.
+현재 스타트업에서 Web 개발자로 일 하고 있으며, 경험을 얻기 위해 도전을 두려워하지 않습니다.
 정리하는 것을 중요한 가치로 여기고 있고 완성도 있는 구현을 위해 생각을 정리한 후 개발을 하는 것을 선호합니다.
 
 <br>
@@ -27,134 +27,99 @@ slug: "about"
 ## 🛠 Stack
 ---
 
-### Devops
-
 <ul style="display: block; margin: 0 auto; padding: 0; max-width: 800px;">
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/docker.png">
+        <img src="./icons/html-5.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/kubernetes.png">
+        <img src="./icons/css.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/jenkins.png">
+        <img src="./icons/jsp.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/groovy.png">
+        <img src="./icons/javascript.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/elasticsearch.png">
+        <img src="./icons/typescript.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/kibana.png">
+        <img src="./icons/nodejs.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/fluentbit.png">
+        <img src="./icons/react.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/argo.png">
+        <img src="./icons/vuejs.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/botkube.png">
+        <img src="./icons/jquery.png">
+    </li> 
+    <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/java.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/devops/k9s.png">
-    </li>
-</ul>
-
-### AWS
-
-<ul style="display: block; margin: 0 auto; padding: 0; max-width: 800px;">
-    <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-vpc.png">
+        <img src="./icons/spring.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-elb.png">
+        <img src="./icons/mysql.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-route53.png">
+        <img src="./icons/maria.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-s3.png">
+        <img src="./icons/Amazon-EC2.jpeg">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-rds.png">
+        <img src="./icons/amazon-elastic-container-icon.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-ec2.png">
+        <img src="./icons/amazon-eks-icon.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-ecr.png">
+        <img src="./icons/aws-lambda-icon.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-eks.png">
+        <img src="./icons/s3-bucket-with-objects.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-efs.png">
+        <img src="./icons/amazon-route-53.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-kinesis.png">
+        <img src="./icons/docker.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-kinesis-icon.png">
+        <img src="./icons/kubernetes.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-kinesis-firehose.png">
+        <img src="./icons/the-jenkins-project-icon.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-opensearch.png">
+        <img src="./icons/git.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-elastiCache.png">
+        <img src="./icons/github.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/aws/aws-sqs.png">
-    </li>
-</ul>
-
-### Front-end
-
-<ul style="display: block; margin: 0 auto; padding: 0; max-width: 800px;">
-    <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/front-end/html5.png">
+        <img src="./icons/gitlab-icon.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/front-end/css.png">
+        <img src="./icons/trello-icon.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/front-end/tailwind.png">
+        <img src="./icons/jira-icon.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/front-end/jquery.png">
+        <img src="./icons/notion.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/front-end/jsp.png">
+        <img src="./icons/confluence.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/front-end/js.png">
+        <img src="./icons/slack.png">
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/front-end/typescript.png">
-    </li>
-    <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/front-end/react.png">
-    </li>
-    <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/front-end/vuejs.png">
-    </li>
-</ul>
-
-### Back-end
-
-<ul style="display: block; margin: 0 auto; padding: 0; max-width: 800px;">
-    <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/back-end/spring.png">
-    </li>
-    <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/back-end/spring-boot.png">
-    </li>
-    <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
-        <img src="./icons/back-end/mysql.png">
+        <img src="./icons/jandi.png">
     </li>
 </ul>
 
@@ -162,23 +127,15 @@ slug: "about"
 <br>
 <br>
 <br>
-
-
-## 💼 Career
-### 주식회사 외식인
-
-📅 2020.04 - 재직중
-
-`Jquery` 및 `Vue.js`를 이용한 Front-end 개발과 `Spring`을 이용한 Back-end 개발 하였습니다. 그리고 현재는 `AWS`를 이용한 `Cloud` 환경에서의 인프라 구축 및 개발과 운영의 효율적인 환경을 제공하기 위한 **Devops Engineer** 로 재직중입니다.
-
-
 
 ## 🎓 Education
 ---
 
-### 한신대학교 컴퓨터공학부
+### 한신대학교
 
-📅 2013.03 -  2020.02
+🥪 컴퓨터공학부
+
+2013.03 -  2020.02
 
 컴퓨터공학부 학사로 2020년 2월에 졸업하였으며, Computer Vision Lab과 Software Engineering Lab에서 연구활동을 하였고 특히, Computer Vision 연구실에서는 학생 연구실장을 맡아 학우들을 지도하였습니다. 
 
