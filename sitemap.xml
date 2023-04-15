@@ -18,6 +18,7 @@
 <url> <loc>https://leehosu.github.io/goal2021</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/review2020</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/about</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/about-old</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/devops</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/metric</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/aws</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
