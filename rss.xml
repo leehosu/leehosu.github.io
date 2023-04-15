@@ -1,4 +1,255 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sat, 15 Apr 2023 11:20:00 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[💡 fluent-bit를 활용한 Metric Data 수집하기]]></title><description><![CDATA[들어가며 를 상용으로 운영하기 전 나 에 대한 를 수집하고 시각화하여 원활한 운영을 해야할 필요가 있었습니다. 현재 으로 을 구축해놓았었는데, 그 중 를 활용하여 를 수집하는 방법에 대해 다뤄보려고 합니다. CPU Metric…]]></description><link>https://leehosu.github.io/fluent-bit-metrics</link><guid isPermaLink="false">https://leehosu.github.io/fluent-bit-metrics</guid><category><![CDATA[Devops]]></category><category><![CDATA[kubernetes]]></category><category><![CDATA[metric]]></category><pubDate>Thu, 24 Nov 2022 07:10:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sat, 15 Apr 2023 11:55:17 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[💬 ArgoCD의 상태를 Slack에 메시지 보내기]]></title><description><![CDATA[들어가며 사내에서 배포 자동화로 ArgoCD를 사용하고 있는데, 여러 개발자가 Sync를 맞추는 작업을 할때에 동시에 작업을 수행할 수도 있는 우려가 있었습니다. 그래서 누군가 Sync를 맞추는 작업을 할때나 완료되었을때, 실패하였을때, 파드가 죽었을 때 슬랙을 통해 알림을 보내는 설정을 하였습니다. How To…]]></description><link>https://leehosu.github.io/argocd-slack</link><guid isPermaLink="false">https://leehosu.github.io/argocd-slack</guid><category><![CDATA[Devops]]></category><category><![CDATA[ArgoCD]]></category><category><![CDATA[Slack]]></category><pubDate>Sat, 15 Apr 2023 12:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 36.36363636363637%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAABPElEQVQoz11RTUvDQBDNv/A39Vfo2avFm57qyZMVvBQEoQrqRY8iBXsqtELtwQ+MaBuDBrVJGlNjst19zn50jS5sZrL75u2beY4Q0IuSjMJUp/JLUV8KziEY+/2nyG0hKOf23FHVtJMZ8HjVhds6RZDmMJREZkjmu0R0OU4xCEeWTBMSjFOR+5EiON5BWK/i9snHF5NPzzTJRRuobQIPHrR4jqMYWHZDLPb20Qn9fwppBUmGYXMLo/oqPP8FBXWRpZ9qBNg9xF1lATfPJxDUSRJHOG+00Dloo99bR/+6YQg5HEEqdHPA6/YKvGoFRRJbgBknoshFiDeVK3T3HpOlNbBBjQY/NDhSqIqMyuxsD9PmBkSe2RYkSD+niedYaUMevIN9jy2ZjNYUNStWQBT5HzctWM6zfF4yR5Rc/gHacROAUg3qqgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;head&quot;
+        title=&quot;head&quot;
+        src=&quot;/static/2b4c2d7f0e9583812cce740bf10625cc/7c811/head.png&quot;
+        srcset=&quot;/static/2b4c2d7f0e9583812cce740bf10625cc/103f2/head.png 165w,
+/static/2b4c2d7f0e9583812cce740bf10625cc/748ba/head.png 330w,
+/static/2b4c2d7f0e9583812cce740bf10625cc/7c811/head.png 660w,
+/static/2b4c2d7f0e9583812cce740bf10625cc/d28e0/head.png 990w,
+/static/2b4c2d7f0e9583812cce740bf10625cc/a4588/head.png 1254w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+&lt;p&gt;사내에서 배포 자동화로 ArgoCD를 사용하고 있는데, 여러 개발자가 Sync를 맞추는 작업을 할때에 동시에 작업을 수행할 수도 있는 우려가 있었습니다.&lt;/p&gt;
+&lt;p&gt;그래서 누군가 Sync를 맞추는 작업을 할때나 완료되었을때, 실패하였을때, 파드가 죽었을 때 슬랙을 통해 알림을 보내는 설정을 하였습니다.&lt;/p&gt;
+&lt;h2 id=&quot;how-to-setting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#how-to-setting&quot; aria-label=&quot;how to setting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How To Setting&lt;/h2&gt;
+&lt;h3 id=&quot;slack&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#slack&quot; aria-label=&quot;slack permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Slack&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 70.9090909090909%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAYAAAAvxDzwAAAACXBIWXMAAAsTAAALEwEAmpwYAAACJUlEQVQ4y51T2ZKbMBDk/z/Iv+ByVeJ1QbxlMBjfxgjEaW7ozAjjuHaTl6iqGY2OlqZpabquw3VdbLdbOI6D3W6nwLllWTBN89V/h23b2Frj+GazweFwwGw2g5YkCYQQmM/nMAwD6/Uai8UC/9OYXBH2XYeASCMpFfiAPM9RlaWKRVGgJKhIY6/88RjXVZUiXH18EGGWoWlb+CKAjCLEdEDApEGg+t79TnNCzd19gVBGam1IuQhCXG83JGmmCHXdgJZfTkAaAcEdkD4QEqQY8d7/F2jN4N/UXmO1guZtPqncGJ9HAWPnYX8N0dUV6rJAU5Vo6xrlg8rOR3C/Kh5PFBi6Fl3fA1EA4+cPaNKxkIQBLPeAw/kC03Zg01/n/ogzrncfgksNpYoxyRRQyZIk4dbxh6o0lkSYOyYG4UG4DrLrGSlJkF6OyG8Xyk+IT3v0sQQy2pzG3zDQXJeQZP4VOt/wIQNQXeh5AW/KUxUHRk5iU4nT2Ld5JqTYM2Fdgj2tiTCET3/LJKOuyaAM/dca5taGE+RIqhYtaVSRE+q2U7HperTD8PJf94zsYy0iLVLSgl/JYb8n91s4Ho84k3buc8zzPOVNRkh28n1f+VU1Im6b5g9hRgL3dANelKYp+AA2OxuW8+Qp/N/aQGQM3j/6UB8JuU0k08uI4xiSbhGSJLyGcz6MD+b5r8SvG0434OfT0NUncD6B85r8+J63pOWE5lnycrnEb4ghJvno0IB8AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;1&quot;
+        title=&quot;1&quot;
+        src=&quot;/static/bbbe853f90fcd7f3ee28ebd711a1e45a/7c811/1.png&quot;
+        srcset=&quot;/static/bbbe853f90fcd7f3ee28ebd711a1e45a/103f2/1.png 165w,
+/static/bbbe853f90fcd7f3ee28ebd711a1e45a/748ba/1.png 330w,
+/static/bbbe853f90fcd7f3ee28ebd711a1e45a/7c811/1.png 660w,
+/static/bbbe853f90fcd7f3ee28ebd711a1e45a/d28e0/1.png 990w,
+/static/bbbe853f90fcd7f3ee28ebd711a1e45a/41314/1.png 1074w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;먼저 Slack에서 새로운 앱을 만듭니다.&lt;/p&gt;
+&lt;p&gt;Create an App &gt; From scratch 버튼을 눌러 애플리케이션을 만들 수 있습니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 121.21212121212122%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAYCAIAAAB1KUohAAAACXBIWXMAAAsTAAALEwEAmpwYAAACdklEQVQ4y4VUy3LaMBTl//+inemik0W77LSLdpNNppDpBIKDIXZsZGzwS37LD9wjXXADIeUsNLKscx/n3quR5QbM9cqiqOu6LEtN08bjsaY9PTxM7yeT6XRaVZUQAr+KU+BkNJs9gpAkSXlEGIZxHEVhECtEUcQ5h+m+7/dHdF0nyZZlmaYZBIEiwk3FmGM7nu24wGazeVFIeAJ+pYB7TdMgnJGtQDysQlRhFLt+tIu47/vb7Xa322GFIc/zEBTuZFkmFEbPq9VS103mJVkOOo4Mw9AXi6W+FJXo3wecjdYKQRjmea48D9qUJNV7kDnPH+faXMNdChsrosoVOoW2bbs3QM6SvGaOYVqWveY8JbWhH1SAkDBUD4AYpKcCBJdhh54TuizeuU2Zda0sNbJgjGE1DQMmYAb7l7UDNyQbhIRzSf788/7Dt7svt7Ovd886C9paoDyQl9rgUD0hirpt2v25YDe//nz8/vvTj/HNrb5gQd+1eS5p+N2qxArSL88Q9v4VJJn7HmIu07jvUfgKSqRpGgYhOSdtWgXszz3ry5X2tGDOJow5aJAGajmOQ+av1HmiABkoQxQQeqBbqYH/A0lG3+M21oEMq/gnrkHWOXO2RRCVqkNIW9uyAz+gGRrWy2EjPQRJlsgzWzNkgTFMFNBw0ILHPElznlcJxlPUBzJUBXnoTSiMAVytVmgP7MkoBH/tE7FAfEkeRpQAtfEAwBVoOCfPZ0X6F3Z5CpBpvOhVApk+0W/7U1wmI1voj7U5AodYr5NxqSoreKOaXcRl8kEwUwqGwUS29DBgI7s7z7GheTy8YW/DpjzpuSPBDkNcVnSBnOPgL9TcW3VnQrugAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;2&quot;
+        title=&quot;2&quot;
+        src=&quot;/static/d00d721e2b7bc0ee418c06ca54aab455/7c811/2.png&quot;
+        srcset=&quot;/static/d00d721e2b7bc0ee418c06ca54aab455/103f2/2.png 165w,
+/static/d00d721e2b7bc0ee418c06ca54aab455/748ba/2.png 330w,
+/static/d00d721e2b7bc0ee418c06ca54aab455/7c811/2.png 660w,
+/static/d00d721e2b7bc0ee418c06ca54aab455/d28e0/2.png 990w,
+/static/d00d721e2b7bc0ee418c06ca54aab455/bb51b/2.png 1320w,
+/static/d00d721e2b7bc0ee418c06ca54aab455/825a4/2.png 1972w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;생성한 후 왼쪽 메뉴의 OAuth &amp;#x26; Permissions 메뉴에 접근합니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 71.51515151515152%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAIAAACgpqunAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB5klEQVQoz41S3WrUQBjNpaBowVcoFG99Fq9laS1YFAqVpfXGB/AFKlqFbrcWL2zxxsvSC3/oyi4ULMvigmtKmr/dyWQyf5kkE79Mii52UQ8nwyHzneHMN5/lOE6v2+t2u5TSsiy11uV/w0rTNAxDhBDnPDYghNQCjiM14GdCY54lrKqBygszxti2bccAhBCCGYATdGIAmjJOhGJc/DLneW65rnv69bTf7w8Gg+FwCKXghG0pJWiomBkYbqeUsuCjCZVCQn7Q4AQPxIGwfzFfxBZSQhLwTJ9aR9X/goVY+s0jHuaFLrKiKLSGAEEQ+n7gnJ8HYQjrBCF4BNgD5nn1HJQmggsLCxUQhkV2mRFXv9cpIq5iLgtomD2OR44/IRwZTmYRJSKaYojZWRBlKrVubxzMr+3fah4sPNpfWHt7c3n3+mLrxlJ77l57bmnHsH2t0bpyd7vm1UbLuvPi6buTqmFP3nRWnh2ubh09fH7Y3Pn8eO9Ls328/rqzsddZ3z027Kxuf7q/9WHlZcUHrz42No/e90aVWReSIj8Zu2TsFoKUKdUyKRXTtdAZtP8yC9NcC0X4+w97ZJ/hmCCMEY4jXE1jzYQymK0/CD85FwruDMPgeR7MGUz42MD3fXhkbsBmAXZh/iD2T8sM8Zgh+NInAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;3&quot;
+        title=&quot;3&quot;
+        src=&quot;/static/794a37ffd26c911c7d64ac4f16d10263/7c811/3.png&quot;
+        srcset=&quot;/static/794a37ffd26c911c7d64ac4f16d10263/103f2/3.png 165w,
+/static/794a37ffd26c911c7d64ac4f16d10263/748ba/3.png 330w,
+/static/794a37ffd26c911c7d64ac4f16d10263/7c811/3.png 660w,
+/static/794a37ffd26c911c7d64ac4f16d10263/d28e0/3.png 990w,
+/static/794a37ffd26c911c7d64ac4f16d10263/b4bc2/3.png 1310w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Scopes &gt; Bot Token Scopes에서 chat:writ 기능을 활성화합니다.&lt;/p&gt;
+&lt;p&gt;그 후 상단으로 이동하여 Install To Workspace 을 진행합니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 45.45454545454545%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsTAAALEwEAmpwYAAABI0lEQVQoz6WR22qDQBCG81peBgX1lfIkIeCdt1KD+AK+RYLi2VZDUGlM4vGvM4VYKC0tGfh2dmeWf3dmVn3f43q9omkaXC4X3G43hs7kKUb5+/0OujtN0490XYcVXfJ9H57rIQxDHA9HJHGCNE35TDnXdef4YRZ/x2/2EMzzHFEUIU1SForjGJ43PxCEHI+iGGGSIcnekGYZXmeKomBOxQl1XS+CtBBkJD4MA/5rVO5DkARs28Z2u4WmadjtdtB1HZZlYb/ff8FkTNPEi/npDcPgakiobVv+0IqUN5sNBEGAJEkQRRGyLENRFPYLCkNxQlVVrNdrOI6DsixRVRVXxz181sZxXKZMm/P5zAPI5mYHQcCeXvsL36ZMCyXop89AGtTHDzBmjzSV69IPAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;4&quot;
+        title=&quot;4&quot;
+        src=&quot;/static/a919a1a38f9bff0aeb4c07453fe6b9dd/7c811/4.png&quot;
+        srcset=&quot;/static/a919a1a38f9bff0aeb4c07453fe6b9dd/103f2/4.png 165w,
+/static/a919a1a38f9bff0aeb4c07453fe6b9dd/748ba/4.png 330w,
+/static/a919a1a38f9bff0aeb4c07453fe6b9dd/7c811/4.png 660w,
+/static/a919a1a38f9bff0aeb4c07453fe6b9dd/d28e0/4.png 990w,
+/static/a919a1a38f9bff0aeb4c07453fe6b9dd/bb51b/4.png 1320w,
+/static/a919a1a38f9bff0aeb4c07453fe6b9dd/f28c3/4.png 1424w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;그러면 위와 같이 Bot User OAuth Token 이 발급되게 됩니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 96.36363636363636%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAAAsTAAALEwEAmpwYAAADEklEQVQ4y6VUS2gTURQV/FA/bZKmzX8+mfwm305+TRqblqqIC0FRkFoRFd12pbsKgis3olhahIqoEBXBlV0UFy7EtRQRN10JrbhS0IK4kOO9dzJpKlIEF4c3b2beuefec+/b5gsq0GMpxM0sonETsWRG9v6whkAX/G38ufeHVQQjuqC3z41tQUVHqTqCRnMC9dFxjB88jEKpah+mn+xDdECJCpx33XslmkBEj9uErNBIpOVjWIshb1VgVWoo1xqo1kcFpeERUR9SDWSHSqg1mjCSfEand9EOea/Lwwqjkq5OB2SldDP5ImKprARiEg7kHOJ9QDHQH9DR71fhDWjwBu1sel2kUCGpcTMnsqV+FDlRsOQ5SoScCn9jqIadWiabxlgtg3olh5JlClhQHytU6UeNVBWrdVHYKT5FZDjKHHUen4I7107h+t1ZtB7M4NPyU6wtt3D8yDB27SGFHJHr05w4JHVLZgowcxbSeQtmdojWItK0zxRKyBcr8IUNLNyYwvnbTzD/aA7rH1/jx+ornD1Rx44el52y1q6bVSYzhhtiSqW2X8iUdgaqkaTAKbgGVTy+OYX19/NYebOAL29vASuzmDw2ip27mZAt1+IoFKtClkznu3psM9jVfZ4gns9dws9vn/FrdRFf194B3z/g3Mk6tve4bUIGF9UgI1gJl+Fv4HoPhHRcnT6Kl60ZvLg3jcX7l7H08Aomxiro2eu2TWE3NSJyenErRAjeoA7XQJAQhitkoM+vkSgqh8fbNoXbw0jBF1Lhj+ji5lYQYlEdg5ItQ0nmpH+FcIAm5czkaSw9a8GiEWSnuS85yD+BjOIuiVK5XO5+e1KaNMPTFy/AJFczhaK46oBruiWcDiByIeSNNOxgSGrIbnan15mUzproTI5zKShtH4RQoTpE4jSzpiXq+MZxLga+hXRKyTHLqZ+s7WdnzrlLXB5WGI0jFEvDl6lKc4+OHxCyYqUuhEzOU8PTYuaG5Dbihudbx17LEkBzTFFo4LllVN12bsNB+5lLsnE5JDel242NGvKmfbP8L5jwN5MAQte/MZXSAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;5&quot;
+        title=&quot;5&quot;
+        src=&quot;/static/f732c56cd64985e2d5f8bba995d13e99/7c811/5.png&quot;
+        srcset=&quot;/static/f732c56cd64985e2d5f8bba995d13e99/103f2/5.png 165w,
+/static/f732c56cd64985e2d5f8bba995d13e99/748ba/5.png 330w,
+/static/f732c56cd64985e2d5f8bba995d13e99/7c811/5.png 660w,
+/static/f732c56cd64985e2d5f8bba995d13e99/d28e0/5.png 990w,
+/static/f732c56cd64985e2d5f8bba995d13e99/70841/5.png 1094w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;그 후 슬랙에서 해당 앱을 추가해줍니다.&lt;/p&gt;
+&lt;h3 id=&quot;argocd&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#argocd&quot; aria-label=&quot;argocd permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;ArgoCD&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;[ ]&lt;/code&gt; 으로 되어있는 칸은 직접 입력해야하는 값입니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl apply -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml -n &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;argoCD namespace&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+$ kubectl apply -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml -n &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;argoCD namespace&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어를 실행 시켜 ArgoCD Notification의 manifests 파일과 catalog 파일을 적용합니다.&lt;/p&gt;
+&lt;h4 id=&quot;argocd-notifications-secret&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#argocd-notifications-secret&quot; aria-label=&quot;argocd notifications secret permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;argocd-notifications-secret&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;apiVersion: v1 
+kind: Secret 
+metadata: 
+  name: argocd-notifications-secret 
+stringData:
+  slack-token: &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Bot User OAuth Token&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;argocd-nofitications-cm&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#argocd-nofitications-cm&quot; aria-label=&quot;argocd nofitications cm permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;argocd-nofitications-cm&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  namespace: argocd
+data:
+  service.slack: &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;
+    token: &lt;span class=&quot;token variable&quot;&gt;$slack&lt;/span&gt;-token&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl edit cm argocd-notifications-cm -n &lt;span class=&quot;token variable&quot;&gt;${argocd_namespace}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명령어 실행 후 &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: argocd-notifications-cm
+    namespace: argocd
+  data:
+    service.slack: &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;
+      token: &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Bot User OAuth Token&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;- 이 부분 작성&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;argocd-notification-check&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#argocd-notification-check&quot; aria-label=&quot;argocd notification check permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;argocd-notification check&lt;/h4&gt;
+&lt;p&gt;ArgoCD Configmap에서 notificatoin이 설정되어있는지 체크하기 위해 ArgoCD가 배포되어있는 namespace로 이동하여 아래의 명령어를 입력합니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl edit cm&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 108.4848484848485%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC/ElEQVQ4y41UyW4TQRD1FaTgddaeffHsiz2OEQdyQaAIuMApSCAuSPz/FzyqyjOJEyUkh6fqrV69rurqWVmW2PcHfLr+hptff3Hz+w++//iJpqtRVjm22+2LkKYpiqLAzDAMpGGO4+UVPnz8jOuvX/Du6j2UUrBtC4vFAvP5nOwc88cwn9/tk53ZtkKZttjGGdarFV6/foU3FxdYrdaC5XI1YvkEVnSOMNqZYRpwlIs8zxEnEfzAQxD6YsM4QBSFcDwbptJh2iPUCZZjwLA06MYGuqlho62ZUEfgh0iTTKxybLiBQph48COHDo8OBE3f3JtPJKJwNSk0iNBN0JUHDP2RcEASp3AdF7quU26WT1/3kb2ZaZpIghxFVqNtOwyXO2T5lsjoOpSO+VgUAY+nIo0Ek7KlWCJUVJQ8KZAlOQLPh65psCwTnutSbpXAdcgSlLIFPDbpZpq2oWIsRpzIZ5btIC0aVO2OsEfVDeiGt4J2d4l2f0RH6Gled/vT2u6AMC0ox1soL4KhfCzX+unKNlW4qHtCh7zqULYnJw7QDUdxZqKaAjWU37LpyQ5IsgoBFTJKcyG3XV/e7sx1HXRdi2HYo2moO4ocZVnQM8oQxxGSJEYcRfJ8eBwEvswD3wf7nlJjSwqE0LIsaZ2uI3XUhnleUHFaVFUldrfbUaCG0KKheTuCz/d9Ly3HSJIEXGDqFFsO8OZ+v8fhcJBxXdeCOI5JXSR2cmScz1kQW1HoOI4QTBGZkMcchAm54VktO/l0TUYYhkLoeR74hqxMng4XhQknhcMwCKYATMSkbLMsuwW3Ka+xQlbPytbr9R0hX5VJOF+skEnZ8jqD55xHVjmRMiFfMwgCUXlLyOxVXRHBfWXsxNGn/27K4wQmO1fI1z69QypKnlZo6lZyw5sccQLvM9jhfH3KHZPwnzm14Uyn9+PaPn0QMSxDwdDpsGHDMpXANh1oG40cFo9+EOc/jSjUqHcXdHiK8hTOHR/ifF8I/3f4odNz5LeEzx18Kf4BQWNUlwJ4+jsAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;6&quot;
+        title=&quot;6&quot;
+        src=&quot;/static/ea01b6860e7935f9bf94c639c937f278/7c811/6.png&quot;
+        srcset=&quot;/static/ea01b6860e7935f9bf94c639c937f278/103f2/6.png 165w,
+/static/ea01b6860e7935f9bf94c639c937f278/748ba/6.png 330w,
+/static/ea01b6860e7935f9bf94c639c937f278/7c811/6.png 660w,
+/static/ea01b6860e7935f9bf94c639c937f278/d28e0/6.png 990w,
+/static/ea01b6860e7935f9bf94c639c937f278/bb51b/6.png 1320w,
+/static/ea01b6860e7935f9bf94c639c937f278/e315f/6.png 1649w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;위의 이미지처럼 argocd-notifications-cm 가 등록되어있다면 잘 설정되어 있는 것입니다!&lt;/p&gt;
+&lt;p&gt;그 후 ArgoCD가 특정한 액션을 할 시에 알림을 받기 위해 아래의 명령어를 입력해줍니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl patch app &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;app name&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; -n &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;argoCD Namespace&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; -p &lt;span class=&quot;token string&quot;&gt;&apos;{&quot;metadata&quot;: {&quot;annotations&quot;: {&quot;notifications.argoproj.io/subscribe.on-sync-succeeded.slack&quot;:&quot;[slack chanel name&quot;}}}&apos;&lt;/span&gt; --type merge&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;argocd-notification-list&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#argocd-notification-list&quot; aria-label=&quot;argocd notification list permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;ArgoCD Notification List&lt;/h4&gt;
+&lt;h5 id=&quot;sync가-성공했을-때-알림&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#sync%EA%B0%80-%EC%84%B1%EA%B3%B5%ED%96%88%EC%9D%84-%EB%95%8C-%EC%95%8C%EB%A6%BC&quot; aria-label=&quot;sync가 성공했을 때 알림 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Sync가 성공했을 때 알림&lt;/h5&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;notifications.argoproj.io/subscribe.on-sync-succeeded.slack&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;sync가-실패했을-때-알림&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#sync%EA%B0%80-%EC%8B%A4%ED%8C%A8%ED%96%88%EC%9D%84-%EB%95%8C-%EC%95%8C%EB%A6%BC&quot; aria-label=&quot;sync가 실패했을 때 알림 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Sync가 실패했을 때 알림&lt;/h5&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;notifications.argoproj.io/subscribe.on-sync-failed.slack&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;sync가-진행중일-때-알림&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#sync%EA%B0%80-%EC%A7%84%ED%96%89%EC%A4%91%EC%9D%BC-%EB%95%8C-%EC%95%8C%EB%A6%BC&quot; aria-label=&quot;sync가 진행중일 때 알림 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Sync가 진행중일 때 알림&lt;/h5&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;notifications.argoproj.io/subscribe.on-sync-running.slack&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;sync-상태가-unknown일-때-알림&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#sync-%EC%83%81%ED%83%9C%EA%B0%80-unknown%EC%9D%BC-%EB%95%8C-%EC%95%8C%EB%A6%BC&quot; aria-label=&quot;sync 상태가 unknown일 때 알림 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Sync 상태가 Unknown일 때 알림&lt;/h5&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;notifications.argoproj.io/subscribe.on-sync-status-unknown.slack&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;health가-degrade-되었을-때-알림&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#health%EA%B0%80-degrade-%EB%90%98%EC%97%88%EC%9D%84-%EB%95%8C-%EC%95%8C%EB%A6%BC&quot; aria-label=&quot;health가 degrade 되었을 때 알림 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Health가 Degrade 되었을 때 알림&lt;/h5&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;notifications.argoproj.io/subscribe.on-health-degraded.slack&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;deploy-되었을-때-알림&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#deploy-%EB%90%98%EC%97%88%EC%9D%84-%EB%95%8C-%EC%95%8C%EB%A6%BC&quot; aria-label=&quot;deploy 되었을 때 알림 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Deploy 되었을 때 알림&lt;/h5&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;notifications.argoproj.io/subscribe.on-deployed.slack&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;finish&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#finish&quot; aria-label=&quot;finish permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Finish&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 36.36363636363637%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAABNElEQVQoz22RTW6DMBSEOUT+CAnGgDE24NggAkRVqmbd3qAn6LJSzz99OKmqNll8GlmWRm9mgs+vD7y+v6GyLVR1QFpocKG8xpkEy8srWYmEdP7bcYHNLkG453caNJODOnfQ/QnKDVCNgybyyoFpi0TPekNZcNJd0WCTVwgz5U3Cm5k3XHCOuDYwxzOiXGMR7rHaxlisI+xFBdFOWPMSy1hgxQSWxDpK/EWPCGInwScFqSqkufSRrlA8RRXYka6ySJXxZPrg42/jFBHL7giKo4G+HOGeXuCmZ7h+QkvU3YTCDpBuZrxBlbQDxKFHUnfgVMvvAVeCxNQoxwHd6YKspp5oiLn8OC0gTQcznqlHC1YaMNl4Tf6Z/DFkmhY1FTJ6sFR4Qw8ZspLi2cmP4c1+8KvLh3wDOX/LoVFX2IkAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;7&quot;
+        title=&quot;7&quot;
+        src=&quot;/static/fcd0f3a8e3dbb43a8f60c7fdd2449f4a/7c811/7.png&quot;
+        srcset=&quot;/static/fcd0f3a8e3dbb43a8f60c7fdd2449f4a/103f2/7.png 165w,
+/static/fcd0f3a8e3dbb43a8f60c7fdd2449f4a/748ba/7.png 330w,
+/static/fcd0f3a8e3dbb43a8f60c7fdd2449f4a/7c811/7.png 660w,
+/static/fcd0f3a8e3dbb43a8f60c7fdd2449f4a/d28e0/7.png 990w,
+/static/fcd0f3a8e3dbb43a8f60c7fdd2449f4a/bb51b/7.png 1320w,
+/static/fcd0f3a8e3dbb43a8f60c7fdd2449f4a/e315f/7.png 1649w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;위의 설정을 모두 완료하면 정상적으로 Slack 채널을 통해 noti가 오는 것을 확인하실 수 있습니다!&lt;/p&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[💡 fluent-bit를 활용한 Metric Data 수집하기]]></title><description><![CDATA[들어가며 를 상용으로 운영하기 전 나 에 대한 를 수집하고 시각화하여 원활한 운영을 해야할 필요가 있었습니다. 현재 으로 을 구축해놓았었는데, 그 중 를 활용하여 를 수집하는 방법에 대해 다뤄보려고 합니다. CPU Metric…]]></description><link>https://leehosu.github.io/fluent-bit-metrics</link><guid isPermaLink="false">https://leehosu.github.io/fluent-bit-metrics</guid><category><![CDATA[Devops]]></category><category><![CDATA[kubernetes]]></category><category><![CDATA[metric]]></category><pubDate>Thu, 24 Nov 2022 07:10:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;kubernetes&lt;/code&gt;를 상용으로 운영하기 전 &lt;code class=&quot;language-text&quot;&gt;CPU&lt;/code&gt;나 &lt;code class=&quot;language-text&quot;&gt;system&lt;/code&gt;에 대한 &lt;code class=&quot;language-text&quot;&gt;Metrics Data&lt;/code&gt;를 수집하고 시각화하여 원활한 운영을 해야할 필요가 있었습니다.&lt;/p&gt;
 &lt;p&gt;현재 &lt;code class=&quot;language-text&quot;&gt;EFK Stack&lt;/code&gt;으로 &lt;code class=&quot;language-text&quot;&gt;logging system&lt;/code&gt;을 구축해놓았었는데, 그 중 &lt;code class=&quot;language-text&quot;&gt;fluent-bit&lt;/code&gt;를 활용하여 &lt;code class=&quot;language-text&quot;&gt;metrics data&lt;/code&gt;를 수집하는 방법에 대해 다뤄보려고 합니다.&lt;/p&gt;
 &lt;h2 id=&quot;cpu-metric&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cpu-metric&quot; aria-label=&quot;cpu metric permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;CPU Metric&lt;/h2&gt;
