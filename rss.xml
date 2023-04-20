@@ -1,4 +1,152 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sat, 15 Apr 2023 12:32:19 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[💬 ArgoCD의 상태를 Slack에 메시지 보내기]]></title><description><![CDATA[들어가며 사내에서 배포 자동화로 ArgoCD를 사용하고 있는데, 여러 개발자가 Sync를 맞추는 작업을 할때에 동시에 작업을 수행할 수도 있는 우려가 있었습니다. 그래서 누군가 Sync를 맞추는 작업을 할때나 완료되었을때, 실패하였을때, 파드가 죽었을 때 슬랙을 통해 알림을 보내는 설정을 하였습니다. How To…]]></description><link>https://leehosu.github.io/argocd-slack</link><guid isPermaLink="false">https://leehosu.github.io/argocd-slack</guid><category><![CDATA[Devops]]></category><category><![CDATA[ArgoCD]]></category><category><![CDATA[Slack]]></category><pubDate>Sat, 15 Apr 2023 12:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Thu, 20 Apr 2023 06:39:26 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[ ⬆️ AWS EC2 Storage 용량 늘리기(scale-up)]]></title><description><![CDATA[들어가며  k8s를 운영하다보면 어느날 갑자기 resource 에 대한 부족으로 인해 문제가 생길 수 있다. 그럴때 AWS Console에 접속하여 해당 EC2 Instance의 storage 용량을 증가시켜 해결할 수 있다. WorkFlow…]]></description><link>https://leehosu.github.io/storage-scale-up</link><guid isPermaLink="false">https://leehosu.github.io/storage-scale-up</guid><category><![CDATA[Devops]]></category><category><![CDATA[AWS]]></category><category><![CDATA[EC2]]></category><pubDate>Thu, 20 Apr 2023 06:30:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 41.21212121212122%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAABYlAAAWJQFJUiTwAAABXUlEQVQoz21RPUsDQRDND9KfoFhZCTYRLOzEQrEWsbHQwsLKUhA02AQxjXY2lmnEOjG5mG/CgXdELrnbnd3nzmwuYMjAcDczb968e1ew1iIPfuPaGgPf97mIkSfRP5zsuSzwMB1HqF1uIauWQa4mh9EaUMqCiA+QkDQfzhDdH8MwZpZKM3aR8DdG/aoI+qzIcDLswRgjJEyaK2yUzjF+OkXSqKF1fYH+4x2MyqAdMx9mpQWHhrFeFUf08ozvwz2oYV9qzSp1CsoSaH8DscME2xvoHOxChyOvVoai0BE6Np1qAYe3N6ivryJt1j2hQ08770hqFWSpvxqXSwjWVtAubkKPBksIjZ013HK/i/ijCjNN5grzUKn3Mn57xdf+DlonR6CfcDkhe8W2TZRBL4zEePZTKcwNl88n9tUgCNrodgeyozLPIYT5bxeV5JVKkq+5nxNy+h4f8ckH2LJ8/gdTSF3nZNDZkwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;head&quot;
+        title=&quot;head&quot;
+        src=&quot;/static/a2ed51adf321ab07173aa95050a9d1f9/7c811/head.png&quot;
+        srcset=&quot;/static/a2ed51adf321ab07173aa95050a9d1f9/103f2/head.png 165w,
+/static/a2ed51adf321ab07173aa95050a9d1f9/748ba/head.png 330w,
+/static/a2ed51adf321ab07173aa95050a9d1f9/7c811/head.png 660w,
+/static/a2ed51adf321ab07173aa95050a9d1f9/d28e0/head.png 990w,
+/static/a2ed51adf321ab07173aa95050a9d1f9/bb51b/head.png 1320w,
+/static/a2ed51adf321ab07173aa95050a9d1f9/d2ccd/head.png 1744w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 70.30303030303031%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAYAAAAvxDzwAAAACXBIWXMAAAsTAAALEwEAmpwYAAABpklEQVQ4y5VU20oCURT1OYqivOuMOjpexlteoEzwkimVUV8QUUGvhdEnFBVdpG8oDAmRvqN6tg+w31idfXSmEHX0Yc/lzDlr77XW3mOQPDIkbwAWm4C5eSNmZhewaLTCLfkhun1aOEUJdqebh0PwjAyD368gHE3w8LFnF0vgYQnoXYnE4Q9G4JVDPIEeGAc8PD7Bze0dms03NF6baLffUTu/4B8JiBIILq9WoS5gJptDYb2MZGqFVbWMSCwJmVVqtYuwOVwaTRVMlzJdKLvIqqDNKpC6YVA3XUCFaRSLp7huRrOdG2K2OjWKdB+kOw7UQJWRy/niBraqu9je2UMmm0eUJYkn0giEolzHSfTTTLl/qOPj8wudzje63R881p84gAqmSjCo53BT1nqmUEXUNnJA4S1CIKop/w/oakj6CKxxqRJaGAYyFaDsCyLYp0amLJlszBShb0avAwaBxlJOpVdRKJZR2ayiWKogly+B1mhSSIagEp2ubfYPjnB5dc2n5PmlgVarjdOzGowWB5/hP5DJmtsQjvSmg6iZGAjRph/FqIN6Ff4Cku+cFVC9T5sAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;noti&quot;
+        title=&quot;noti&quot;
+        src=&quot;/static/b2bbfb12f166ba8503ce2ec5234789f4/7c811/noti.png&quot;
+        srcset=&quot;/static/b2bbfb12f166ba8503ce2ec5234789f4/103f2/noti.png 165w,
+/static/b2bbfb12f166ba8503ce2ec5234789f4/748ba/noti.png 330w,
+/static/b2bbfb12f166ba8503ce2ec5234789f4/7c811/noti.png 660w,
+/static/b2bbfb12f166ba8503ce2ec5234789f4/d28e0/noti.png 990w,
+/static/b2bbfb12f166ba8503ce2ec5234789f4/bb51b/noti.png 1320w,
+/static/b2bbfb12f166ba8503ce2ec5234789f4/5e9f9/noti.png 2088w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;k8s를 운영하다보면 어느날 갑자기 resource 에 대한 부족으로 인해 문제가 생길 수 있다.&lt;/p&gt;
+&lt;p&gt;그럴때 AWS Console에 접속하여 해당 EC2 Instance의 storage 용량을 증가시켜 해결할 수 있다.&lt;/p&gt;
+&lt;h2 id=&quot;workflow&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#workflow&quot; aria-label=&quot;workflow permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;WorkFlow&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;인스턴스에 접속한다.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;아래의 명령어로 해당 노드의 파티션을 확인한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; lsblk
+NAME          MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+nvme1n1       &lt;span class=&quot;token number&quot;&gt;259&lt;/span&gt;:0    &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;  30G  &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; disk /data
+nvme0n1       &lt;span class=&quot;token number&quot;&gt;259&lt;/span&gt;:1    &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;  16G  &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; disk
+└─nvme0n1p1   &lt;span class=&quot;token number&quot;&gt;259&lt;/span&gt;:2    &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;   8G  &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; part /
+└─nvme0n1p128 &lt;span class=&quot;token number&quot;&gt;259&lt;/span&gt;:3    &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;   1M  &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; part&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;growpart&lt;/code&gt; 명령을 사용하여 확장할 파티션을 지정한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; growpart /dev/nvme0n1 &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;lsblk&lt;/code&gt; 명령어를 사용하여 파티션이 확장되었는지 확인한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; lsblk
+NAME          MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+nvme1n1       &lt;span class=&quot;token number&quot;&gt;259&lt;/span&gt;:0    &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;  30G  &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; disk /data
+nvme0n1       &lt;span class=&quot;token number&quot;&gt;259&lt;/span&gt;:1    &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;  50G  &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; disk
+└─nvme0n1p1   &lt;span class=&quot;token number&quot;&gt;259&lt;/span&gt;:2    &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;  16G  &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; part /
+└─nvme0n1p128 &lt;span class=&quot;token number&quot;&gt;259&lt;/span&gt;:3    &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;   1M  &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; part&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;df -hT&lt;/code&gt; 명령어를 사용하여 현재 스토리지 가용 현황을 확인한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;df&lt;/span&gt; -hT
+Filesystem      Type  Size  Used Avail Use% Mounted on
+/dev/nvme0n1p1  xfs   &lt;span class=&quot;token number&quot;&gt;8&lt;/span&gt;.0G  &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;.6G  &lt;span class=&quot;token number&quot;&gt;6&lt;/span&gt;.5G  &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;% /
+/dev/nvme1n1    xfs   &lt;span class=&quot;token number&quot;&gt;8&lt;/span&gt;.0G   33M  &lt;span class=&quot;token number&quot;&gt;8&lt;/span&gt;.0G   &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;% /data
+&lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;xfs_growfs&lt;/code&gt; 명령어를 사용하여 파티션 탑재를 진행합니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; xfs_growfs -d /&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;df -hT&lt;/code&gt; 명령어를 통해 변경된 스토리지 가용 현황을 확인합니다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span class=&quot;token function&quot;&gt;df&lt;/span&gt; -hT
+Filesystem      Type  Size  Used Avail Use% Mounted on
+/dev/nvme0n1p1  xfs   &lt;span class=&quot;token number&quot;&gt;8&lt;/span&gt;.0G  &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;.6G  &lt;span class=&quot;token number&quot;&gt;6&lt;/span&gt;.5G  &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;% /
+/dev/nvme1n1    xfs   &lt;span class=&quot;token number&quot;&gt;8&lt;/span&gt;.0G   33M  &lt;span class=&quot;token number&quot;&gt;48&lt;/span&gt;.0G   &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;% /data
+&lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;finish&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#finish&quot; aria-label=&quot;finish permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Finish&lt;/h2&gt;
+&lt;h3 id=&quot;before&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#before&quot; aria-label=&quot;before permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Before&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 31.51515151515152%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAABYlAAAWJQFJUiTwAAABW0lEQVQY01WQy27bMBBFKSWiRImk9RZlSZTiFCjSFmjRRT7CP2VkwaW9MGAv/aM0eMOoBdosDga4gzmYGbLf73G73XC9XleOxyPO5zMul8vK6XTCbrdDURTI8xycczDGkKbpWqMoAiHkH01do/ZUVfWp8ZF9VEqjtTeOI4SXDcMArTX6vocQAnEcfxYO4+QmrR0JAucDT+Bixty8LI7GieNSOi6EG6bJRZS6vChc03WuaVrnt/078x9L39216u6UkDt7CG0SEMtpZJ+GrZUxtaosbC2FnVVnNyyxfVXa3meqrqw/2/otbZZlNggC64WW/Bp7fBu3+NJU+Koa7KoCilH8fn5CG0eYJIfeCPxcNOZc4mWrsGw4FM+QcQEp5fqeMAz/nLx07eFZtYeUkENGyFtCiKlYbF70ZORDaPLo0XQ8M68/vps6Tcw2lyttXRsvMmVZmnmejRcaLzTvL16PMHwJtNUAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;before&quot;
+        title=&quot;before&quot;
+        src=&quot;/static/e600b79a4733c794da3d492286d243d5/7c811/before.png&quot;
+        srcset=&quot;/static/e600b79a4733c794da3d492286d243d5/103f2/before.png 165w,
+/static/e600b79a4733c794da3d492286d243d5/748ba/before.png 330w,
+/static/e600b79a4733c794da3d492286d243d5/7c811/before.png 660w,
+/static/e600b79a4733c794da3d492286d243d5/35f7f/before.png 818w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&quot;after&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#after&quot; aria-label=&quot;after permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;After&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 32.121212121212125%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAABYlAAAWJQFJUiTwAAABJ0lEQVQY02WQS26DQBBEIYr4DzP8P8ZAwAsnUaSIm7BFYuGFLS+4gg/gjRH2gSszo8SS40VL3U/dVaVWTqcTlmXBPM+yLpcLbrcbrtcrzuezZF3XwXEceJ4H3/fBGIOu61AU5bmGYcA0TTgej9jtduj7HoLt93uM44jD4YDtdos4jhFFEdI0RRiGCIIAlFIYhvEoSAiBZVlPTpZt33vTNJHnOTRNk6KiF6KCq6r6eNu2LYqieIDCtaoqaSSSuS6ROzoXFMkSzoSgMH35L9htGnyWBdaUoA485MRGZpsQPDF11D5DyVx8N7Xk76sMFWcNI6Bc0Pv96T3px3qFTRojdSwU/DDhR7FlQHBfe0XGDVaug6+3ips5aOMQOZ9LXozPrkvlG/4S/gA0gaHayJmMFAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;after&quot;
+        title=&quot;after&quot;
+        src=&quot;/static/db2b746458f310275604c657e76daf29/7c811/after.png&quot;
+        srcset=&quot;/static/db2b746458f310275604c657e76daf29/103f2/after.png 165w,
+/static/db2b746458f310275604c657e76daf29/748ba/after.png 330w,
+/static/db2b746458f310275604c657e76daf29/7c811/after.png 660w,
+/static/db2b746458f310275604c657e76daf29/a0e79/after.png 824w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;( 🚨 스크린샷에는  EC2 Instance type도 변경하여 &lt;code class=&quot;language-text&quot;&gt;devtmpts&lt;/code&gt; , &lt;code class=&quot;language-text&quot;&gt;tmpfs&lt;/code&gt;등 다른 filesystem도 증가되어 있다.)&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/recognize-expanded-volume-linux.html&quot;&gt;https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/recognize-expanded-volume-linux.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[💬 ArgoCD의 상태를 Slack에 메시지 보내기]]></title><description><![CDATA[들어가며 사내에서 배포 자동화로 ArgoCD를 사용하고 있는데, 여러 개발자가 Sync를 맞추는 작업을 할때에 동시에 작업을 수행할 수도 있는 우려가 있었습니다. 그래서 누군가 Sync를 맞추는 작업을 할때나 완료되었을때, 실패하였을때, 파드가 죽었을 때 슬랙을 통해 알림을 보내는 설정을 하였습니다. How To…]]></description><link>https://leehosu.github.io/argocd-slack</link><guid isPermaLink="false">https://leehosu.github.io/argocd-slack</guid><category><![CDATA[Devops]]></category><category><![CDATA[ArgoCD]]></category><category><![CDATA[Slack]]></category><pubDate>Sat, 15 Apr 2023 12:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
     &gt;
