@@ -1,4 +1,357 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Thu, 20 Apr 2023 06:39:26 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[ ⬆️ AWS EC2 Storage 용량 늘리기(scale-up)]]></title><description><![CDATA[들어가며  k8s를 운영하다보면 어느날 갑자기 resource 에 대한 부족으로 인해 문제가 생길 수 있다. 그럴때 AWS Console에 접속하여 해당 EC2 Instance의 storage 용량을 증가시켜 해결할 수 있다. WorkFlow…]]></description><link>https://leehosu.github.io/storage-scale-up</link><guid isPermaLink="false">https://leehosu.github.io/storage-scale-up</guid><category><![CDATA[Devops]]></category><category><![CDATA[AWS]]></category><category><![CDATA[EC2]]></category><pubDate>Thu, 20 Apr 2023 06:30:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Fri, 21 Apr 2023 05:38:26 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[ 🔍 AWS OpenSearch를 활용해 EFK Stack 구축하기]]></title><description><![CDATA[Overview…]]></description><link>https://leehosu.github.io/aws-opensearch-efk-stack</link><guid isPermaLink="false">https://leehosu.github.io/aws-opensearch-efk-stack</guid><category><![CDATA[Devops]]></category><category><![CDATA[AWS]]></category><category><![CDATA[AWS OpenSearch]]></category><category><![CDATA[EFKStack]]></category><pubDate>Fri, 21 Apr 2023 05:30:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;overview&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#overview&quot; aria-label=&quot;overview permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Overview&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 104.84848484848483%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAIAAADJt1n/AAAACXBIWXMAAAsTAAALEwEAmpwYAAACSElEQVQ4y4VU224TMRDNpyK+AfWZn+gv8AFUQkhICFGBkPJAKlqK0qRRk2w2m+zN1/Vl7XJskzSUtBwl3snsnJmx5ziD+3/hwyKoXU5Eb3sHRyv8hgXDOR2RAgdHuC6wx9/b05MrSgTsi+HF+ZchDGvtbDYbj8chzPvBjuDwOUxhtCsy6mMX0vetM8nvnOv7/snKe1in7p/F4D4ml9eX8vYGVkgbt1muuq/vVq73scOnyLHb5uP79ts5Yqwx1ljEj0fN6cmlNe5Z8tMwVv+v7ZQY35jfRYTW41TcDv5Y9b8qI8gYsyenNRkY0hEyFfrzMOskivRgolp/DEqpw5+pqQGXejSuje1xVFJKIUQHyE51KlVLTC4E1i4CTLwKIkkPAETZaVYuNh9ebc5ebn6c6aAFj1DBmdKuHr0p3r7YfHpNmq2NGwpkF8mqk8uqbYUsstvl7FdTbVTUsNaqpSwjjJNqPv25zeeM0cBK5F1lWVHCVJdl+WQ6q+o6XYDQM+e14C2hN5Ppal0wxh+TsVtsD8Y6z+/u7uoDMgCDMYZbURRr5HoghyF5r5UivFtsqcHBWouDSRysmMGiZISJcKrGoMzjyp0Qq21zNS85Yya+S2TUZ5Rczst12SAjIuFBij+nnS5nmjDs6xWZ5jVta4QGkUbAoFIPpyVtG0JI0s+ubUgEGuxtl084F8gMf+LYuOpqKapcKOjBPszZxDggaEBKvs1wMEkJSVXhqY2sC95sgxKiHwiVkWAvfR/lH6+JT55Df/p3218V/PwN9tTCfSIFYKEAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;overview&quot;
+        title=&quot;overview&quot;
+        src=&quot;/static/2d983d9e06505f557c177d40aa79db00/7c811/overview.png&quot;
+        srcset=&quot;/static/2d983d9e06505f557c177d40aa79db00/103f2/overview.png 165w,
+/static/2d983d9e06505f557c177d40aa79db00/748ba/overview.png 330w,
+/static/2d983d9e06505f557c177d40aa79db00/7c811/overview.png 660w,
+/static/2d983d9e06505f557c177d40aa79db00/d28e0/overview.png 990w,
+/static/2d983d9e06505f557c177d40aa79db00/f6c2e/overview.png 1264w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Kubernetes&lt;/code&gt;는 생성된 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;들에 대하여 &lt;code class=&quot;language-text&quot;&gt;Stateless&lt;/code&gt;하게 관리되어야하는 것이 기본 관리 원칙이다.&lt;/p&gt;
+&lt;p&gt;그렇기에 &lt;code class=&quot;language-text&quot;&gt;STDOUT&lt;/code&gt;/&lt;code class=&quot;language-text&quot;&gt;STDERR&lt;/code&gt;등 &lt;code class=&quot;language-text&quot;&gt;SYSOUT&lt;/code&gt;의 형태로 쌓이는 로그들을 노드내에 저장하는 방식이 아닌 중앙 집중식 로깅 시스템을 구축해야 한다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;로부터 수신된 로그를 &lt;code class=&quot;language-text&quot;&gt;Fluent-bit&lt;/code&gt;를 통해 &lt;code class=&quot;language-text&quot;&gt;AWS Kinesis&lt;/code&gt;로 전송하고, 수신된 로그 데이터를 &lt;code class=&quot;language-text&quot;&gt;AWS OpenSearch&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;ElasticSearch&lt;/code&gt;가 받게 되고 &lt;code class=&quot;language-text&quot;&gt;Kibana&lt;/code&gt;를 통해 시각화하게 된다.&lt;/p&gt;
+&lt;h2 id=&quot;what-is-efk-stack&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#what-is-efk-stack&quot; aria-label=&quot;what is efk stack permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;What Is EFK Stack?&lt;/h2&gt;
+&lt;h3 id=&quot;elf-stack&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#elf-stack&quot; aria-label=&quot;elf stack permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;ELF Stack&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 66.06060606060606%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAACUUlEQVQ4y3WSO4tTQRTH71cRSxttrCzEws7CQlQUv4CIKWQhhTZa2FkIaqVbiIKFCCq47iK4RFbNBrOgMSyuJCbX7NzX3Pd77t8z995c46oHDjPMmfnN/zwU1KbHGb7YLrQ4RSQK5EVRBQpRrWEf+HYRsFax14pXA4QPOkinJhRN0+Byjk+WjUNPn+GDZkEiUiEgpNOecQe3rpxC+24LPbUP+ZfKGGw/QE7x1eNLUFvLJVzJ85xECIyCCK93GXb8EHGtMMgFYrpkOC7OX7+Bg8sreDiLpCbwMIKf5cjozuHTJ3Hi5SMYhFfmsrUkwaZpwknzEjQHFnXqXcfE7e0e+voUmJdDGom51+2gvbWBnsGgGATxbQdbtoUDzx+ja+iQ1+dAaY7rgo1/wJwx7E6m8Hy/ql0NDigDS/2JjEQpsk6SoEYh7o+2sRN4sAnEbBs8in8LocdO/cEfDaFzUbvclynLf5I6i5T8exSBEYyn2YISASemM2qg4zjlWoqp46XLpnBSktHjj5aGc+tvsKbqJZT6glAUTVrSPGppGASICByGYRNrgFJhGSAl7yyGm5+/YsPgiCmQibopZb4J4tEdxO7wnykvWtNlIwEmNNROnhKoGhufRkomJbIQSWcfDXarpmQVaEFhAxyNx7B1hnXNx/4nb/FeN5vBlu6RyoAeXDp7BEcvHMPlQQ92HC2A9ij0fA8J1XDocyz1hjSLMeh/ghX1mFWFX3mxhjNXr6E96MKl8fgvcL4J6aEERSJHIqoxWEyHcxOz6QScadU5ir/qJ+0XMT/VvxEqrd0AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;elk-stack&quot;
+        title=&quot;elk-stack&quot;
+        src=&quot;/static/640484ec2c0ac5a1f98c579b43eca655/7c811/elk-stack.png&quot;
+        srcset=&quot;/static/640484ec2c0ac5a1f98c579b43eca655/103f2/elk-stack.png 165w,
+/static/640484ec2c0ac5a1f98c579b43eca655/748ba/elk-stack.png 330w,
+/static/640484ec2c0ac5a1f98c579b43eca655/7c811/elk-stack.png 660w,
+/static/640484ec2c0ac5a1f98c579b43eca655/d28e0/elk-stack.png 990w,
+/static/640484ec2c0ac5a1f98c579b43eca655/bb51b/elk-stack.png 1320w,
+/static/640484ec2c0ac5a1f98c579b43eca655/1d574/elk-stack.png 1510w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;ELK Stack&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;ElasticSearch&lt;/code&gt; + &lt;code class=&quot;language-text&quot;&gt;Logstash&lt;/code&gt; + &lt;code class=&quot;language-text&quot;&gt;Kibana&lt;/code&gt;의 로그 분석 프로세스를 지칭한다.&lt;/p&gt;
+&lt;p&gt;하지만 이 중 &lt;code class=&quot;language-text&quot;&gt;Logstash&lt;/code&gt;보다 &lt;code class=&quot;language-text&quot;&gt;fluent-bit&lt;/code&gt;이 쿠버네티스 환경에서 최적화 되어있는 시스템 구축 시 많이 사용되기 때문에 &lt;code class=&quot;language-text&quot;&gt;Fluent-bit&lt;/code&gt;를 선택하였다.&lt;/p&gt;
+&lt;h3 id=&quot;efk-stack&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#efk-stack&quot; aria-label=&quot;efk stack permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;EFK Stack&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 57.57575757575757%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAABYlAAAWJQFJUiTwAAAB0UlEQVQoz31T227bMAz1/wN73FcMG7a3/cGAvQx7GTYUbdLUju3Y8lWSZVnSGanZqZsWIyBTMclzyEMnMTbg1+OMRtQQdY22aeguMBuDaCFgWRxfcJ97pEWPVlRoGhFz+77DZt57JKMJ+HmYcakq5OUFxaWmew2pJywBcP4Z8PfZ4XDuKV4iv1QoKU+0LawHFr8CpsOMp15DU4mwwGmw8V4oh3uh0NMEwTkIIj42CmIOMX7qLRrKlwTEeWe5EDkBTgQ9uYC6G/HwlCMrK9R1AzkZcGyhDh0BWvKaWtHzgoe0wOO5iNN0wwhNeYYwYoc8ClvZS3y7OyI9nZCSRiH4fxJ6RyMv9DtcNf1+zHB3OBJoitFMq4IrID+4VX5hqXBQGrNbYnDD8NQdA/Lxay5PoGhxjoj53XYS7IwBWGAudOT12CH78xHWKmhakqFuLC2ICazHm5ZszNuZCUlbKqLgpczx7utn1FIhzzLStoahGGtrncdtLZ/kubvwgsk7Fz0/vZ5ffGu7mV7VJXuwyLJ6z5r2CurTDyzaQE9TJOGN7/Num7nRMFyXwNa3Hd5/+IKBtOvoX3ElfQPov4Ds5ThikCOqWUFKCaUUhmHANE2vgPf2F26Dpyn8tcktAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;efk-stack&quot;
+        title=&quot;efk-stack&quot;
+        src=&quot;/static/5c14ae946911c993953bc437f3538268/7c811/efk-stack.png&quot;
+        srcset=&quot;/static/5c14ae946911c993953bc437f3538268/103f2/efk-stack.png 165w,
+/static/5c14ae946911c993953bc437f3538268/748ba/efk-stack.png 330w,
+/static/5c14ae946911c993953bc437f3538268/7c811/efk-stack.png 660w,
+/static/5c14ae946911c993953bc437f3538268/d28e0/efk-stack.png 990w,
+/static/5c14ae946911c993953bc437f3538268/bb51b/efk-stack.png 1320w,
+/static/5c14ae946911c993953bc437f3538268/602ac/efk-stack.png 3062w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Fluent-bit&lt;/code&gt; : 로그를 수집해서 &lt;code class=&quot;language-text&quot;&gt;Elasticsearch&lt;/code&gt;로 전달&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Elasticsearch&lt;/code&gt; : &lt;code class=&quot;language-text&quot;&gt;Fluentd&lt;/code&gt;로부터 받은 데이터를 검색 및 분석하여 저장&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Kibana&lt;/code&gt; : &lt;code class=&quot;language-text&quot;&gt;Elasticsearch&lt;/code&gt;의 빠른 검색능력을 통해 데이터 시각화&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;사내-efk-stack&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%82%AC%EB%82%B4-efk-stack&quot; aria-label=&quot;사내 efk stack permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;사내 EFK Stack&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.36363636363636%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAIAAADwazoUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1klEQVQoz22Rz24SURjFh9ouBNSlmmiiJq6qG0x8AR/Cta/h2kXT2MQncOOfuO5KJbErysDciaWhpBbbQhk0QIX5ywBz7zlephU1enOSe7/k++WcnGuUW9PHW8F18iZ5C7gNXAWeKDCJEDaY1BjtIlhIj3thr3a0L5JZbLxQyphh9XMvN4oNIgMaZA7sR8eqV3q3bg2+VBhV4Vn0fykQ9E0Vd4zngGbudoPcOLkgk+V0vEx+C77y1DQ3bd+xlF/RMDwbnsbE/OGaatwxNvQ2cKfxI+tPDSWX5jDz5PfgEIPyh5didGwhhTkVjAQDm/EOQwsTJ3UGVltuLpxlpDaXy254aYau39Tw1hvhti3lVeSoWt0UTl3I/vbAKg47xYl3dAbzRnN0MYWXpMw4zpUodnwdu1wrirBryRT+9NpuCzs8LZVqRffk4wJG4WCY9yd/xQ4PVb/8ds0aHOiGKsr9X+yNdPta28+OkxWZrCwKmzub9ns7SJ11VWlh9nlhni7s5Lywwk4/O1x8FfLgYNySvdKrZ9X+vslIw1X6C1n0tlXcNZrAI6XukwXyAfAQuAc8BSknKmpS1jluMGwg3PtDdURNqJmOTOpVpQj8Vnr0LSWUwr/nbOEn6LEjrywHZeQAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;ower-stack&quot;
+        title=&quot;ower-stack&quot;
+        src=&quot;/static/c348a5046b3739f5c48aff0e160f9cba/7c811/ower-stack.png&quot;
+        srcset=&quot;/static/c348a5046b3739f5c48aff0e160f9cba/103f2/ower-stack.png 165w,
+/static/c348a5046b3739f5c48aff0e160f9cba/748ba/ower-stack.png 330w,
+/static/c348a5046b3739f5c48aff0e160f9cba/7c811/ower-stack.png 660w,
+/static/c348a5046b3739f5c48aff0e160f9cba/a91f8/ower-stack.png 960w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;k8s&lt;/code&gt;내 파드들의 로그를 수집하는 &lt;code class=&quot;language-text&quot;&gt;fluent-bit&lt;/code&gt;가 노드별로 &lt;code class=&quot;language-text&quot;&gt;DaemonSet&lt;/code&gt;에 존재하고 &lt;code class=&quot;language-text&quot;&gt;fluent-bit&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;AWS Kinesis Datafirehose&lt;/code&gt;를 통해 &lt;code class=&quot;language-text&quot;&gt;AWS OpenSearch&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;ElasticSearch&lt;/code&gt;로 전송하며 &lt;code class=&quot;language-text&quot;&gt;Kibana&lt;/code&gt;를 통해 시각화 하게 구성하였다.&lt;/p&gt;
+&lt;h2 id=&quot;set-a-efk-stack&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#set-a-efk-stack&quot; aria-label=&quot;set a efk stack permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Set a EFK Stack&lt;/h2&gt;
+&lt;h3 id=&quot;install-fluent-bit&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#install-fluent-bit&quot; aria-label=&quot;install fluent bit permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Install Fluent-bit&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;## create k8s namespace&lt;/span&gt;
+kubectl create ns logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;먼저 &lt;code class=&quot;language-text&quot;&gt;loggging&lt;/code&gt; 전용 &lt;code class=&quot;language-text&quot;&gt;namespace&lt;/code&gt;를 생성한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;## helm repo add&lt;/span&gt;
+helm repo &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; fluent https://fluent.github.io/helm-charts&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;그 후 &lt;code class=&quot;language-text&quot;&gt;helm&lt;/code&gt;을 통해 &lt;code class=&quot;language-text&quot;&gt;fluent chart&lt;/code&gt;를 다운로드한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;## helm install&lt;/span&gt;
+helm upgrade --install fluent-bit fluent/fluent-bit -n logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;k8s cluster&lt;/code&gt;에 해당 &lt;code class=&quot;language-text&quot;&gt;helm repo&lt;/code&gt;를 &lt;code class=&quot;language-text&quot;&gt;logging namespace&lt;/code&gt;에 설치합니다.&lt;/p&gt;
+&lt;h5 id=&quot;result&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#result&quot; aria-label=&quot;result permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Result&lt;/h5&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 550px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 18.78787878787879%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA1ElEQVQY02MQklH6zyMk9p+Dhx9Mc/IJAbHgfwYGBjgWkJT/zyMs/p+dixeshotf6D87N+9/fnEZMJ9bUBSsh4WN4z9DQPXU/97F3f898tv+B9XN/B/ds+p/dPfK/4E10/8H1c4A075lE/57FnT898hr++9T0vvfPbflP0gfiO2UWv3fp7Tvf2zfmv+xvWv+M9jGFv439I7+bxac+t8hsQxsiH/lZDANMXDaf8eUqv82MQVg7JBc8d8mOv+/a2bDf+uoPDB2SCoH6wmomgLyEcN/amIAEIGFRr9LSyMAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;namespace&quot;
+        title=&quot;namespace&quot;
+        src=&quot;/static/27cf6f9d8259e1fa3cc82c25a2f89d22/8c3ad/pod-namespace.png&quot;
+        srcset=&quot;/static/27cf6f9d8259e1fa3cc82c25a2f89d22/103f2/pod-namespace.png 165w,
+/static/27cf6f9d8259e1fa3cc82c25a2f89d22/748ba/pod-namespace.png 330w,
+/static/27cf6f9d8259e1fa3cc82c25a2f89d22/8c3ad/pod-namespace.png 550w&quot;
+        sizes=&quot;(max-width: 550px) 100vw, 550px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&quot;set-aws-kinesis-data-firehose&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#set-aws-kinesis-data-firehose&quot; aria-label=&quot;set aws kinesis data firehose permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Set AWS Kinesis Data Firehose&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;AWS Kinesis Data Firehose를 생성하기 전 AWS Opensearch Domain과 백업용 AWS S3 Buckect을 생성해야 한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 29.09090909090909%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAAsTAAALEwEAmpwYAAABAUlEQVQY02VQyU7FMAzs/38Sv8CBAycOSFx4tK9p1mZPO9guEpslKxNrMpnxtCgNax32GP/3vv+6xz/Ye4+wR4T3F4TXR3i7YbrdPlBqRa3t6tbk3uhsvdPswlU437gzrxSkXJDfnhCeH+D1HVPOGZ0e5pJhg8FxHOJAqU1chBDkHGPgvq7iivlaG8F7TNCxowGCJ3xVP4gUlWB2MM8zjLEUaRdRrnVVcM5fWCksy4JUGrZQcB6D3P4QHCToshHMsRQ9YAeJEqSUZG6Mkb1ysbClD2vrsKnhPE/hTrwniVwzdFCEhwgsyx2aBByJeh8kMruyzgmf3TInUMzVJ9k9r+oTs+HPpYxyBbMAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;aws-kinesis&quot;
+        title=&quot;aws-kinesis&quot;
+        src=&quot;/static/ac02283a517640d5bbe8188706120d7e/7c811/aws-kinesis.png&quot;
+        srcset=&quot;/static/ac02283a517640d5bbe8188706120d7e/103f2/aws-kinesis.png 165w,
+/static/ac02283a517640d5bbe8188706120d7e/748ba/aws-kinesis.png 330w,
+/static/ac02283a517640d5bbe8188706120d7e/7c811/aws-kinesis.png 660w,
+/static/ac02283a517640d5bbe8188706120d7e/d28e0/aws-kinesis.png 990w,
+/static/ac02283a517640d5bbe8188706120d7e/bb51b/aws-kinesis.png 1320w,
+/static/ac02283a517640d5bbe8188706120d7e/80fb9/aws-kinesis.png 3040w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;왼쪽 상단에 전송스트림 생성을 클릭한다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 34.54545454545455%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA7ElEQVQoz3WRiW6EIBRF+f8PnKmNncykTZcoiiiyqNxyiVU7iSTHx9suyBO1lCjfbri+FLjfHxhHmxg3zGHPnDG7773/h3UOoqpqFMUrLpcryvKGpmmhVIdWKTRtu/utguo6SNnkOH2XBEIIWYyWvuDHTzPmZcE0TbDWwaUC53wuyHi/WbvGKDKxb96hqOiHHo+PLyg9IMaIJQlnuE/E1R59NvvU/LzYJ/gWehgRUhFXXBPHk8+I6wGEizHR9z3eP7/xU8n0PhJ1LfNv/wkvJzcMZzccjIFOop3WG4yN1q4TfyLFOXlOm+95hLlf8RkgiIbCymsAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;kinesis-1&quot;
+        title=&quot;kinesis-1&quot;
+        src=&quot;/static/b9e4ea916993e0be98608e5709a8c832/7c811/kinesis-1.png&quot;
+        srcset=&quot;/static/b9e4ea916993e0be98608e5709a8c832/103f2/kinesis-1.png 165w,
+/static/b9e4ea916993e0be98608e5709a8c832/748ba/kinesis-1.png 330w,
+/static/b9e4ea916993e0be98608e5709a8c832/7c811/kinesis-1.png 660w,
+/static/b9e4ea916993e0be98608e5709a8c832/d28e0/kinesis-1.png 990w,
+/static/b9e4ea916993e0be98608e5709a8c832/bb51b/kinesis-1.png 1320w,
+/static/b9e4ea916993e0be98608e5709a8c832/f0faf/kinesis-1.png 1644w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;소스 및 대상을 선택한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;소스 : &lt;code class=&quot;language-text&quot;&gt;Direct PUT&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;대상 : &lt;code class=&quot;language-text&quot;&gt;Amazon OpenSearch Service&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 87.87878787878788%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAYAAABb0P4QAAAACXBIWXMAAAsTAAALEwEAmpwYAAABv0lEQVQ4y51Ui3KCMBDk/39SbWsFeYc3GK63C1Gk4Ngys3Pkkix7L7zT6UPOF1/qtpOu66QF2vZfKKtKvMPxKIfTp4RJJlmWSVXV0vc9yf+KCoRgbpqGi6IouCHjKNZaud1utEuMuqcHFu+PBzzet4Z78X0Jgqv4QaAqc6l1o9UU2FFJ9eKgxCDvh0Hy3BBYGxWQpBkBH+55zhnFicRJShtcQ/qwV9U1lQBWgTwZU1Ah0pOqAIjAOxVGUTzlbJU3FKdpWlrsT3md7N6Ds14QRhqyhppPX4GqCSVRlCVVUZmuc1XXaN7trNqBhOr3QJIbwzBwaZ3orWdckT0Rfp3PmreYzq2qbmHQ4jiSX4SJFgIhkvANMoSKkHF2kxBFQTLrumERUFWkgVbh/LDOb1dkT4QoCnqRRdHDrgC4TDuTuj1Y9KPdU4hwy7K6K3nneVkUtEycJMwLSEk8vxflrBQf1KZdXt4l9HXkXL+hfTAhCA0EnWto2Lmye7gTdvNENJzflupA2L2YiL3wcddLVVGohUFvQUXfO/T8QQCP39nDx7X6l4PA0UN+UOEMfxFjOFqYGjeCXM9jeF8vgMjc/COyH2t9firw9KTTAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;kinesis-2&quot;
+        title=&quot;kinesis-2&quot;
+        src=&quot;/static/72a105e23c12af891709a5695912cbec/7c811/kinesis-2.png&quot;
+        srcset=&quot;/static/72a105e23c12af891709a5695912cbec/103f2/kinesis-2.png 165w,
+/static/72a105e23c12af891709a5695912cbec/748ba/kinesis-2.png 330w,
+/static/72a105e23c12af891709a5695912cbec/7c811/kinesis-2.png 660w,
+/static/72a105e23c12af891709a5695912cbec/d28e0/kinesis-2.png 990w,
+/static/72a105e23c12af891709a5695912cbec/bb51b/kinesis-2.png 1320w,
+/static/72a105e23c12af891709a5695912cbec/4020a/kinesis-2.png 1642w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;미리 생성해둔 &lt;code class=&quot;language-text&quot;&gt;AWS OpenSearch Domain&lt;/code&gt;을 설정하고 특히, &lt;code class=&quot;language-text&quot;&gt;index&lt;/code&gt; 이름을 설정한다.
+해당 &lt;code class=&quot;language-text&quot;&gt;index&lt;/code&gt; 이름과 같은 &lt;code class=&quot;language-text&quot;&gt;fluent-bit&lt;/code&gt;로 부터 수집된 &lt;code class=&quot;language-text&quot;&gt;pod&lt;/code&gt;들의 로그가 수집된다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 80%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkklEQVQ4y5VU2W7CMBD0//8eL6UXUVsIsXPZzn1tdyxHoBBXNNLIxuDZ2Zkl4vMU0eFwoI/om0zdUts+h67rqO/7B4if85mOx1d6O32RyksyxjAsFWVJWmsqS+1WrY07K3HGaJqGhmFwJMMdxDSONM8TV+2ormt30VaVU3BD79DenYFsmqYHiOii6OU9YpVHShJJ1lqqmPiZZ1mW296vQlcNSZXR+XxxFXYveSwet+uPj4A/UinS7B0IO2+ua2meg4BFDYez3qnZU4QljK0oZ7NlmlGWF2x2y+SWDLc+whcQbL3is4LDUip1nxGi5L1lLgFlKZMlUrr0iqKgkYNa2w0h2DJYc1YGYrSKNgYmROWZlYQA9XuFxPxHtftgtlgJt98LDGsilQOSxgoL0izjYEYXTkjlrsKcPbvy/CkmQesosML4mfwXYc8K1hH5T8tTqOV5h2hX0QIsfr+EQ8H/Fm3H8ZUucUxZlruxgWqsK1Y/B78PdSQw4W4WmQiAj/Cu5JcEVuOHHC8NzCl+C+CeK7TBL2Nt4msmDA0KAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;kinesis-3&quot;
+        title=&quot;kinesis-3&quot;
+        src=&quot;/static/411a01de054bb6e49347d57d373b6a07/7c811/kinesis-3.png&quot;
+        srcset=&quot;/static/411a01de054bb6e49347d57d373b6a07/103f2/kinesis-3.png 165w,
+/static/411a01de054bb6e49347d57d373b6a07/748ba/kinesis-3.png 330w,
+/static/411a01de054bb6e49347d57d373b6a07/7c811/kinesis-3.png 660w,
+/static/411a01de054bb6e49347d57d373b6a07/d28e0/kinesis-3.png 990w,
+/static/411a01de054bb6e49347d57d373b6a07/bb51b/kinesis-3.png 1320w,
+/static/411a01de054bb6e49347d57d373b6a07/f4146/kinesis-3.png 1618w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;미리 생성해둔 백업용 &lt;code class=&quot;language-text&quot;&gt;AWS S3 Bucket&lt;/code&gt;을 설정한다.
+해당 &lt;code class=&quot;language-text&quot;&gt;AWS S3 Bucket&lt;/code&gt;에는 설정해놓은 버퍼와 파일 형태로 &lt;code class=&quot;language-text&quot;&gt;log&lt;/code&gt;들이 수집된다.&lt;/p&gt;
+&lt;h3 id=&quot;set-fluent-bit-configmap&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#set-fluent-bit-configmap&quot; aria-label=&quot;set fluent bit configmap permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Set Fluent-bit Configmap&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;apiVersion: v1
+data:
+  fluent-bit.conf: &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;SERVICE&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+        Parsers_File      parsers.conf
+        HTTP_Server       On
+        HTTP_Listen       &lt;span class=&quot;token number&quot;&gt;0.0&lt;/span&gt;.0.0
+        HTTP_Port         &lt;span class=&quot;token number&quot;&gt;2020&lt;/span&gt;
+
+    &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;INPUT&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+        Name              &lt;span class=&quot;token function&quot;&gt;tail&lt;/span&gt;
+        Path              /var/log/containers/front-end-app-*.log
+        DB                /var/log/flb_kube.db
+        Mem_Buf_Limit     10MB
+        Refresh_Interval  &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;
+        Tag               front-end
+        Parser            docker
+    &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;FILTER&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+        Name              record_modifier
+        Match             front-end
+        Whitelist_key     log
+    &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;OUTPUT&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+        Name              kinesis_firehose
+        Match             front-end
+        region            ap-northeast-2
+        delivery_stream   kinesis-app
+&lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;.
+
+kind: ConfigMap
+metadata:
+  creationTimestamp: &lt;span class=&quot;token string&quot;&gt;&quot;2022-05-30T05:43:33Z&quot;&lt;/span&gt;
+  labels:
+    k8s-app: fluent-bit
+  name: fluent-bit
+  namespace: logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 내용중 &lt;code class=&quot;language-text&quot;&gt;[INPUT]&lt;/code&gt; , &lt;code class=&quot;language-text&quot;&gt;[FILTER]&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;[OUTPUT]&lt;/code&gt; 에 내용을 수정한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;INPUT&lt;/code&gt; : 로그를 수집할 &lt;code class=&quot;language-text&quot;&gt;app log path&lt;/code&gt;를 작성한다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;FILTER&lt;/code&gt; : 해당 &lt;code class=&quot;language-text&quot;&gt;INPUT&lt;/code&gt; 의 &lt;code class=&quot;language-text&quot;&gt;Type&lt;/code&gt;을 작성한다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;OUTPUT&lt;/code&gt; : 수집된 로그들을 어느 곳으로 전송할지 설정합니다. (여기서는 &lt;code class=&quot;language-text&quot;&gt;AWS Kinesis delivery_stram&lt;/code&gt;을 작성한다.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;result-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#result-1&quot; aria-label=&quot;result 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Result&lt;/h4&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 36.96969696969697%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAz0lEQVQoz4WSjY6EIAyEff8XNaAYF135K84yaO82l9yuySgpn52WMszOYRxH2MnCWouUEmqtEJGuXApCCJ2hlmWBMQbTPCHnfHFV+n8xRgz7c8dj2xGydMVC1VuCIldy7z22Z+jxX7b+SFoRNBj4YkXnef4rVlmaPjGdY0KW+g3mfkzxu7EmZEt8GNTv+5oVknuP/eWqtlxuWIfBg2WMJhord8vc00FwULqnZj3hEROMW9v0HI4G6RFoQpHL2R8RZnZY17XpAd4Ov22dUROuX0zmJTWK2kKfAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;check-result&quot;
+        title=&quot;check-result&quot;
+        src=&quot;/static/25b2575fbec916ef6f8e088449d9659f/7c811/check-result.png&quot;
+        srcset=&quot;/static/25b2575fbec916ef6f8e088449d9659f/103f2/check-result.png 165w,
+/static/25b2575fbec916ef6f8e088449d9659f/748ba/check-result.png 330w,
+/static/25b2575fbec916ef6f8e088449d9659f/7c811/check-result.png 660w,
+/static/25b2575fbec916ef6f8e088449d9659f/d28e0/check-result.png 990w,
+/static/25b2575fbec916ef6f8e088449d9659f/bb51b/check-result.png 1320w,
+/static/25b2575fbec916ef6f8e088449d9659f/725bf/check-result.png 1998w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이제 AWS Kinesis로 접속하여 해당 DataFirehose에서 모니터링 탭에서 확인해보면 위의 사진 처럼 성공 그래프가 찍히는걸 볼 수 있다.&lt;/p&gt;
+&lt;h2 id=&quot;finish&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#finish&quot; aria-label=&quot;finish permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Finish&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 53.93939393939393%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABOElEQVQoz62R2XLDIAxF+f+P7EuT2rHjDTA7vhUEEpcuT/WMBoPE0b2Cdf0Nl+sHun7AMN4xDHfchsfaxvN8bOKUZ/jnj713I679CLlr7NpiVwbGOFjrYCi0sbS3ZaVz57GsGzYuMQuT75zr2KUjudNGhYESHooKlNI56b3HcRw50r/Wj3OlFAlQubnSBiHEZx0bpxWGYN7HAnXUnWNZ1gxORTEmYADnAtO8QAiZ86luJbWOVMdcF8HeLjeMXGOSFvOepLt8MdnS1D02wJlAGUj5tF83/hU4bxLaBiiKtCaFXLyA1UoID2BSJqTMytJ+S8AymgRlgh7Dkd0aFZguaNMAS6M/gZ4Gasv8nsCipCrMlovC+TTD75YJWEGuAa7nGR6vGS51hr8Bq1X7E7BYzsDQAJtHqU4+AeU4Vn700PaTAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;finish&quot;
+        title=&quot;finish&quot;
+        src=&quot;/static/546d4ff7d35c9318604966ab94cee3a1/7c811/finish.png&quot;
+        srcset=&quot;/static/546d4ff7d35c9318604966ab94cee3a1/103f2/finish.png 165w,
+/static/546d4ff7d35c9318604966ab94cee3a1/748ba/finish.png 330w,
+/static/546d4ff7d35c9318604966ab94cee3a1/7c811/finish.png 660w,
+/static/546d4ff7d35c9318604966ab94cee3a1/d28e0/finish.png 990w,
+/static/546d4ff7d35c9318604966ab94cee3a1/bb51b/finish.png 1320w,
+/static/546d4ff7d35c9318604966ab94cee3a1/80fb9/finish.png 3040w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;위의 과정을 모두 마쳤으면 &lt;code class=&quot;language-text&quot;&gt;AWS OpenSearch Domain&lt;/code&gt;으로 접속하여 &lt;code class=&quot;language-text&quot;&gt;kibana&lt;/code&gt;를 보자.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Index patterns&lt;/code&gt; 설정을 먼저 하고 &lt;code class=&quot;language-text&quot;&gt;kibana&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;Discover&lt;/code&gt; 메뉴에 접속하면 정상적으로 로그가 쌓이는 것을 확인할 수 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://nsxbaas.blog/2022/09/27/visualising-antrea-ids-logs/&quot;&gt;https://nsxbaas.blog/2022/09/27/visualising-antrea-ids-logs/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[ ⬆️ AWS EC2 Storage 용량 늘리기(scale-up)]]></title><description><![CDATA[들어가며  k8s를 운영하다보면 어느날 갑자기 resource 에 대한 부족으로 인해 문제가 생길 수 있다. 그럴때 AWS Console에 접속하여 해당 EC2 Instance의 storage 용량을 증가시켜 해결할 수 있다. WorkFlow…]]></description><link>https://leehosu.github.io/storage-scale-up</link><guid isPermaLink="false">https://leehosu.github.io/storage-scale-up</guid><category><![CDATA[Devops]]></category><category><![CDATA[AWS]]></category><category><![CDATA[EC2]]></category><pubDate>Thu, 20 Apr 2023 06:30:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
     &gt;
