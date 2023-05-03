@@ -1,4 +1,49 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Wed, 26 Apr 2023 05:50:07 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[Managing Kubernetes - 01.쿠버네티스란?]]></title><description><![CDATA[쿠버네티스란 쿠버네티스는 컨테이너화된 애플리케이션을 배포하기 위한 오픈 소스 오케스트레이터(orchestrator)입니다. 쿠버네티스는 애플리케이션 지향 API로 구글이 컨테이너에 확장 가능하고 안정적인 시스템을 배포해온 1…]]></description><link>https://leehosu.github.io/managing-kubernetes-01</link><guid isPermaLink="false">https://leehosu.github.io/managing-kubernetes-01</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Wed, 26 Apr 2023 06:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Wed, 03 May 2023 06:40:53 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[kubelet이란?]]></title><description><![CDATA[각 Node에는 ControlPlane과 통신하는 kubelet이 있습니다. kubelet은 각 노드에서 실행되는 기본 Node Agent입니다. 즉, 쿠블릿(kubelet…]]></description><link>https://leehosu.github.io/kubelet</link><guid isPermaLink="false">https://leehosu.github.io/kubelet</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Wed, 03 May 2023 06:40:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 79.39393939393939%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAABYlAAAWJQFJUiTwAAACD0lEQVQ4y41U246qQBDk/7/Jh032yQdNVJRko2tElovcBpGbgH26GkfJrieRpDMwNNVV1T0YdL9ut9tjvV6v1HWd3Ov9V9erd8bvl23b0na7pfl8LuvxeKTNZkPn81neNU0jgftXoH8A67qmJEmoLEsBuVwulKap7CmlKMsyuY/j+D1AyHUcRz5QKhXA0+lE0+mULMuSdbfbUZ7n7wHCu8ViIR8vlxbLtWi/39NsNhPpsAAB1m8Bwh8kY7XtgqqqZplKPF2v18IM0v8LOGw8u1lVFScreY7jlhn3dDgcaDKZkGmu2YJCio09HIfxfBgq9H3Hzcj4w5x+fvI7o5SCwGeQSPbRrKIo/zAUwNFUSfQ9CTgCJNhS2dOB5zHAOERy23bk+xE3IGOPFPuWssSUV0Xf3yl3PGNGN0JT47ihr6+EVitFYZiKjwh4qkfNgB/LpaKPD+Jkot/DD7nPGb1wt0v6/CS2Y2CsLww6rDAwd3GcsScN+9NIE1BJnwRU7/sBsCgKZlJy1JzT8f6Qq8cNfotkxzlKhOGJ5fsyd5CCJABqhgAMAo9zXN5P5AC4ritAD4a48TyfJbhyIgAEQByxJ8P+Aej7gYDAM6wYcpwmFBVAsNCVoiiSwIwBEJVRQDOEPOTats1qQiEARQBCYQFEIgYXR8vzPPnDaAn4UXT3OdGgpmlyl1cChFzkoA9YoeQfYSjPUWe3X+8AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;head&quot;
+        title=&quot;head&quot;
+        src=&quot;/static/d9b996a2585d14b35164061097a6cd46/7c811/head.png&quot;
+        srcset=&quot;/static/d9b996a2585d14b35164061097a6cd46/103f2/head.png 165w,
+/static/d9b996a2585d14b35164061097a6cd46/748ba/head.png 330w,
+/static/d9b996a2585d14b35164061097a6cd46/7c811/head.png 660w,
+/static/d9b996a2585d14b35164061097a6cd46/d28e0/head.png 990w,
+/static/d9b996a2585d14b35164061097a6cd46/bb51b/head.png 1320w,
+/static/d9b996a2585d14b35164061097a6cd46/c7591/head.png 1574w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;각 Node에는 ControlPlane과 통신하는 kubelet이 있습니다. kubelet은 각 노드에서 실행되는 기본 Node Agent입니다.&lt;/p&gt;
+&lt;p&gt;즉, 쿠블릿(kubelet)은 노드에서 컨테이너가 동작하도록 관리해 주는 핵심 요소입니다. 각 노드에서 파드를 생성하고 정상적으로 동작하는지 관리하는 역할을 담당하고 있으며, 실제로 우리가 쿠버네티스의 워크로드를 관리하기 위해 내려지는 명령은 kubelet을 통해 수행된다고 볼 수 있습니다.&lt;/p&gt;
+&lt;h2 id=&quot;작동-방식&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9E%91%EB%8F%99-%EB%B0%A9%EC%8B%9D&quot; aria-label=&quot;작동 방식 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;작동 방식&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;쿠버네티스 파드를 관리하기 위해 YAML 파일을 작성합니다.&lt;/li&gt;
+&lt;li&gt;kubectl 명령어를 통해 해당 명령을 쿠버네티스 클러스터에 적용합니다.&lt;/li&gt;
+&lt;li&gt;이때 YAML의 명령이 kube-apiserver로 전송된 후 kubelet으로 전달됩니다. &lt;/li&gt;
+&lt;li&gt;kubelet은 이 YAML을 통해 전달된 파드를 생성 혹은 변경하고, 이후 이 YAML에 명시된 컨테이너가 정상적으로 실행되고 있는지 확인합니다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;기능&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B8%B0%EB%8A%A5&quot; aria-label=&quot;기능 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;기능&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;kublet은 컨테이너가 포드에서 실행되게 합니다. 컨트롤 플레인에서 노드에 작업을 요청하는 경우 kubelet이 이 작업을 실행합니다.&lt;/li&gt;
+&lt;li&gt;api-server와 통신하며, PodSpecs라는 설정을 받아서 그 조건에 맞게 컨테이너를 실행하고 컨테이너가 정상정으로 실행되고 있는지 상태 체크를 진행합니다.&lt;/li&gt;
+&lt;li&gt;선언된 상태와 일치하지 않는 Pod가 있는지 확인하고, 어떤 Node에 Pod을 배치하면 좋을지 결정합니다.&lt;/li&gt;
+&lt;li&gt;어디에 배치할 지는 Scheduler가 결정하지만 실제로 Container Runtime(Docker등)에 배치를 명령하는 것은 kubelet입니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://velog.io/@squarebird/Worker-Node-Kubelet&quot;&gt;https://velog.io/@squarebird/Worker-Node-Kubelet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.redhat.com/ko/topics/containers/kubernetes-architecture&quot;&gt;https://www.redhat.com/ko/topics/containers/kubernetes-architecture&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.samsungsds.com/kr/insights/kubernetes-3.html&quot;&gt;https://www.samsungsds.com/kr/insights/kubernetes-3.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[Managing Kubernetes - 01.쿠버네티스란?]]></title><description><![CDATA[쿠버네티스란 쿠버네티스는 컨테이너화된 애플리케이션을 배포하기 위한 오픈 소스 오케스트레이터(orchestrator)입니다. 쿠버네티스는 애플리케이션 지향 API로 구글이 컨테이너에 확장 가능하고 안정적인 시스템을 배포해온 1…]]></description><link>https://leehosu.github.io/managing-kubernetes-01</link><guid isPermaLink="false">https://leehosu.github.io/managing-kubernetes-01</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Wed, 26 Apr 2023 06:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
     &gt;
@@ -399,19 +444,19 @@ metadata:
     &gt;
       &lt;span
     class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 53.93939393939393%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABNklEQVQoz62RyZLDIAxE+f+PnMuksjiOF4zZcY+kQBbPchpXqTBIPHULdTyd8Xk44nTu0F17dF2PS3df9/E4v+7iJa/wz5+ajcOyOljnsdpA4eF9RAgRnsL5QPtQVzqPCeM0Y9YGw0J3XHirU+d+wqhXxJjhQiJwgLVOkiklbNsmwf/O3c+ttTCrleYsJOfyqFNdPwoopkLds3SbtcY4TgLmolIYmKH1gtswYlmM5LluIrWRVBepK1Afhwuu2uNmAoaVpUe5yLYcdS874EAgAVKe99Os34HDbEhhhg1ZVlaolyewWcn5DmRlizGijPczA+toGKr4QdhuiwbkC87vgLXRn8BEAw11fg9gVdIUiuWqcHiZ4XfLBGyguANOrzPcnjMc2wx/Azar4SdgtSzAvAPuHqU5+QLyilbgxKxjjwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    style=&quot;padding-bottom: 53.93939393939393%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABOElEQVQoz62R2XLDIAxF+f+P7EuT2rHjDTA7vhUEEpcuT/WMBoPE0b2Cdf0Nl+sHun7AMN4xDHfchsfaxvN8bOKUZ/jnj713I679CLlr7NpiVwbGOFjrYCi0sbS3ZaVz57GsGzYuMQuT75zr2KUjudNGhYESHooKlNI56b3HcRw50r/Wj3OlFAlQubnSBiHEZx0bpxWGYN7HAnXUnWNZ1gxORTEmYADnAtO8QAiZ86luJbWOVMdcF8HeLjeMXGOSFvOepLt8MdnS1D02wJlAGUj5tF83/hU4bxLaBiiKtCaFXLyA1UoID2BSJqTMytJ+S8AymgRlgh7Dkd0aFZguaNMAS6M/gZ4Gasv8nsCipCrMlovC+TTD75YJWEGuAa7nGR6vGS51hr8Bq1X7E7BYzsDQAJtHqU4+AeU4Vn700PaTAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
   &gt;&lt;/span&gt;
   &lt;img
         class=&quot;gatsby-resp-image-image&quot;
         alt=&quot;finish&quot;
         title=&quot;finish&quot;
-        src=&quot;/static/54868a51b7225d80c95e7d823fb2f234/7c811/finish.png&quot;
-        srcset=&quot;/static/54868a51b7225d80c95e7d823fb2f234/103f2/finish.png 165w,
-/static/54868a51b7225d80c95e7d823fb2f234/748ba/finish.png 330w,
-/static/54868a51b7225d80c95e7d823fb2f234/7c811/finish.png 660w,
-/static/54868a51b7225d80c95e7d823fb2f234/d28e0/finish.png 990w,
-/static/54868a51b7225d80c95e7d823fb2f234/bb51b/finish.png 1320w,
-/static/54868a51b7225d80c95e7d823fb2f234/80fb9/finish.png 3040w&quot;
+        src=&quot;/static/546d4ff7d35c9318604966ab94cee3a1/7c811/finish.png&quot;
+        srcset=&quot;/static/546d4ff7d35c9318604966ab94cee3a1/103f2/finish.png 165w,
+/static/546d4ff7d35c9318604966ab94cee3a1/748ba/finish.png 330w,
+/static/546d4ff7d35c9318604966ab94cee3a1/7c811/finish.png 660w,
+/static/546d4ff7d35c9318604966ab94cee3a1/d28e0/finish.png 990w,
+/static/546d4ff7d35c9318604966ab94cee3a1/bb51b/finish.png 1320w,
+/static/546d4ff7d35c9318604966ab94cee3a1/80fb9/finish.png 3040w&quot;
         sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
         style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
