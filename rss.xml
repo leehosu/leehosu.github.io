@@ -1,4 +1,229 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Wed, 10 May 2023 07:16:03 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[Managing Kubernetes - 02.쿠버네티스 살펴보기]]></title><description><![CDATA[쿠버네티스 살펴보기 쿠버네티스 API…]]></description><link>https://leehosu.github.io/managing-kubernetes-02</link><guid isPermaLink="false">https://leehosu.github.io/managing-kubernetes-02</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Sat, 06 May 2023 06:00:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;쿠버네티스-살펴보기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0&quot; aria-label=&quot;쿠버네티스 살펴보기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;쿠버네티스 살펴보기&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sat, 10 Jun 2023 06:48:39 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[Managing Kubernetes - 03.아키텍처]]></title><description><![CDATA[3. 아키텍처  쿠버네티스는 분산 시스템을 쉽게 배포하고 관리할 수 있도록 고안되었는데, 쿠버네티스는 그 자체로도 관리가 필요한 분산 시스템이다. 개념 시스템이 꽤 복잡해 보일 수 있지만 사실은 비교적 적은 수의 몇몇 개념을 토대로 하고 이 개념들이 전체적으로 반복된다.  선언적 구성(Declarative…]]></description><link>https://leehosu.github.io/managing-kubernetes-03</link><guid isPermaLink="false">https://leehosu.github.io/managing-kubernetes-03</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Sat, 10 Jun 2023 07:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;3-아키텍처&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#3-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98&quot; aria-label=&quot;3 아키텍처 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;3. 아키텍처&lt;/h1&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.36363636363636%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAA7DAAAOwwHHb6hkAAACmElEQVQoz02Ty2sTURTGB/E/ELfiwo3of+HehaCCVnygoKAbQQWVYn1VUHQjuhIRxVJFWlvpE9sapPah1bS1xjRtJs07mUkyk8m8Mz/vNBo8l497uRy+c8/3nSvFOu4SP9BF4ch9YgdvtnDoFpmD3ZTPPyGwHcIIgmATYZydfseukYfsiTxhd/899o49Ysf4Awbzv5CUsTnUoRn0sa8oI7OoAuXhL1TCu6nvOJaF32yGjG3CiVSM55EBXn5+z8voJK/TUV7I31jVy0hhfc23BSw0z8Shyb8ITyGZ53n8fSZB04d8Dm7fx794DSKz7fxA5EpmvYGpGehVA7VcQ1F0HDskCNqJvidIXFHKrGM3dAr1Ep0LDzkzeZl3G8MtMgHH95AGozpX+ipc6FG42l/h6HOFaELhd6bG1WGN/u9V/EqOhlGjZmrUnQZVU2c6+Y3e+QHmElHyhTIlpULNMJBiRZuPaw6fkh4zaY8p2cMV5UZXNLZez3K8t4hp17BFO//EqAuj5KLGalZlJbHBj58xln6vUVArSJgGVEpClw0oZMQuUC0yuaiw7dIc51/HEZqA5262HXgOli4KLC3iLizgFfL4oSxBs9Vy9fFTcidOkzrcQe7YKZL7D0DPKybkJlsurnCyJ41hKmj1CoZRxbB07FKBzI1O4hfOiakYamno+7ghoZ9NESSWaK4vEawt466vgWWQVet0j2b5sNII7cMTaHg2lnih6ujcSTzjzHwXb/KjbfNcMQGSn+nFieyj1LeT8tvteKsPWv66etjIpn+u6/J/mLbFcirOeDTCQnwZOZUlnSuiahqSW8/iFOepyRNoyXFsNYbrBTiCxLIFLLtNuPlbxGqIYc9ky8hyjsR6mlgiyaqcplSt8geTARFhgeSVEAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;overview&quot;
+        title=&quot;overview&quot;
+        src=&quot;/static/e6e20cfb1bec67d40ec9496ffaeb7515/7c811/kubernetes-architecture.png&quot;
+        srcset=&quot;/static/e6e20cfb1bec67d40ec9496ffaeb7515/103f2/kubernetes-architecture.png 165w,
+/static/e6e20cfb1bec67d40ec9496ffaeb7515/748ba/kubernetes-architecture.png 330w,
+/static/e6e20cfb1bec67d40ec9496ffaeb7515/7c811/kubernetes-architecture.png 660w,
+/static/e6e20cfb1bec67d40ec9496ffaeb7515/d28e0/kubernetes-architecture.png 990w,
+/static/e6e20cfb1bec67d40ec9496ffaeb7515/bb51b/kubernetes-architecture.png 1320w,
+/static/e6e20cfb1bec67d40ec9496ffaeb7515/2cf9f/kubernetes-architecture.png 1936w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;쿠버네티스는 분산 시스템을 쉽게 배포하고 관리할 수 있도록 고안되었는데, 쿠버네티스는 그 자체로도 관리가 필요한 분산 시스템이다.&lt;/p&gt;
+&lt;h2 id=&quot;개념&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B0%9C%EB%85%90&quot; aria-label=&quot;개념 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;개념&lt;/h2&gt;
+&lt;p&gt;시스템이 꽤 복잡해 보일 수 있지만 사실은 비교적 적은 수의 몇몇 개념을 토대로 하고 이 개념들이 전체적으로 반복된다. &lt;/p&gt;
+&lt;h3 id=&quot;선언적-구성declarative-configuration&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%84%A0%EC%96%B8%EC%A0%81-%EA%B5%AC%EC%84%B1declarative-configuration&quot; aria-label=&quot;선언적 구성declarative configuration permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;선언적 구성(Declarative Configuration)&lt;/h3&gt;
+&lt;p&gt;사용자가 결과를 생성하기 위해 원하는 상태를 선언하는 선언적 구성(declarative configuration)은 쿠버네티스 개발의 주요 동력 중 하나이다. &lt;/p&gt;
+&lt;p&gt;선언은 실제로 구조화된 YAML 또는 JSON 문서의 형태로 이루어진다.&lt;/p&gt;
+&lt;p&gt;시스템에 일련의 명령보다 더 많은 것을 제공하며 ‘원하는 상태’를 선언하여 개발자가 원하는 상태를 이해하고 사용자 상호작용과 관계없이 능동적인 조치를 할 수 있다.&lt;/p&gt;
+&lt;p&gt;즉, 자동으로 자가 수정과 복구가 가능하다. (이는 개발자에게 매우 중요한 기능인데 한밤중에 시스템이 개발자를 깨우지 않고도 스스로 복구가 가능)&lt;/p&gt;
+&lt;h3 id=&quot;조정-또는-컨트롤러&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%A1%B0%EC%A0%95-%EB%98%90%EB%8A%94-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC&quot; aria-label=&quot;조정 또는 컨트롤러 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;조정 또는 컨트롤러&lt;/h3&gt;
+&lt;h4 id=&quot;조정&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%A1%B0%EC%A0%95&quot; aria-label=&quot;조정 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;조정&lt;/h4&gt;
+&lt;p&gt;자가 복구나 자가 수정을 수행하기 위해 쿠버네티스는 많은 독립 조정(Independent Reconciliation) 또는 제어 루프(Control Loops)를 기반으로 구성&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;단일 상태 기반 접근 방식(단일 시스템 설계)&lt;/li&gt;
+&lt;li&gt;시스템이 모든 프로세스의 상태를 인식하고 모든 것을 조화롭게 발전시키기 위해 완전한 관점 사용&lt;/li&gt;
+&lt;li&gt;시스템 작동이 중앙 집중화되어 이해하기 쉬움.&lt;/li&gt;
+&lt;li&gt;안정적이지 않다.&lt;/li&gt;
+&lt;li&gt;예기치 않은 일이 발생하면 전체 시스템이 다운될 수 있음&lt;/li&gt;
+&lt;li&gt;분산형 컨트롤러 기반 접근 방식&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;많은 수의 컨트롤러로 구성되어 각 컨트롤러는 자체 독립 조정 루프를 수행&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;독립적인 조정 루프&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;원하는 상태를 얻는다.&lt;/li&gt;
+&lt;li&gt;관찰한다.&lt;/li&gt;
+&lt;li&gt;관찰 결과와 원하는 상태 사이의 차이점을 찾는다.&lt;/li&gt;
+&lt;li&gt;관찰 결과와 원하는 상태가 일치하도록 조치를 취한다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;각 컨트롤러는 다른 나머지 부분과는 완전히 무관&lt;/li&gt;
+&lt;li&gt;작은 문제에 집중하고 해결하면 전체 시스템을 훨씬 더 안정적으로 만듬.&lt;/li&gt;
+&lt;li&gt;시스템의 작동 방식에 대한 설명을 찾을 수 있는 단일 위치가 없으므로 시스템의 전반적인 동작을 이해하기 어려움.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;쿠버네티스-컨트롤러&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC&quot; aria-label=&quot;쿠버네티스 컨트롤러 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;쿠버네티스 컨트롤러&lt;/h4&gt;
+&lt;p&gt;쿠버네티스 API 서버에 대한 선언문으로 원하는 상태를 관찰&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;동작 원리&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# 사용자는 &quot;웹 서버의 레플리카 4개가 필요합니다.&quot; 라고 선언&lt;/span&gt;
+&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 쿠버네티스 복제 컨트롤러는 원하는 상태를 받아들이고 현재 상태를 관찰.
+&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 컨트롤러는 현재 상태와 원하는 상태 사이의 차이점을 찾음.
+&lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 원하는 상태와 일치하도록 컨테이너를 생성/삭제 작업 수행.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;암시적-또는-동적-그룹화&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%95%94%EC%8B%9C%EC%A0%81-%EB%98%90%EB%8A%94-%EB%8F%99%EC%A0%81-%EA%B7%B8%EB%A3%B9%ED%99%94&quot; aria-label=&quot;암시적 또는 동적 그룹화 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;암시적 또는 동적 그룹화&lt;/h3&gt;
+&lt;p&gt;어떤 것을 한 집합으로 묶을 때에는 두 가지 접근법이 존재.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;명시적/정적 그룹화&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;모든 그룹이 구체적인 목록으로 정의(ex. 내 팀원은 alice, bob, ted입니다.)&lt;/li&gt;
+&lt;li&gt;목록은 그룹의 멤버 이름을 명시적으로 호출하며 목록은 정적이다.&lt;/li&gt;
+&lt;li&gt;목록 자체가 변경되지 않으면 멤버 자격이 변경되지 않는다.&lt;/li&gt;
+&lt;li&gt;그룹에 누가 있는지 알기 위해서는 그저 목록을 읽기만 하면 된다.&lt;/li&gt;
+&lt;li&gt;유연성이 부족하여 동적으로 변화하는 것에 대응 하기 어렵다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;암시적/동적 그룹화&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;멤버 목록 대신 그룹을 ‘우리 팀원은 오렌지색의 옷을 입고 있는 사람들입니다’ 와 같은 문구로 정의&lt;/li&gt;
+&lt;li&gt;그룹의 정의에는 일일이 이름이 적힌 멤버가 없다.&lt;/li&gt;
+&lt;li&gt;존재하는 사람들에 대한 그룹을 정의&lt;/li&gt;
+&lt;li&gt;복잡성을 초래할 수 있지만, 훨씬 더 유연하고 안정적이며 정적 목록을 지속해서 조정하지 않고도 변화에 대응 할 수 있다.&lt;/li&gt;
+&lt;li&gt;쿠버네티스에서는 레이블, 레이블 쿼리 또는 레이블 셀렉터로 수행된다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;구조&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B5%AC%EC%A1%B0&quot; aria-label=&quot;구조 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;구조&lt;/h3&gt;
+&lt;h4 id=&quot;유닉스-철학&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9C%A0%EB%8B%89%EC%8A%A4-%EC%B2%A0%ED%95%99&quot; aria-label=&quot;유닉스 철학 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;유닉스 철학&lt;/h4&gt;
+&lt;p&gt;첫 번째 원칙은 쿠버네티스가 일반적인 유닉스 철학인 ‘각자 일을 잘 수행하는’ 작은 조각, 즉 모듈화를 기반으로 한다.&lt;/p&gt;
+&lt;p&gt;쿠버네티스는 단일 바이너리에서 다양한 기능을 모두 구현하는 단일 애플리케이션이 아니다.&lt;/p&gt;
+&lt;p&gt;쿠버네티스라는 전체 시스템을 구현하기 위해 서로 모르는 다른 애플리케이션의 모음이다.&lt;/p&gt;
+&lt;p&gt;다수의 상이한 기능을 함께 그룹화하는 바이너리가 있을지라도 그 기능들은 해당 바이너리 내에서 거의 독립적으로 유지된다.&lt;/p&gt;
+&lt;p&gt;구성 요소 간의 긴밀한 결합 때문이 아니라 쿠버네티스를 쉽게 배포하고 관리할 수 있도록 컴파일 된다.&lt;/p&gt;
+&lt;p&gt;→ 이 모듈 방식의 장점은 쿠버네티스가 유연하다는 것.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;시스템의 큰 부분을 교체할 때도 다른 부분을 고려하거나 신경 쓰지 않고 그 부분만 교체할 수 있다.&lt;/li&gt;
+&lt;li&gt;시스템을 배포하고 모니터링하고 이애하기 위해서 여러 가지 툴에 정보와 구성을 통합해야하기 때문에 복잡하다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;api-기반-상호작용&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#api-%EA%B8%B0%EB%B0%98-%EC%83%81%ED%98%B8%EC%9E%91%EC%9A%A9&quot; aria-label=&quot;api 기반 상호작용 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;API 기반 상호작용&lt;/h4&gt;
+&lt;p&gt;쿠버네티스의 두 번째 구조 설계 원칙은 구성 요소 간의 모든 상호작용이 중앙 집중식 API로 이루어진다는 것이다.&lt;/p&gt;
+&lt;p&gt;→ 구성 요소가 사용하는 API가 다른 모든 클러스터 사용자가 사용하는 API와 완전 동일&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;시스템의 어느 부분도 다른 어떤 부분보다 특권을 갖지 않고 상호간에 직접 접근할 수 없다.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;API서버를 제외하고는 내부에 대한 접근 권한이 전혀 없다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;모든 구성 요소를 대체 구현하여 교체할 수 있으며 핵심 구성요소를 재구성하지 않고도 새로운 기능을 추가할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;구성-요소&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C&quot; aria-label=&quot;구성 요소 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;구성 요소&lt;/h3&gt;
+&lt;p&gt;쿠버네티스는 다수 장비를 하나의 단위로 그룹화하여 API로 사용할 수 있는 시스템&lt;/p&gt;
+&lt;p&gt;쿠버네티스 구현 시에는 실제로 장비 집합을 워커 노드와 헤드 노드라는 두 그룹으로 나눈다.&lt;/p&gt;
+&lt;p&gt;쿠버네티스 인프라를 구성하는 대부분의 구성 요소는 헤드, 제어, 플랜 노드에서 실행된다.&lt;/p&gt;
+&lt;p&gt;클러스터에는 일반적으로 노드 수가 1개, 3개, 5개로 제한되어 있다. &lt;/p&gt;
+&lt;p&gt;이 노드에서는 etcd나 API 서버와 같은 쿠버네티스를 구성하는 요소를 실행한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;노드의 수는 홀수인데 쿼럼에 대해 Raft/Paxos 알고리즘을 사용하여 쿼럼을 공유 상태로 유지&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;클러스터의 실제 작업은 워커 노드에서 수행된다.&lt;/p&gt;
+&lt;p&gt;쿠버네티스의 구성 요소가 생성되면 쿠버네티스 클러스터에 스케줄된다.&lt;/p&gt;
+&lt;h4 id=&quot;헤드-노드의-구성-요소&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%97%A4%EB%93%9C-%EB%85%B8%EB%93%9C%EC%9D%98-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C&quot; aria-label=&quot;헤드 노드의 구성 요소 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;헤드 노드의 구성 요소&lt;/h4&gt;
+&lt;p&gt;헤드 노드는 쿠버네티스 클러스터의 두뇌이다. &lt;/p&gt;
+&lt;p&gt;쿠버네티스 API 기능을 구현하는 핵심 구성 요소들이 모아져 있다.&lt;/p&gt;
+&lt;h5 id=&quot;etcd&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#etcd&quot; aria-label=&quot;etcd permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;etcd&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;쿠버네티스 클러스터의 핵심&lt;/li&gt;
+&lt;li&gt;쿠버네티스 클러스터의 모든 오브젝트가 유지되는 키/값 저장소를 만든다.&lt;/li&gt;
+&lt;li&gt;분산된 합의 알고리즘인 Raft를 구현하여 스토리지 서버 중 하나에 장애가 발생하더라도 etcd에 저장된 데이터를 유지하고, etcd 서버가 정상 상태가 되어 다시 클러스터에 추가할 때 데이터를 복구할 수 있도록 충분한 복제가 이루어진다.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;etcd 서버는 쿠버네티스가 많이 사용하는 두 가지 중요한 기능을 제공한다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;낙관적인 동시성&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;etcd에 저장된 모든 값에는 해당 리소스 버전이 있다.&lt;/li&gt;
+&lt;li&gt;키/값 쌍이 etcd 서버에 기록되면 특정 리소스 버전을 조건으로 지정할 수 있다.&lt;/li&gt;
+&lt;li&gt;etcd를 사용하면 모든 동시성 시스템에서 제일 중요한 &lt;strong&gt;비교 후 교환(CAS, Compare and swap)&lt;/strong&gt;을 구현&lt;/li&gt;
+&lt;li&gt;비교 후 교환을 사용하면 사용자가 값을 읽고 시스템의 다른 구성 요소가 값을 업데이트하지 못했다는 것을 알게 되어 업데이트 할 수 있게 된다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;→ 시스템이 비관적인 잠금장치가 없어도 etcd의 데이터를 조작하는 다중 스레드를 안전하게 가질 수 있게 하여 서버의 처리량을 크게 줄일 수 있다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;워치(Watch) 프로토콜 구현&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;워치의 장점은 클라이언트가 전체 값 디렉터리에 대한 키/값 저장소의 변경 사항을 효율적으로 감시할 수 있다는 것&lt;/li&gt;
+&lt;li&gt;워치를 사용하면 클라이언트가 지속적으로 etcd 서버에 폴링하지 않아도 변경 사항을 효율적으로 기다리고 이에 대응할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&quot;api-서버&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#api-%EC%84%9C%EB%B2%84&quot; aria-label=&quot;api 서버 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;API 서버&lt;/h5&gt;
+&lt;p&gt;etcd가 쿠버네티스 클러스터의 핵심이긴 하지만 쿠버네티스 클러스터에 직접 접근할 수 있는 서버는 실제로 API서버 하나 뿐이다.&lt;/p&gt;
+&lt;p&gt;API 서버는 쿠버네티스 클러스터의 허브로서 클라이언트와 etcd에 저장된 API 오브젝트 사이의 모든 상호작용을 중개한다.&lt;/p&gt;
+&lt;p&gt;→ 결과적으로 다양한 구성 요소 모두에 대한 중앙 집중 지점이 된다.&lt;/p&gt;
+&lt;h5 id=&quot;스케줄러&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%8A%A4%EC%BC%80%EC%A4%84%EB%9F%AC&quot; aria-label=&quot;스케줄러 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;스케줄러&lt;/h5&gt;
+&lt;p&gt;파드가 실행될 위치를 찾는 것이 바로 쿠버네티스 스케줄러의 역할&lt;/p&gt;
+&lt;p&gt;→ 스케줄러는 API 서버에서 스케줄 되지 않은 파드를 검색한 다음, 이들을 실행할 최적의 노드를 결정&lt;/p&gt;
+&lt;h5 id=&quot;컨트롤러-관리자&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC-%EA%B4%80%EB%A6%AC%EC%9E%90&quot; aria-label=&quot;컨트롤러 관리자 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;컨트롤러 관리자&lt;/h5&gt;
+&lt;p&gt;etcd, API 서버, 스케줄러가 작동한 후에는 성공적으로 파드를 만들고 노드에 스케줄된 것을 볼 수 있지만 예상대로 ReplicaSets, Deployment, Service는 작동하지 않는다.&lt;/p&gt;
+&lt;p&gt;→ 필요한 모든 조정 제어 루프가 현재 실행중이지 않기 때문이다.&lt;/p&gt;
+&lt;p&gt;루프를 실행하는 것은 컨트롤러 관리자의 역할&lt;/p&gt;
+&lt;h4 id=&quot;모든-노드의-구성-요소&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%AA%A8%EB%93%A0-%EB%85%B8%EB%93%9C%EC%9D%98-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C&quot; aria-label=&quot;모든 노드의 구성 요소 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;모든 노드의 구성 요소&lt;/h4&gt;
+&lt;h5 id=&quot;쿠블렛kubelet&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%BF%A0%EB%B8%94%EB%A0%9Bkubelet&quot; aria-label=&quot;쿠블렛kubelet permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;쿠블렛(kubelet)&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;쿠버네티스 클러스터의 일부인 모든 시스템의 노드 데몬이다.&lt;/li&gt;
+&lt;li&gt;사용 가능한 CPU, 디스크, 노드의 메모리를 큰 쿠버네티스 클러스터에 연결하는 다리이다.&lt;/li&gt;
+&lt;li&gt;API 서버와 통신하여 노드에서 실행되어야 하는 컨테이너를 찾는다.&lt;/li&gt;
+&lt;li&gt;다른 조정 제어 루프가 컨테이너의 현재 상태를 볼 수 있다.&lt;/li&gt;
+&lt;li&gt;실행될 것으로 예상되는 컨테이너의 상태를 확인하고 다시 시작하는 일을 담당한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;→ 쿠블렛이 실행한 컨테이너가 죽거나 상태 점검에 실패하면 쿠블렛은 컨테이너를 다시 시작하고 상태와 재시작 정보를 다시 API 서버에 전달한다.&lt;/p&gt;
+&lt;h5 id=&quot;kube-proxy&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#kube-proxy&quot; aria-label=&quot;kube proxy permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;kube-proxy&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;모든 컴퓨터에서 실행되는 다른 구성 요소&lt;/li&gt;
+&lt;li&gt;쿠버네티스 Service 로드 밸런서 네트워킹 모델 구현을 담당&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;동작 원리&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;. 쿠버네티스 클러스터의 모든 서비스에 대한 엔드 포인트 오브젝트를 항상 감시한다.
+&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;. 노드의 네트워크를 프로그래밍하여 Service의 가상 IP 주소에 대한 네트워크 요청이 실제로 
+	 Service를 구현하는 엔드포인트로 라우팅되도록 설정한다.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;쿠버네티스의 모든 Service는 가상 IP 주소를 가지며 kube-proxy는 로컬 로드밸런서를 정의하고 구현하는 데몬이다.&lt;/p&gt;
+&lt;p&gt;→ 클러스터 내의 어떤 곳이든 파드에서 파드로 트래픽을 라우팅하게 된다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;스케줄된-구성-요소&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%8A%A4%EC%BC%80%EC%A4%84%EB%90%9C-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C&quot; aria-label=&quot;스케줄된 구성 요소 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;스케줄된 구성 요소&lt;/h4&gt;
+&lt;h5 id=&quot;쿠버-dns&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%BF%A0%EB%B2%84-dns&quot; aria-label=&quot;쿠버 dns permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;쿠버 DNS&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;스케줄된 구성 요소 중 첫 번째는 쿠버 DNS 서버이다.&lt;/li&gt;
+&lt;li&gt;쿠버네티스 Service가 생성되면 가상 IP 주소를 얻지만 해당 IP 주소는 DNS 서버에 프로그램이되어 쉽게 검색할 수 있다.&lt;/li&gt;
+&lt;li&gt;쿠버 DNS 컨테이너는 쿠버네티스 Service 오브젝트에 대해 네임 서비스를 구현한다.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;쿠버 DNS Service 자체는 쿠버네티스 Service로 표현되므로 kube-proxy가 제공하는 동일한 라우팅이 DNS 트래픽을 쿠버 DNS 컨테이너로 라우팅된다.&lt;/p&gt;
+&lt;p&gt;→ 쿠버 DNS 서비스에 정적 가상 IP 주소가 부여된다.&lt;/p&gt;
+&lt;p&gt;→ API 서버가 생성한 모든 컨테이너에 DNS 서버를 프로그래밍할 수 있음을 의미하며 쿠버네티스 서비스에 대한 이름 지정 및 서비스 검색이 가능해짐을 의미한다.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&quot;힙스터&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%9E%99%EC%8A%A4%ED%84%B0&quot; aria-label=&quot;힙스터 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;힙스터&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;쿠버네티스 클러스터에서 실행되는 모든 컨테이너에서 CPU, 네트워크, 디스크 사용량과 같은 메트릭을 수집한다.&lt;/li&gt;
+&lt;li&gt;이러한 메트릭은 인플럭스DB(InfluxDB)와 같은 모니터링 시스템으로 푸시되어 클러스터의 애플리케이션 상태에 대한 경고 및 일반 모니터링을 수행한다.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;쿠버네티스 클러스터 내에서 파드의 자동 스케일링을 구현하는데 이러한 메트릭을 사용한다.&lt;/p&gt;
+&lt;p&gt;→ 힙스터는 특정 기준을 수집하고 집계하여 자동 측정기가 구현한 조정 루프를 가동하는 구성 요소.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;metric-server와 metric API로 대체되었다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;마치며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A7%88%EC%B9%98%EB%A9%B0&quot; aria-label=&quot;마치며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;마치며&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;쿠버네티스는 API 서버를 실행하는 컨트롤 플랜 노드와 API 백업 스토어를 구성하는 etcd클러스터를 포함해 완전한 쿠버네티스 API를 구현하는 다양한 구성 요소를 가진 복잡한 분산 시스템&lt;/li&gt;
+&lt;li&gt;스케줄러는 API 서버와 상호작용하여 컨테이너를 특정 워커 노드로 스케줄링하고, 컨트롤러 관리자는 클러스터가 올바르게 작동하도록 대부분의 제어 루프를 작동&lt;/li&gt;
+&lt;li&gt;클러스터가 제대로 작동하면 클러스터 DNS 서비스, 쿠버네티스 서비스 로드 밸런서 인프라 구조, 컨테이너 모니터링 등을 비롯하여 클러스터 자체에서 실행되는 수많은 구성 요소가 작동&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://techdozo.dev/kubernetes-architecture/&quot;&gt;https://techdozo.dev/kubernetes-architecture/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[Managing Kubernetes - 02.쿠버네티스 살펴보기]]></title><description><![CDATA[쿠버네티스 살펴보기 쿠버네티스 API…]]></description><link>https://leehosu.github.io/managing-kubernetes-02</link><guid isPermaLink="false">https://leehosu.github.io/managing-kubernetes-02</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Sat, 06 May 2023 06:00:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;쿠버네티스-살펴보기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0&quot; aria-label=&quot;쿠버네티스 살펴보기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;쿠버네티스 살펴보기&lt;/h2&gt;
 &lt;p&gt;쿠버네티스 API를 기반으로 애플리케이션을 작성, 배포, 관리하는 것은 그 자체로 아주 복잡한 주제입니다.&lt;/p&gt;
 &lt;h3 id=&quot;컨테이너&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88&quot; aria-label=&quot;컨테이너 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;컨테이너&lt;/h3&gt;
 &lt;p&gt;컨테이너는 도커가 등장하며 대중화되었으며 개발자가 애플리케이션을 패키지화하고 배포하는 방식에 혁명을 일으켰습니다.&lt;/p&gt;
@@ -718,19 +943,19 @@ metadata:
     &gt;
       &lt;span
     class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 53.93939393939393%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABOElEQVQoz62R2XLDIAxF+f+P7EuT2rHjDTA7vhUEEpcuT/WMBoPE0b2Cdf0Nl+sHun7AMN4xDHfchsfaxvN8bOKUZ/jnj713I679CLlr7NpiVwbGOFjrYCi0sbS3ZaVz57GsGzYuMQuT75zr2KUjudNGhYESHooKlNI56b3HcRw50r/Wj3OlFAlQubnSBiHEZx0bpxWGYN7HAnXUnWNZ1gxORTEmYADnAtO8QAiZ86luJbWOVMdcF8HeLjeMXGOSFvOepLt8MdnS1D02wJlAGUj5tF83/hU4bxLaBiiKtCaFXLyA1UoID2BSJqTMytJ+S8AymgRlgh7Dkd0aFZguaNMAS6M/gZ4Gasv8nsCipCrMlovC+TTD75YJWEGuAa7nGR6vGS51hr8Bq1X7E7BYzsDQAJtHqU4+AeU4Vn700PaTAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    style=&quot;padding-bottom: 53.93939393939393%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABNklEQVQoz62RyZLDIAxE+f+PnMuksjiOF4zZcY+kQBbPchpXqTBIPHULdTyd8Xk44nTu0F17dF2PS3df9/E4v+7iJa/wz5+ajcOyOljnsdpA4eF9RAgRnsL5QPtQVzqPCeM0Y9YGw0J3XHirU+d+wqhXxJjhQiJwgLVOkiklbNsmwf/O3c+ttTCrleYsJOfyqFNdPwoopkLds3SbtcY4TgLmolIYmKH1gtswYlmM5LluIrWRVBepK1Afhwuu2uNmAoaVpUe5yLYcdS874EAgAVKe99Os34HDbEhhhg1ZVlaolyewWcn5DmRlizGijPczA+toGKr4QdhuiwbkC87vgLXRn8BEAw11fg9gVdIUiuWqcHiZ4XfLBGyguANOrzPcnjMc2wx/Azar4SdgtSzAvAPuHqU5+QLyilbgxKxjjwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
   &gt;&lt;/span&gt;
   &lt;img
         class=&quot;gatsby-resp-image-image&quot;
         alt=&quot;finish&quot;
         title=&quot;finish&quot;
-        src=&quot;/static/546d4ff7d35c9318604966ab94cee3a1/7c811/finish.png&quot;
-        srcset=&quot;/static/546d4ff7d35c9318604966ab94cee3a1/103f2/finish.png 165w,
-/static/546d4ff7d35c9318604966ab94cee3a1/748ba/finish.png 330w,
-/static/546d4ff7d35c9318604966ab94cee3a1/7c811/finish.png 660w,
-/static/546d4ff7d35c9318604966ab94cee3a1/d28e0/finish.png 990w,
-/static/546d4ff7d35c9318604966ab94cee3a1/bb51b/finish.png 1320w,
-/static/546d4ff7d35c9318604966ab94cee3a1/80fb9/finish.png 3040w&quot;
+        src=&quot;/static/54868a51b7225d80c95e7d823fb2f234/7c811/finish.png&quot;
+        srcset=&quot;/static/54868a51b7225d80c95e7d823fb2f234/103f2/finish.png 165w,
+/static/54868a51b7225d80c95e7d823fb2f234/748ba/finish.png 330w,
+/static/54868a51b7225d80c95e7d823fb2f234/7c811/finish.png 660w,
+/static/54868a51b7225d80c95e7d823fb2f234/d28e0/finish.png 990w,
+/static/54868a51b7225d80c95e7d823fb2f234/bb51b/finish.png 1320w,
+/static/54868a51b7225d80c95e7d823fb2f234/80fb9/finish.png 3040w&quot;
         sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
         style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
