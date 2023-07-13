@@ -146,7 +146,7 @@ const config = {
     // },
     {
       label: "RSS",
-      url: "https://gb-template.netlify.com/rss.xml",
+      url: "https://leehosu.github.io/rss.xml",
       iconClassName: "fas rss"
     },
   ],
