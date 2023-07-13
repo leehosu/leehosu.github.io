@@ -1,8 +1,8 @@
 ---
 template: "post"
-title: "쿠버네티스는 pod를 어떻게 죽일까??"
+title: "쿠버네티스는 pod를 어떻게 삭제할까??"
 date: "2023-07-12 10:00"
-slug: "kubernetes-kill-pod"
+slug: "kubernetes-delete-pod"
 keywords: "devops"
 cover : './cover.png'
 categories: 
