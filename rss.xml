@@ -1,4 +1,194 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Wed, 12 Jul 2023 02:03:36 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[쿠버네티스는 pod를 어떻게 죽일까??]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/kubernetes-kill-pod</link><guid isPermaLink="false">https://leehosu.github.io/kubernetes-kill-pod</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Wed, 12 Jul 2023 01:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Thu, 13 Jul 2023 01:43:49 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[쿠버네티스는 Node에 Resource가 부족할 때 어떤 순서로 pod를 없앨까?!]]></title><description><![CDATA[들어가며 는 의 리소스에 따라 의 배치 전략도 달라지고, 제한이 됩니다.
+이번 게시글에서는 의 리소스가 꽉 찼을 때 리소스를 확보하기 위해 어떤 우선 순위에 의해 를 삭제하는지에 대해 알아보겠습니다. 우선 순위 에서 의 리소스가 가득 찼을 때 를 삭제하는 순서를 정하는 것은 에 의해 정해집니다.  QoS…]]></description><link>https://leehosu.github.io/kubernetes-delete-process</link><guid isPermaLink="false">https://leehosu.github.io/kubernetes-delete-process</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Thu, 13 Jul 2023 01:30:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;kubernetes&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;node&lt;/code&gt;의 리소스에 따라 &lt;code class=&quot;language-text&quot;&gt;Pods&lt;/code&gt;의 배치 전략도 달라지고, 제한이 됩니다.
+이번 게시글에서는 &lt;code class=&quot;language-text&quot;&gt;Node&lt;/code&gt;의 리소스가 꽉 찼을 때 리소스를 확보하기 위해 어떤 우선 순위에 의해 &lt;code class=&quot;language-text&quot;&gt;Pods&lt;/code&gt;를 삭제하는지에 대해 알아보겠습니다.&lt;/p&gt;
+&lt;h2 id=&quot;우선-순위&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9A%B0%EC%84%A0-%EC%88%9C%EC%9C%84&quot; aria-label=&quot;우선 순위 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;우선 순위&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Kubernetes&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;Node&lt;/code&gt;의 리소스가 가득 찼을 때 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 삭제하는 순서를 정하는 것은 &lt;code class=&quot;language-text&quot;&gt;kube-scheduler&lt;/code&gt;에 의해 정해집니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 53.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAABk0lEQVQoz31S2UoDQRDM7/qgPgkKgp/gTwgKooIPgiD64gWCwQOCV4LRqERjJO5udo7usntmTcxGHRhmp7e7prqqKygt5ngSAcYwvANyObOcQR7opYxWh0LMyT9rudihGpW/AL2PibraPUKrS5qPJznPmg69jMNd84j+BeQBoDJyknzScDi6E5A+4+Hd4+jWoJPQSN3345UyWMSTFx3DFEn3bw5XzxZeMJw81MtsBJHvbkqhboShBrwwoQDI+H3xj60ae9TbFpePDm+fFLrR2koZQK8Kvn1psFezchcG4lCae2yd5zi4tQFUY9p249Wjb6N5AVBBVJv1UxOFl3X3kmNmNcHcWoKXrpGIQ7WRYmo5wfxGgsz4AYHM8LiGs+sp5mRPSsFHogCE/WuHwxs7wn5XGFfF4dCyUKo9WRzXXZgCpoKh6ja9kmBhM8PE0qfo4cdc17FgGkqj5qg29bY67tARDUdabr4TFnf6uGhFMCpMMsXwxs1hmNV5/daY93Ho9dQxCy1TyZThfejouNvl/zzo5gsQflUt9Zn7EQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;kube-scheduler&quot;
+        title=&quot;kube-scheduler&quot;
+        src=&quot;/static/4fd95f53c97f62b6b52353fd5a1665e8/7c811/kube-scheduler.png&quot;
+        srcset=&quot;/static/4fd95f53c97f62b6b52353fd5a1665e8/103f2/kube-scheduler.png 165w,
+/static/4fd95f53c97f62b6b52353fd5a1665e8/748ba/kube-scheduler.png 330w,
+/static/4fd95f53c97f62b6b52353fd5a1665e8/7c811/kube-scheduler.png 660w,
+/static/4fd95f53c97f62b6b52353fd5a1665e8/d28e0/kube-scheduler.png 990w,
+/static/4fd95f53c97f62b6b52353fd5a1665e8/bb51b/kube-scheduler.png 1320w,
+/static/4fd95f53c97f62b6b52353fd5a1665e8/6d3ba/kube-scheduler.png 1774w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&quot;qos-클래스&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#qos-%ED%81%B4%EB%9E%98%EC%8A%A4&quot; aria-label=&quot;qos 클래스 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;QoS 클래스&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Kubernetes&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;QoS(Quality of Service)&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;의 리소스 요구 사항을 기반으로 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 세 가지 클래스로 분류하는 개념입니다.
+해당 클래스는 관리자가 직접 부여하는 것이 아니라 해당 &lt;strong&gt;조건이 충족되면 자동으로 부여&lt;/strong&gt;됩니다.
+즉, &lt;code class=&quot;language-text&quot;&gt;QoS&lt;/code&gt; 클래스는 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;가 얼마나 신속하게 할당된 리소스를 사용할 수 있는지와 관련이 있는데 세가지로 분류됩니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 57.57575757575757%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAABYlAAAWJQFJUiTwAAACGklEQVQoz21TTWsUQRAdxOhB9D/sf1E8iOAlZw8ixoOHqCCCqBdP0ZMedCESJTl4iKCgeFBxWfEkokZDoqLZZNlkdDY7Mztf/VH9rJ6Znd0RC5rqnqp+9erVtEPGwFrhDUx5VqrwbkjY8AhuQFjrKYzMxsvUyltzMGEWzJTAUhZZPV9jfUfBGxJ+/ZGjTGiNqngNMEgN3qxLZOqfYOk1GQipyw+E3kChOyBQBWjqgHdbKWYWIyy8jW0jkIrypG2f0I+oStz0FBJB+RpmJgek/wE+XxG4tBzj3Y+Mj5K14YuZwtyLBPPtxHKE6wvMPorwclXgd6BYAg3DtYjqulcaJqIIZEKVnRp83lJY7SpLgwsQXn+J0PUkYmbnx6yhmtSwYGmXM4lu2VidxkY8HJWzhhGQIkWaJFBS5JeJbNx2JSvRnWqq2qC1JrDlFe3sBgIZt04lvt1Pmkiz2tnmWayKYcjTvv4kxgq32tkFTt7+huMnpnH0yGG8//AJ99oaF27cx9kzp/Hs6TJaP4Hzd9q4duUy5m7eQhyLsYYjUKuPpWdJPX71FXun9sFxHCwuLeGjCxybPoVDBw/g4uw5bHOXM1fnsX9qDxqNBvp9f9xygceeij3x77PpfseDhwtoNpvodDb4W8gF/VzPIj9BmOwgioYQWVq9nBqgZh2t/ilPO0iTmkaDKEbEugmh81cSpxKDMGQtJWSm8nsW6y/UY4JwfcFHDgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;QoS&quot;
+        title=&quot;QoS&quot;
+        src=&quot;/static/f841961180c61e692d3f2e506a54805f/7c811/qos.png&quot;
+        srcset=&quot;/static/f841961180c61e692d3f2e506a54805f/103f2/qos.png 165w,
+/static/f841961180c61e692d3f2e506a54805f/748ba/qos.png 330w,
+/static/f841961180c61e692d3f2e506a54805f/7c811/qos.png 660w,
+/static/f841961180c61e692d3f2e506a54805f/d28e0/qos.png 990w,
+/static/f841961180c61e692d3f2e506a54805f/bb51b/qos.png 1320w,
+/static/f841961180c61e692d3f2e506a54805f/45d2b/qos.png 2348w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&quot;guaranteed-보장&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#guaranteed-%EB%B3%B4%EC%9E%A5&quot; aria-label=&quot;guaranteed 보장 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Guaranteed (보장)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;리소스 요구 사항을 완벽하게 충족하는 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;입니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;CPU&lt;/code&gt;와 &lt;code class=&quot;language-text&quot;&gt;Memory&lt;/code&gt;에 대한 정확한 요구 사항을 지정합니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;가 필요한 리소스를 모두 사용할 수 있으며, 다른 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;가 리소스를 사용하지 못하도록 합니다.&lt;/li&gt;
+&lt;li&gt;다른 클래스의 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;보다 우선 순위가 높습니다.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;이 클래스의 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;는 리소스 부족 상황에서도 최우선으로 유지됩니다.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt; 요구 조건&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;파드 내 모든 컨테이너는 메모리 상한과 메모리 요청량을 가지고 있어야 한다.&lt;/li&gt;
+&lt;li&gt;파드 내 모든 컨테이너의 메모리 상한이 메모리 요청량과 일치해야 한다.&lt;/li&gt;
+&lt;li&gt;파드 내 모든 컨테이너는 CPU 상한과 CPU 요청량을 가지고 있어야 한다.&lt;/li&gt;
+&lt;li&gt;파드 내 모든 컨테이너의 CPU 상한이 CPU 요청량과 일치해야 한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; myapp
+    &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+    &lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; // resource의 limit(cpu&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;memory)와 request(cpu&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; memory)가 명시되어있다.
+      &lt;span class=&quot;token key atrule&quot;&gt;limits&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 700m
+        &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
+      &lt;span class=&quot;token key atrule&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 700m
+        &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명세로 파드를 생성한 후 상세 정보를 보게 되면 아래와 같이 &lt;code class=&quot;language-text&quot;&gt;status&lt;/code&gt;가 부여된 것을 확인할 수 있습니다. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; myapp
+    &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+    &lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;limits&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 700m
+        &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
+      &lt;span class=&quot;token key atrule&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 700m
+        &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
+    
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;qosClass&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Guaranteed
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;burstable-가변&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#burstable-%EA%B0%80%EB%B3%80&quot; aria-label=&quot;burstable 가변 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Burstable (가변)&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;일부 리소스를 보장하면서도 추가 리소스를 요청할 수 있는 Pod입니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;는 최소한의 리소스 요구 사항을 지정하며, 필요한 경우 추가 리소스를 동적으로 요청할 수 있습니다.&lt;/li&gt;
+&lt;li&gt;다른 클래스의 Pod보다 우선 순위가 낮습니다.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code class=&quot;language-text&quot;&gt;Burstable Pod&lt;/code&gt;는 리소스 부족 상황에서 &lt;code class=&quot;language-text&quot;&gt;Guaranteed Pod&lt;/code&gt;보다 우선 삭제될 수 있습니다.&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;요구 조건&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;파드 내에서 최소한 하나의 컨테이너가 메모리 또는 CPU 요청량/상한을 가집니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; myapp
+    &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+    &lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; // resource의 limit.memory와 request.memory만 명시되어있다.
+      &lt;span class=&quot;token key atrule&quot;&gt;limits&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
+      &lt;span class=&quot;token key atrule&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명세로 파드를 생성한 후 상세 정보를 보게 되면 아래와 같이 &lt;code class=&quot;language-text&quot;&gt;status&lt;/code&gt;가 부여된 것을 확인할 수 있습니다. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; myapp
+    &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+    &lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;limits&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 700m
+        &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
+      &lt;span class=&quot;token key atrule&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 700m
+        &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;qosClass&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Burstable
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;besteffort-최선의-노력&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#besteffort-%EC%B5%9C%EC%84%A0%EC%9D%98-%EB%85%B8%EB%A0%A5&quot; aria-label=&quot;besteffort 최선의 노력 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;BestEffort (최선의 노력)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;리소스 요구 사항이 없거나 매우 낮은 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;입니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;는 최소한의 리소스를 요청하지 않으며, 리소스를 다른 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;와 공유합니다.&lt;/li&gt;
+&lt;li&gt;다른 클래스의 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;보다 우선 순위가 가장 낮습니다.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;리소스 부족 상황에서 가장 먼저 삭제될 수 있습니다.&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;요구 조건&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;파드의 컨테이너에 메모리 또는 CPU의 상한이나 요청량이 없어야 합니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; myapp
+    &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 명세로 파드를 생성한 후 상세 정보를 보게 되면 아래와 같이 &lt;code class=&quot;language-text&quot;&gt;status&lt;/code&gt;가 부여된 것을 확인할 수 있습니다. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; myapp
+    &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+    &lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;       // 비어있음.
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;qosClass&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; BestEffort
+&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;정리&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%A0%95%EB%A6%AC&quot; aria-label=&quot;정리 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;정리&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;우선순위 클래스에 따라 &lt;code class=&quot;language-text&quot;&gt;BestEffort Pod&lt;/code&gt;가 가장 먼저 삭제됩니다.&lt;/li&gt;
+&lt;li&gt;그 다음으로는 우선순위가 낮은 &lt;code class=&quot;language-text&quot;&gt;Burstable Pod&lt;/code&gt;가 삭제됩니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Guaranteed Pod&lt;/code&gt;는 리소스가 부족한 상황에서도 최우선으로 유지되며, 가장 마지막에 삭제됩니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/ko/docs/tasks/configure-pod-container/quality-service-pod/&quot;&gt;https://kubernetes.io/ko/docs/tasks/configure-pod-container/quality-service-pod/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[쿠버네티스는 pod를 어떻게 삭제할까??]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/kubernetes-delete-pod</link><guid isPermaLink="false">https://leehosu.github.io/kubernetes-delete-pod</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Wed, 12 Jul 2023 01:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;kuberentes&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;pod&lt;/code&gt;를 어떻게 &lt;code class=&quot;language-text&quot;&gt;kill&lt;/code&gt;하는지, 어떻게 &lt;code class=&quot;language-text&quot;&gt;delete&lt;/code&gt; 하는지에 대해 알아보려고 합니다.
 상당히 많은 회사에서 물어보는 질문으로 미리 알고갔으면 어땟을까? 하는 생각이 들지만... 늦었더라도 지금이라도 정리하고 넘어가려고 합니다!&lt;/p&gt;
 &lt;h1 id=&quot;순서&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%88%9C%EC%84%9C&quot; aria-label=&quot;순서 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;순서&lt;/h1&gt;
