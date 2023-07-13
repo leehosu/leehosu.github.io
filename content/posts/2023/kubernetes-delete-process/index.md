@@ -16,7 +16,7 @@ tags:
 
 # 들어가며
 
-쿠버네티스는 `node`의 리소스에 따라 `Pods`의 배치 전략도 달라지고, 제한이 됩니다.
+`kubernetes`는 `node`의 리소스에 따라 `Pods`의 배치 전략도 달라지고, 제한이 됩니다.
 이번 게시글에서는 `Node`의 리소스가 꽉 찼을 때 리소스를 확보하기 위해 어떤 우선 순위에 의해 `Pods`를 삭제하는지에 대해 알아보겠습니다.
 
 ## 우선 순위
@@ -26,22 +26,28 @@ tags:
 ![kube-scheduler](./kube-scheduler.png)
 
 
-### QoS 클래스
+#### QoS 클래스
 `Kubernetes`에서 `QoS(Quality of Service)`는 `Pod`의 리소스 요구 사항을 기반으로 `Pod`를 세 가지 클래스로 분류하는 개념입니다. 
 해당 클래스는 관리자가 직접 부여하는 것이 아니라 해당 **조건이 충족되면 자동으로 부여**됩니다.
 즉, `QoS` 클래스는 `Pod`가 얼마나 신속하게 할당된 리소스를 사용할 수 있는지와 관련이 있는데 세가지로 분류됩니다.
 
-#### Guaranteed (보장)
+
+![QoS](./qos.png)
+
+
+
+### Guaranteed (보장)
 - 리소스 요구 사항을 완벽하게 충족하는 `Pod`입니다.
 - `Pod`는 `CPU`와 `Memory`에 대한 정확한 요구 사항을 지정합니다.
 - `Pod`가 필요한 리소스를 모두 사용할 수 있으며, 다른 `Pod`가 리소스를 사용하지 못하도록 합니다.
 - 다른 클래스의 `Pod`보다 우선 순위가 높습니다.
 - **이 클래스의 `Pod`는 리소스 부족 상황에서도 최우선으로 유지됩니다.**
-- 요구 조건
-    - 파드 내 모든 컨테이너는 메모리 상한과 메모리 요청량을 가지고 있어야 한다.
-    - 파드 내 모든 컨테이너의 메모리 상한이 메모리 요청량과 일치해야 한다.
-    - 파드 내 모든 컨테이너는 CPU 상한과 CPU 요청량을 가지고 있어야 한다.
-    - 파드 내 모든 컨테이너의 CPU 상한이 CPU 요청량과 일치해야 한다.
+
+>  요구 조건
+>    - 파드 내 모든 컨테이너는 메모리 상한과 메모리 요청량을 가지고 있어야 한다.
+>    - 파드 내 모든 컨테이너의 메모리 상한이 메모리 요청량과 일치해야 한다.
+>    - 파드 내 모든 컨테이너는 CPU 상한과 CPU 요청량을 가지고 있어야 한다.
+>    - 파드 내 모든 컨테이너의 CPU 상한이 CPU 요청량과 일치해야 한다.
 
 
 ```yaml
@@ -50,7 +56,7 @@ spec:
   containers:
   - name: myapp
     image: nginx
-    resources:                  // resource의 limit(cpu,memory)와 request(cpu, memory)가 명시되어있다.
+    resources: // resource의 limit(cpu,memory)와 request(cpu, memory)가 명시되어있다.
       limits:
         cpu: 700m
         memory: 200Mi
@@ -84,13 +90,13 @@ status:
 
 
 
-##### Burstable (가변)
+#### Burstable (가변)
 - 일부 리소스를 보장하면서도 추가 리소스를 요청할 수 있는 Pod입니다.
 - `Pod`는 최소한의 리소스 요구 사항을 지정하며, 필요한 경우 추가 리소스를 동적으로 요청할 수 있습니다.
 - 다른 클래스의 Pod보다 우선 순위가 낮습니다.
 - **`Burstable Pod`는 리소스 부족 상황에서 `Guaranteed Pod`보다 우선 삭제될 수 있습니다.**
-- 요구 조건
-    - 파드 내에서 최소한 하나의 컨테이너가 메모리 또는 CPU 요청량/상한을 가집니다.
+> 요구 조건
+>    - 파드 내에서 최소한 하나의 컨테이너가 메모리 또는 CPU 요청량/상한을 가집니다.
 
 ``` yaml
 ...
@@ -98,7 +104,7 @@ spec:
   containers:
   - name: myapp
     image: nginx
-    resources:              // resource의 limit.memory와 request.memory만 명시되어있다.
+    resources: // resource의 limit.memory와 request.memory만 명시되어있다.
       limits:
         memory: 200Mi
       requests:
@@ -121,20 +127,19 @@ spec:
       requests:
         cpu: 700m
         memory: 200Mi
-    
 ...
 status:
   qosClass: Burstable
 ...
 ```
 
-#### BestEffort (최선의 노력)
+### BestEffort (최선의 노력)
 - 리소스 요구 사항이 없거나 매우 낮은 `Pod`입니다.
 - `Pod`는 최소한의 리소스를 요청하지 않으며, 리소스를 다른 `Pod`와 공유합니다.
 - 다른 클래스의 `Pod`보다 우선 순위가 가장 낮습니다.
 - **리소스 부족 상황에서 가장 먼저 삭제될 수 있습니다.**
-- 요구 조건
-    - 파드의 컨테이너에 메모리 또는 CPU의 상한이나 요청량이 없어야 합니다.
+> 요구 조건
+>    - 파드의 컨테이너에 메모리 또는 CPU의 상한이나 요청량이 없어야 합니다.
 
 ``` yaml
 ...
