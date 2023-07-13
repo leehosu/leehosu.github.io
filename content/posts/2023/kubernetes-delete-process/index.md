@@ -1,7 +1,7 @@
 ---
 template: "post"
 title: "쿠버네티스는 Node에 Resource가 부족할 때 어떤 순서로 pod를 없앨까?!"
-date: "2023-07-13 11:00"
+date: "2023-07-13 10:30"
 slug: "kubernetes-delete-process"
 keywords: "devops"
 cover : './cover.png'
