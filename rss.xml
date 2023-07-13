@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Thu, 13 Jul 2023 01:43:49 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[쿠버네티스는 Node에 Resource가 부족할 때 어떤 순서로 pod를 없앨까?!]]></title><description><![CDATA[들어가며 는 의 리소스에 따라 의 배치 전략도 달라지고, 제한이 됩니다.
-이번 게시글에서는 의 리소스가 꽉 찼을 때 리소스를 확보하기 위해 어떤 우선 순위에 의해 를 삭제하는지에 대해 알아보겠습니다. 우선 순위 에서 의 리소스가 가득 찼을 때 를 삭제하는 순서를 정하는 것은 에 의해 정해집니다.  QoS…]]></description><link>https://leehosu.github.io/kubernetes-delete-process</link><guid isPermaLink="false">https://leehosu.github.io/kubernetes-delete-process</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Thu, 13 Jul 2023 01:30:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
-&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;kubernetes&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;node&lt;/code&gt;의 리소스에 따라 &lt;code class=&quot;language-text&quot;&gt;Pods&lt;/code&gt;의 배치 전략도 달라지고, 제한이 됩니다.
-이번 게시글에서는 &lt;code class=&quot;language-text&quot;&gt;Node&lt;/code&gt;의 리소스가 꽉 찼을 때 리소스를 확보하기 위해 어떤 우선 순위에 의해 &lt;code class=&quot;language-text&quot;&gt;Pods&lt;/code&gt;를 삭제하는지에 대해 알아보겠습니다.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Thu, 13 Jul 2023 01:54:09 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[쿠버네티스는 Node에 Resource가 부족할 때 어떤 순서로 pod를 없앨까?!]]></title><description><![CDATA[들어가며 kubernetes는 node의 리소스에 따라 Pods의 배치 전략도 달라지고, 제한이 됩니다.
+이번 게시글에서는 Node의 리소스가 꽉 찼을 때 리소스를 확보하기 위해 어떤 우선 순위에 의해 Pods를 삭제하는지에 대해 알아보겠습니다. 우선 순위 Kubernetes에서 Node의 리소스가 가득 찼을 때 Pod…]]></description><link>https://leehosu.github.io/kubernetes-delete-process</link><guid isPermaLink="false">https://leehosu.github.io/kubernetes-delete-process</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Thu, 13 Jul 2023 01:30:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+&lt;p&gt;kubernetes는 node의 리소스에 따라 Pods의 배치 전략도 달라지고, 제한이 됩니다.
+이번 게시글에서는 Node의 리소스가 꽉 찼을 때 리소스를 확보하기 위해 어떤 우선 순위에 의해 Pods를 삭제하는지에 대해 알아보겠습니다.&lt;/p&gt;
 &lt;h2 id=&quot;우선-순위&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9A%B0%EC%84%A0-%EC%88%9C%EC%9C%84&quot; aria-label=&quot;우선 순위 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;우선 순위&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Kubernetes&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;Node&lt;/code&gt;의 리소스가 가득 찼을 때 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 삭제하는 순서를 정하는 것은 &lt;code class=&quot;language-text&quot;&gt;kube-scheduler&lt;/code&gt;에 의해 정해집니다.&lt;/p&gt;
+&lt;p&gt;Kubernetes에서 Node의 리소스가 가득 찼을 때 Pod를 삭제하는 순서를 정하는 것은 kube-scheduler에 의해 정해집니다.&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
@@ -29,9 +29,9 @@
       /&gt;
     &lt;/span&gt;&lt;/p&gt;
 &lt;h4 id=&quot;qos-클래스&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#qos-%ED%81%B4%EB%9E%98%EC%8A%A4&quot; aria-label=&quot;qos 클래스 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;QoS 클래스&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Kubernetes&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;QoS(Quality of Service)&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;의 리소스 요구 사항을 기반으로 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 세 가지 클래스로 분류하는 개념입니다.
+&lt;p&gt;Kubernetes에서 QoS(Quality of Service)는 Pod의 리소스 요구 사항을 기반으로 Pod를 세 가지 클래스로 분류하는 개념입니다.
 해당 클래스는 관리자가 직접 부여하는 것이 아니라 해당 &lt;strong&gt;조건이 충족되면 자동으로 부여&lt;/strong&gt;됩니다.
-즉, &lt;code class=&quot;language-text&quot;&gt;QoS&lt;/code&gt; 클래스는 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;가 얼마나 신속하게 할당된 리소스를 사용할 수 있는지와 관련이 있는데 세가지로 분류됩니다.&lt;/p&gt;
+즉, QoS 클래스는 Pod가 얼마나 신속하게 할당된 리소스를 사용할 수 있는지와 관련이 있는데 세가지로 분류됩니다.&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
@@ -58,11 +58,11 @@
     &lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&quot;guaranteed-보장&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#guaranteed-%EB%B3%B4%EC%9E%A5&quot; aria-label=&quot;guaranteed 보장 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Guaranteed (보장)&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;리소스 요구 사항을 완벽하게 충족하는 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;입니다.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;CPU&lt;/code&gt;와 &lt;code class=&quot;language-text&quot;&gt;Memory&lt;/code&gt;에 대한 정확한 요구 사항을 지정합니다.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;가 필요한 리소스를 모두 사용할 수 있으며, 다른 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;가 리소스를 사용하지 못하도록 합니다.&lt;/li&gt;
-&lt;li&gt;다른 클래스의 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;보다 우선 순위가 높습니다.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;이 클래스의 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;는 리소스 부족 상황에서도 최우선으로 유지됩니다.&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;리소스 요구 사항을 완벽하게 충족하는  Pod 입니다.&lt;/li&gt;
+&lt;li&gt;Pod 는  CPU 와  Memory 에 대한 정확한 요구 사항을 지정합니다.&lt;/li&gt;
+&lt;li&gt;Pod 가 필요한 리소스를 모두 사용할 수 있으며, 다른  Pod 가 리소스를 사용하지 못하도록 합니다.&lt;/li&gt;
+&lt;li&gt;다른 클래스의  Pod 보다 우선 순위가 높습니다.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;이 클래스의  Pod 는 리소스 부족 상황에서도 최우선으로 유지됩니다.&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt; 요구 조건&lt;/p&gt;
@@ -86,7 +86,7 @@
         &lt;span class=&quot;token key atrule&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 700m
         &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
 &lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;위의 명세로 파드를 생성한 후 상세 정보를 보게 되면 아래와 같이 &lt;code class=&quot;language-text&quot;&gt;status&lt;/code&gt;가 부여된 것을 확인할 수 있습니다. &lt;/p&gt;
+&lt;p&gt;위의 명세로 파드를 생성한 후 상세 정보를 보게 되면 아래와 같이  status 가 부여된 것을 확인할 수 있습니다. &lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
 &lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
@@ -107,10 +107,10 @@
 &lt;h4 id=&quot;burstable-가변&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#burstable-%EA%B0%80%EB%B3%80&quot; aria-label=&quot;burstable 가변 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Burstable (가변)&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;일부 리소스를 보장하면서도 추가 리소스를 요청할 수 있는 Pod입니다.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;는 최소한의 리소스 요구 사항을 지정하며, 필요한 경우 추가 리소스를 동적으로 요청할 수 있습니다.&lt;/li&gt;
+&lt;li&gt;Pod 는 최소한의 리소스 요구 사항을 지정하며, 필요한 경우 추가 리소스를 동적으로 요청할 수 있습니다.&lt;/li&gt;
 &lt;li&gt;다른 클래스의 Pod보다 우선 순위가 낮습니다.&lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;&lt;code class=&quot;language-text&quot;&gt;Burstable Pod&lt;/code&gt;는 리소스 부족 상황에서 &lt;code class=&quot;language-text&quot;&gt;Guaranteed Pod&lt;/code&gt;보다 우선 삭제될 수 있습니다.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;** Burstable Pod 는 리소스 부족 상황에서  Guaranteed Pod 보다 우선 삭제될 수 있습니다.**&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;요구 조건&lt;/p&gt;
 &lt;ul&gt;
@@ -130,7 +130,7 @@
       &lt;span class=&quot;token key atrule&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;token key atrule&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 200Mi
 &lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;위의 명세로 파드를 생성한 후 상세 정보를 보게 되면 아래와 같이 &lt;code class=&quot;language-text&quot;&gt;status&lt;/code&gt;가 부여된 것을 확인할 수 있습니다. &lt;/p&gt;
+&lt;p&gt;위의 명세로 파드를 생성한 후 상세 정보를 보게 되면 아래와 같이  status 가 부여된 것을 확인할 수 있습니다. &lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
 &lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
@@ -149,9 +149,9 @@
 &lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;besteffort-최선의-노력&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#besteffort-%EC%B5%9C%EC%84%A0%EC%9D%98-%EB%85%B8%EB%A0%A5&quot; aria-label=&quot;besteffort 최선의 노력 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;BestEffort (최선의 노력)&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;리소스 요구 사항이 없거나 매우 낮은 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;입니다.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;는 최소한의 리소스를 요청하지 않으며, 리소스를 다른 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;와 공유합니다.&lt;/li&gt;
-&lt;li&gt;다른 클래스의 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;보다 우선 순위가 가장 낮습니다.&lt;/li&gt;
+&lt;li&gt;리소스 요구 사항이 없거나 매우 낮은  Pod 입니다.&lt;/li&gt;
+&lt;li&gt;Pod 는 최소한의 리소스를 요청하지 않으며, 리소스를 다른  Pod 와 공유합니다.&lt;/li&gt;
+&lt;li&gt;다른 클래스의  Pod 보다 우선 순위가 가장 낮습니다.&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;리소스 부족 상황에서 가장 먼저 삭제될 수 있습니다.&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
@@ -168,7 +168,7 @@
   &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; myapp
     &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
 &lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;위의 명세로 파드를 생성한 후 상세 정보를 보게 되면 아래와 같이 &lt;code class=&quot;language-text&quot;&gt;status&lt;/code&gt;가 부여된 것을 확인할 수 있습니다. &lt;/p&gt;
+&lt;p&gt;위의 명세로 파드를 생성한 후 상세 정보를 보게 되면 아래와 같이  status 가 부여된 것을 확인할 수 있습니다. &lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
 &lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
@@ -181,19 +181,20 @@
 &lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2 id=&quot;정리&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%A0%95%EB%A6%AC&quot; aria-label=&quot;정리 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;정리&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;우선순위 클래스에 따라 &lt;code class=&quot;language-text&quot;&gt;BestEffort Pod&lt;/code&gt;가 가장 먼저 삭제됩니다.&lt;/li&gt;
-&lt;li&gt;그 다음으로는 우선순위가 낮은 &lt;code class=&quot;language-text&quot;&gt;Burstable Pod&lt;/code&gt;가 삭제됩니다.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Guaranteed Pod&lt;/code&gt;는 리소스가 부족한 상황에서도 최우선으로 유지되며, 가장 마지막에 삭제됩니다.&lt;/li&gt;
+&lt;li&gt;우선순위 클래스에 따라  BestEffort Pod 가 가장 먼저 삭제됩니다.&lt;/li&gt;
+&lt;li&gt;그 다음으로는 우선순위가 낮은  Burstable Pod 가 삭제됩니다.&lt;/li&gt;
+&lt;li&gt;Guaranteed Pod 는 리소스가 부족한 상황에서도 최우선으로 유지되며, 가장 마지막에 삭제됩니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://kubernetes.io/ko/docs/tasks/configure-pod-container/quality-service-pod/&quot;&gt;https://kubernetes.io/ko/docs/tasks/configure-pod-container/quality-service-pod/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[쿠버네티스는 pod를 어떻게 삭제할까??]]></title><description><![CDATA[…]]></description><link>https://leehosu.github.io/kubernetes-delete-pod</link><guid isPermaLink="false">https://leehosu.github.io/kubernetes-delete-pod</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Wed, 12 Jul 2023 01:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
-&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;kuberentes&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;pod&lt;/code&gt;를 어떻게 &lt;code class=&quot;language-text&quot;&gt;kill&lt;/code&gt;하는지, 어떻게 &lt;code class=&quot;language-text&quot;&gt;delete&lt;/code&gt; 하는지에 대해 알아보려고 합니다.
+&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[쿠버네티스는 pod를 어떻게 삭제할까??]]></title><description><![CDATA[들어가며  kuberentes 에서  pod 를 어떻게  kill 하는지, 어떻게 delete하는지에 대해 알아보려고 합니다.
+상당히 많은 회사에서 물어보는 질문으로 미리 알고갔으면 어땟을까? 하는 생각이 들지만... 늦었더라도 지금이라도 정리하고 넘어가려고 합니다! 순서 사용자 또는 관리자가 아래의 명령으로  Pod…]]></description><link>https://leehosu.github.io/kubernetes-delete-pod</link><guid isPermaLink="false">https://leehosu.github.io/kubernetes-delete-pod</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Wed, 12 Jul 2023 01:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+&lt;p&gt; kuberentes 에서  pod 를 어떻게  kill 하는지, 어떻게 delete하는지에 대해 알아보려고 합니다.
 상당히 많은 회사에서 물어보는 질문으로 미리 알고갔으면 어땟을까? 하는 생각이 들지만... 늦었더라도 지금이라도 정리하고 넘어가려고 합니다!&lt;/p&gt;
 &lt;h1 id=&quot;순서&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%88%9C%EC%84%9C&quot; aria-label=&quot;순서 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;순서&lt;/h1&gt;
 &lt;ol&gt;
-&lt;li&gt;사용자 또는 관리자가 아래의 명령으로 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 삭제 요청합니다.
+&lt;li&gt;사용자 또는 관리자가 아래의 명령으로  Pod 를 삭제 요청합니다.
 &lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
@@ -221,7 +222,7 @@
 &lt;/ol&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl delete pod &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;pod-name&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;ol start=&quot;2&quot;&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Kubernetes Control Plane&lt;/code&gt;내의 &lt;code class=&quot;language-text&quot;&gt;api-server&lt;/code&gt; 는 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt; 삭제 요청을 받고, 해당 요청을 클러스터 내의 모든 &lt;code class=&quot;language-text&quot;&gt;Control Plane&lt;/code&gt; 구성 요소에게 전달합니다.&lt;/li&gt;
+&lt;li&gt;Kubernetes Control Plane 내의  api-server  는  Pod  삭제 요청을 받고, 해당 요청을 클러스터 내의 모든  Control Plane  구성 요소에게 전달합니다.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
@@ -271,7 +272,7 @@ etcd는 컨트롤 플레인 컴포넌트들 간의 통신과 클러스터의 상
 &lt;/details&gt;
 &lt;br&gt;
 &lt;ol start=&quot;3&quot;&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Kubernetes ControlPlane&lt;/code&gt;내의 &lt;code class=&quot;language-text&quot;&gt;kube-controller-manager&lt;/code&gt; 는 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;가 &lt;code class=&quot;language-text&quot;&gt;ReplicaSet&lt;/code&gt; 또는 &lt;code class=&quot;language-text&quot;&gt;Deployment&lt;/code&gt;와 같은 객체의 소유 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;인지 확인합니다.&lt;/li&gt;
+&lt;li&gt;Kubernetes ControlPlane 내의  kube-controller-manager  는  Pod 가  ReplicaSet  또는  Deployment 와 같은 객체의 소유  Pod 인지 확인합니다.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
@@ -297,9 +298,9 @@ etcd는 컨트롤 플레인 컴포넌트들 간의 통신과 클러스터의 상
         loading=&quot;lazy&quot;
       /&gt;
     &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;만약 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;가 &lt;code class=&quot;language-text&quot;&gt;ReplicaSet&lt;/code&gt; 또는 &lt;code class=&quot;language-text&quot;&gt;Deployment&lt;/code&gt;에 속한 경우, &lt;code class=&quot;language-text&quot;&gt;kube-controller-manager&lt;/code&gt;는 해당 컨트롤러가 관리하는 &lt;code class=&quot;language-text&quot;&gt;ReplicaSet&lt;/code&gt;또는 &lt;code class=&quot;language-text&quot;&gt;Deployment&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;의 개수를 조정합니다. 그로인해 일반적으로 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 삭제하면 새로운 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 생성하여 설정된 개수를 유지하도록 합니다. &lt;/p&gt;
+&lt;p&gt;만약  Pod 가  ReplicaSet  또는  Deployment 에 속한 경우,  kube-controller-manager 는 해당 컨트롤러가 관리하는  ReplicaSet 또는  Deployment 에서  Pod 의 개수를 조정합니다. 그로인해 일반적으로  Pod 를 삭제하면 새로운  Pod 를 생성하여 설정된 개수를 유지하도록 합니다. &lt;/p&gt;
 &lt;ol start=&quot;4&quot;&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 삭제하기 위해 &lt;code class=&quot;language-text&quot;&gt;kube-api-server&lt;/code&gt; 는 해당 노드의 &lt;code class=&quot;language-text&quot;&gt;kubelet&lt;/code&gt;에게 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt; 삭제 요청을 전달합니다.&lt;/li&gt;
+&lt;li&gt;Pod 를 삭제하기 위해  kube-api-server  는 해당 노드의  kubelet 에게  Pod  삭제 요청을 전달합니다.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
@@ -326,7 +327,7 @@ etcd는 컨트롤 플레인 컴포넌트들 간의 통신과 클러스터의 상
       /&gt;
     &lt;/span&gt;&lt;/p&gt;
 &lt;ol start=&quot;5&quot;&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;kubelet&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 삭제하기 전에 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt; 내의 컨테이너에 &lt;code class=&quot;language-text&quot;&gt;SIGTERM&lt;/code&gt; 시그널을 보내고, 일정 시간(기본적으로 30초) 동안 대기합니다. 컨테이너는 이 시그널을 받고 종료 준비를 시작합니다.&lt;/li&gt;
+&lt;li&gt;kubelet 은  Pod 를 삭제하기 전에  Pod  내의 컨테이너에  SIGTERM  시그널을 보내고, 일정 시간(기본적으로 30초) 동안 대기합니다. 컨테이너는 이 시그널을 받고 종료 준비를 시작합니다.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
@@ -352,9 +353,9 @@ etcd는 컨트롤 플레인 컴포넌트들 간의 통신과 클러스터의 상
         loading=&quot;lazy&quot;
       /&gt;
     &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;만약 일정 시간 내에 컨테이너가 종료되지 않으면 &lt;code class=&quot;language-text&quot;&gt;kubelet&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;SIGKILL&lt;/code&gt; 시그널을 보내어 강제로 컨테이너를 종료시킵니다.&lt;/p&gt;
+&lt;p&gt;만약 일정 시간 내에 컨테이너가 종료되지 않으면  kubelet 은  SIGKILL  시그널을 보내어 강제로 컨테이너를 종료시킵니다.&lt;/p&gt;
 &lt;ol start=&quot;6&quot;&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;의 모든 컨테이너가 종료되면 &lt;code class=&quot;language-text&quot;&gt;kubelet&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt;를 완전히 삭제하고, 상태 업데이트를 &lt;code class=&quot;language-text&quot;&gt;kube-api-server&lt;/code&gt;로 보냅니다.&lt;/li&gt;
+&lt;li&gt;Pod 의 모든 컨테이너가 종료되면  kubelet 은  Pod 를 완전히 삭제하고, 상태 업데이트를  kube-api-server 로 보냅니다.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
@@ -381,7 +382,7 @@ etcd는 컨트롤 플레인 컴포넌트들 간의 통신과 클러스터의 상
       /&gt;
     &lt;/span&gt;&lt;/p&gt;
 &lt;ol start=&quot;7&quot;&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;kube-api-server&lt;/code&gt;는 &lt;code class=&quot;language-text&quot;&gt;Pod&lt;/code&gt; 삭제 완료를 확인하고, 상태를 업데이트한 후 요청한 클라이언트에 응답합니다.&lt;/li&gt;
+&lt;li&gt;kube-api-server 는  Pod  삭제 완료를 확인하고, 상태를 업데이트한 후 요청한 클라이언트에 응답합니다.&lt;/li&gt;
 &lt;/ol&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[kubernetes Pod의 상태를 진단하는 Probes]]></title><description><![CDATA[들어가며 처음 kubenetes로 container 운영 환경을 구성하였을 때, 애플리케이션 컨테이너가 생성되지도 않았는데 kube-scheduelr가 scheduling을 하고, ingress에선 해당 파드로 트래픽을 보내는데 아직 생성되지 않아 500 ERROR 발생하기도 하고.. pod가 unhealth…]]></description><link>https://leehosu.github.io/prone</link><guid isPermaLink="false">https://leehosu.github.io/prone</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Sat, 01 Jul 2023 06:40:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
 &lt;p&gt;처음 kubenetes로 container 운영 환경을 구성하였을 때, 애플리케이션 컨테이너가 생성되지도 않았는데 kube-scheduelr가 scheduling을 하고, ingress에선 해당 파드로 트래픽을 보내는데 아직 생성되지 않아 500 ERROR 발생하기도 하고.. pod가 unhealth 상태인데 kubenetes에선 그 상태를 감지하지 못해 계속 트래픽을 분산하기도 하고.. 아주 곤욕스러웠습니다. 그러던 중 kubernetes에서도 health check를 할 수 있는 Probe가 존재한다는 것을 알게되었고 바로 도입하였습니다. &lt;/p&gt;
 &lt;p&gt;나아가 kubernetes pod probe는 오픈소스인 &lt;a href=&quot;https://botkube.io/&quot;&gt;botkube&lt;/a&gt;를 통해 효율을 극대화 할 수 있습니다. 이번 포스팅에서는 kubernetes의 probe에 대해 다뤄보고 추후에 botkube에 대해 포스팅하도록 할게요!&lt;/p&gt;
