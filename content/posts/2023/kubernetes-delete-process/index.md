@@ -23,18 +23,14 @@ kubernetes는 node의 리소스에 따라 Pods의 배치 전략도 달라지고,
 
 Kubernetes에서 Node의 리소스가 가득 찼을 때 Pod를 삭제하는 순서를 정하는 것은 kube-scheduler에 의해 정해집니다.
 
-![kube-scheduler](./kube-scheduler.png)
-
+![kube-api-scheduler](./kube-apiserver-scheduler.png)
 
 #### QoS 클래스
 Kubernetes에서 QoS(Quality of Service)는 Pod의 리소스 요구 사항을 기반으로 Pod를 세 가지 클래스로 분류하는 개념입니다. 
 해당 클래스는 관리자가 직접 부여하는 것이 아니라 해당 **조건이 충족되면 자동으로 부여**됩니다.
 즉, QoS 클래스는 Pod가 얼마나 신속하게 할당된 리소스를 사용할 수 있는지와 관련이 있는데 세가지로 분류됩니다.
 
-
 ![QoS](./qos.png)
-
-
 
 ### Guaranteed (보장)
 - 리소스 요구 사항을 완벽하게 충족하는  Pod 입니다.
