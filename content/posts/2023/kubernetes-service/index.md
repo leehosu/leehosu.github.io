@@ -1,7 +1,7 @@
 ---
 template: "post"
 title: "쿠버네티스 service란?!"
-date: "2023-08-3 11:40"
+date: "2023-08-03 11:40"
 slug: "kubernetes-service"
 keywords: "devops"
 cover : './cover.png'
