@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://leehosu.github.io/aws-eks-ng</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/kubernetes-service</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/kubernetes-pod-update</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/kubernetes-delete-process</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -34,8 +35,12 @@
 <url> <loc>https://leehosu.github.io/tag/devops</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/devops/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/devops/page/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/tag/devops/page/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/kubernetes/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/aws</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/tag/aws/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/tag/aws-eks</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/tag/aws-ec2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/aws-opensearch</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/efkstack</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/ec2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -70,8 +75,11 @@
 <url> <loc>https://leehosu.github.io/category/devops</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/devops/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/devops/page/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/category/devops/page/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/kubernetes/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/aws</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/category/aws-eks</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/category/aws-ec2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/efkstack</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/ec2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/argocd</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
