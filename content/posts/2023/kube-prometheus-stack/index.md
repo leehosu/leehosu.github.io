@@ -2,7 +2,7 @@
 template: "post"
 title: "kube-prometheus-stack으로 모니터링 시스템 구축하기"
 date: "2023-08-27 15:40"
-slug: "kubelet"
+slug: "kube-prometheus-stack"
 keywords: "devops"
 cover : './cover.png'
 categories: 
@@ -25,9 +25,19 @@ tags:
 # 들어가며
 사내에서 EFK-Stack(ElasticSearch+Fluent-bit+Kibana)를 이용하여 모니터링 시스템을 구축했었습니다. 하지만 AWS Opensearch를 이용하다보니 비용적인 문제와 비교적 활용도가 낮았던 fluent-bit(응답이 길면 Probe가 자꾸 문제가 발생), metirc 데이터 필요, 쿠버네티스에 맞지 않은 설정들등 다양한 이슈로 모니터링 시스템을 바꿔야 하는 요구 사항이 생겼습니다. 그러던 중 쿠버네티스 모니터링 시스템계의 또 하나의 터줏대감인 Prometheus, Loki, Grafana를 이용하여 새롭게 모니터링 시스템을 구축하였습니다.
 
-<aside>
-💡 개념적인 내용은 공식 문서와 ChatGPT를 참고하여 작성하였습니다.
-</aside>
+
+>
+> 💡 개념적인 내용은 공식 문서와 ChatGPT를 참고하여 작성하였습니다.
+>
+
+
+# Overview
+
+<div style="width:100%">
+
+![overview](./blog-overview.gif)
+
+</div>
 
 # Prometheus
 
@@ -184,8 +194,8 @@ $ kubectl create namsespace monitoring
 
 ```bash
 # 헬름 차트의 저장소 추가
-$ helm repo add prometheus-community https://prometheus-community.github.io/$ helm-charts
-helm repo update
+$ helm repo add prometheus-community https://prometheus-community.github.io/
+$ helm repo update
 ```
 
 Helm을 통해 prometheus-community repo를 cluster에 받아옵니다.
@@ -201,6 +211,259 @@ $ tar xvfz kube-prometheus-stack-${version}.tgz #설치된 버전을 작성하�
 
 ### service 수정
 
-대시보드 형태로 외부에서 접근할 수 있게 `prometheus-grafana`와 `prometheus-kube-prometheus-operator` 만 clusterIP에서 LoadBalancer나 NodePort로 변경합니다.
+대시보드 형태로 외부에서 접근할 수 있게 `prometheus-grafana`만 clusterIP에서 LoadBalancer나 NodePort로 변경합니다. (이 글에선 loadbalancer로 설정하였습니다)
 
-그 후 해당 values.yaml 파일을 토대로 설치하면 정상적으로 설치가 완료됩니다.
+```yaml
+...
+grafana:
+	enabled: true
+	...
+	## Passed to grafana subchart and used by servicemonitor below
+  ##
+  service:
+    type: LoadBalancer
+    portName: http-web
+...
+
+```
+
+그 후 수정된 values.yaml 파일을 paramater로 주어 helm chart를 배포합니다. 
+
+```bash
+$ helm install prometheus . -n monitoring -f values.yaml
+```
+
+### service 확인
+
+```bash
+kubectl get svc -n mornitoring
+```
+
+![promehteus-service](./prometheus-service.png)
+
+배포되어있는 service를 확인해보면 정상적으로 prometheus-grafana의 servive type이 LoadBalancer로 설정되어 배포된 것을 확인할 수 있고, `EXTERNAL-IP` 에 명시된 외부 IP 주소로 접근하실 수 있습니다. 
+
+(후에 AWS Route53와 같은 DNS service를 통해 해당 주소를 routing 해주시면 좋습니다!)
+
+자! metric data 수집과 모니터링 구축은 완료했습니다. 이제 log를 수집해보겠습니다.
+
+# Loki-Stack
+
+## Loki-stack이란?
+
+Loki-Stack은 Loki 로깅 엔진을 포함하지만, 추가적으로 로그를 수집, 집계, 시각화하기 위한 다른 컴포넌트들도 함께 제공합니다. 
+
+- **Loki**: 로그 데이터를 저장하고 쿼리합니다.
+- **Promtail**: 로그 데이터를 수집하고 Loki로 전송합니다.
+- **Grafana**: 로그 데이터를 시각화합니다.
+
+### Loki VS Loki-Stack
+
+|  | 구성 요소 | 기능 범위 | 용도 | 설치 및 관리 |
+| --- | --- | --- | --- | --- |
+| loki | 로깅 엔진 | 로그 저장 및 쿼리에 중점 | 다른 로깅 시스템이나 시각화 도구와 통합 | 단일 컴포넌트로 더 간단하게 설치 및 관리 |
+| loki-stack | 로깅 엔진, 로그 수집기, 시각화 도구까지 포함 | 로그 수집부터 저장, 쿼리, 시각화까지 전체 로깅 파이프라인 제공 | 독립적인, 통합된 로깅 솔류션을 제공 | 여러 컴포넌트를 관리해야하므로 설정과 관리 복잡 |
+
+loki만이 아니라 promtail과 여러 컴포넌트를 쉽게 사용할 수 있는 loki-stack을 선택해서 배포하도록 하겠습니다. 
+
+## 설치
+
+```bash
+git clone https://github.com/grafana/helm-charts
+```
+
+위의 명령어로 helm chart를 받아옵니다.
+
+```bash
+cd helm-charts/charts/loki-stack
+```
+
+grafana/helm-chart 레포지토리를 clone하여 받아온 후 loki-stack 디렉토리로 이동합니다.
+
+**디렉토리 구조**
+
+```
+./                                
+├── Chart.yaml                    
+├── README.md                     
+├── charts                        
+│   ├── filebeat-7.17.3.tgz       
+│   ├── fluent-bit-2.6.0.tgz      
+│   ├── grafana-6.43.5.tgz        
+│   ├── logstash-7.17.3.tgz       
+│   ├── loki-2.16.0.tgz           
+│   ├── prometheus-15.5.4.tgz     
+│   └── promtail-6.14.1.tgz       
+├── requirements.lock             
+├── requirements.yaml             
+├── templates                     
+│   ├── NOTES.txt                 
+│   ├── _helpers.tpl              
+│   ├── datasources.yaml          
+│   └── tests                     
+└── values.yaml
+```
+
+loki-stack 디렉토리에서 values.yaml 파일을 수정하여 원하는 기능을 키고 끄고 추가로 설정할 수 있습니다.
+
+```yaml
+...
+loki:
+  enabled: true
+...
+promtail:
+  enabled: true
+...
+grafana:
+  enabled: false
+...
+
+```
+
+저희가 사용할 서비스는 loki와 promtail 인데 기본값이 `enabled:true` 이기 때문에 수정하지 않고 배포합니다.
+
+```bash
+$ helm install loki-stack . --namespace monitoring
+```
+
+---
+
+### 배포시 오류
+
+```bash
+helm install loki-stack . --namespace monitoring                                │
+Error: INSTALLATION FAILED: An error occurred while checking for chart dependencies. You may need to run `helm dependency build` to fetc│
+h missing dependencies: found in Chart.yaml, but missing in charts/ directory: loki, promtail, fluent-bit, grafana, prometheus, filebeat│
+, logstash
+```
+
+만약 설치시 위와 같이 문제가 생긴다면 `helm dependency build` 을 통해 의존성을 설치하신 후 진행하시면 됩니다.
+
+---
+
+## 확인
+
+```bash
+kubectl get po -n monitoring
+```
+
+조금 후 해당 namespace의 pod 목록을 출력해보면 아래와 같이 Running이 되고 있습니다!설치가 완료되었습니다…!
+
+![loki-get-po](./loki-stack-get.png)
+
+
+### promtail에서 로그가 수집안되는 이슈
+
+![promtail](./promtail.png)
+
+위의 사진처럼 promtail에서 log를 수집할 때에 error level의 로그 수집 오류 내용이 발생할 수 있습니다. 해당 이슈의 원인은 비교적 설치 시간이 짧은 promtail이 loki보다 먼저 설치되어 발생한 이슈인데, promtail Pod를 재시작해주면 해결됩니다!
+
+## Retention
+
+기본적으로 `table_manager.retention_deletes_enabled`또는 `compactor.retention_enable`플래그가 설정되지 않은 경우 Loki로 전송된 로그는 영원히 유지됩니다.
+
+table_manager 통한 보존은 객체 저장소 TTL 기능을 사용하며 boltdb-shipper store와 chunk/index store 에서 작동합니다. 그러나 Compactor을 통한 로그 보관은 boltdb-shipper store 에서만 지원됩니다.
+
+### boltdb-shipper
+
+Grafana Loki에서 사용되는 index 및 chunk 데이터를 저장하는 데 사용되는 저장소 엔진 중 하나입니다.
+
+**특징**
+
+- 인덱스와 로그 청크 모두를 객체 저장소(예: Amazon S3, Google Cloud Storage 등)에 저장합니다.
+- 객체 저장소만을 사용하기 때문에, 일반적으로 비용이 더 저렴합니다.
+- 수평 확장이 가능하며, 큰 규모의 로그 데이터를 처리할 수 있습니다.
+- Loki의 Compactor 컴포넌트와 함께 사용할 때 더 세밀한 데이터 보존 정책을 설정할 수 있습니다.
+- 인덱스 데이터를 로컬에 캐싱할 수 있어, 쿼리 성능이 향상될 수 있습니다.
+
+### table_manager
+
+Loki 데이터베이스의 핵심 구성 요소로서 로그 데이터의 저장, 유지 관리, 압축 및 정리를 관리하며 데이터베이스의 성능과 공간 효율성을 유지하는 역할을 합니다.
+
+**특징**
+
+- 로그 데이터를 시간별로 테이블에 저장하는 형태로 데이터를 구성하며, 이를 통해 검색 성능을 최적화합니다.
+- 설정된 로그 보존 기간 내에 있는 데이터만을 유지하고, 설정보다 오래된 데이터는 자동으로 삭제합니다.
+- 인덱스 관리
+- 데이터를 정리하고 필요한 경우 압축하여 저장 공간을 효율적으로 관리합니다.
+- 설정된 보존 기간이 지난 로그 데이터를 정기적으로 삭제하여 데이터베이스의 용량을 유지합니다.
+
+**설정하기**
+
+```yaml
+...
+loki:
+	...
+	config:
+    table_manager:
+      retention_deletes_enabled: true
+      retention_period: 24h
+...
+```
+
+### Compactor
+
+**특징**
+
+- `boltdb-shipper` 저장소에서만 지원됩니다.
+- 단일 인스턴스(싱글톤)로 실행하는 것이 권장됩니다.
+- Compactor가 재시작되면 이전에 중단된 지점에서 계속 작업을 수행합니다.
+- 설정된 `compaction_interval`마다 압축과 보존을 적용하기 위해 루프를 실행합니다.
+- Compactor의 알고리즘은 다음과 같습니다
+    
+    ```
+    - 각 테이블을 단일 인덱스 파일로 압축합니다.
+    - 전체 인덱스를 순회하여 제거해야 할 청크를 식별하고 표시합니다.
+    - 표시된 청크를 인덱스에서 제거하고 디스크에 있는 파일에 참조를 저장합니다.
+    - 새로 수정된 인덱스 파일을 업로드합니다.
+    ```
+    
+- 보존 알고리즘은 인덱스에 적용되며, 청크는 즉시 삭제되지 않고 추후에 비동기적으로 삭제됩니다.
+- 설정된 `retention_delete_delay`가 만료된 후에만 표시된 청크가 삭제됩니다.
+- Compactor를 사용하여 보존을 적용할 때는 table_manager가 필요하지 않습니다.
+
+**설정하기** 
+
+```yaml
+...
+	loki:
+	...
+		config:
+	    compactor:
+	      shared_store: s3 // store가 설정되어 있어야 함
+	      retention_delete_delay: 72h
+	      retention_enabled: true
+...
+```
+
+### table_manager VS Compactor
+
+`table_manager`는 데이터의 논리적 구조와 스키마를 관리하고 구성하며, `Compactor`는 저장된 데이터의 물리적인 관리와 최적화를 담당합니다.
+
+### 결과
+
+![s3-index](./s3-index.png)
+
+![s3-index-retention](./s3-index-retention.png)
+
+위의 사진을 보시면 loki_index_ 형식으로 log index가 쌓이고 있습니다. 해당 데이터들은 설정된 Retention 값에 따라 gz file로 압축하여 AWS S3에 전송한 후 pod내에선 삭제합니다.
+
+![pod-index](./loki-pod-index.png)
+
+실제로 Retention을 24h로 설정한 Loki pod 내부입니다. 총 4일이 지나 loki_index_ 디렉토리가 4개가 생성되어있는데, 가장 최근의 값인 loki_index_19597에만 log data들이 저장되어 있고 loki_index_19594의 디렉토리는 비어져있습니다.
+
+
+# 마치며
+
+이렇게 PLG (Prometheus, Loki, Grafana)를 이용하여 모니터링 시스템을 구축해보았습니다! 개인적으로 EFK (Elasticsearch, Fluent-bit, Kibana)보다 가볍지만 강력하다고 생각이 들어요!
+다음엔 Grafana Dashboard 설정에 대해 공부해보고 포스팅 해보도록 하겠습니다!
+
+
+
+# Reference
+
+[Prometheus - Monitoring system & time series database](https://prometheus.io/)
+
+[[Helm] kube-prometheus-stack 모니터링 시스템 구축하기 (Grafana, exporter, monitoring)](https://ksr930.tistory.com/315)
+
+[Retention |  Grafana Loki documentation](https://grafana.com/docs/loki/latest/operations/storage/retention/#table-manager)

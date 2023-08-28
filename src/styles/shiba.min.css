@@ -17,3 +17,7 @@
     background: rgb(248, 249, 250) !important;
     border-color:rgb(248, 249, 250) !important
 }
+
+img {
+    width: 100%;
+}
