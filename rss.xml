@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Mon, 28 Aug 2023 07:14:41 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[kube-prometheus-stack으로 모니터링 시스템 구축하기]]></title><description><![CDATA[들어가며 사내에서 EFK-Stack(ElasticSearch+Fluent-bit+Kibana)를 이용하여 모니터링 시스템을 구축했었습니다. 하지만 AWS Opensearch를 이용하다보니 비용적인 문제와 비교적 활용도가 낮았던 fluent-bit(응답이 길면 Probe가 자꾸 문제가 발생), metirc…]]></description><link>https://leehosu.github.io/kube-prometheus-stack</link><guid isPermaLink="false">https://leehosu.github.io/kube-prometheus-stack</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><category><![CDATA[promehtues]]></category><category><![CDATA[loki]]></category><category><![CDATA[grafana]]></category><category><![CDATA[Observability]]></category><pubDate>Sun, 27 Aug 2023 06:40:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Mon, 28 Aug 2023 07:24:01 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[kube-prometheus-stack으로 모니터링 시스템 구축하기]]></title><description><![CDATA[들어가며 사내에서 EFK-Stack(ElasticSearch+Fluent-bit+Kibana)를 이용하여 모니터링 시스템을 구축했었습니다. 하지만 AWS Opensearch를 이용하다보니 비용적인 문제와 비교적 활용도가 낮았던 fluent-bit(응답이 길면 Probe가 자꾸 문제가 발생), metirc…]]></description><link>https://leehosu.github.io/kube-prometheus-stack</link><guid isPermaLink="false">https://leehosu.github.io/kube-prometheus-stack</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><category><![CDATA[promehtues]]></category><category><![CDATA[loki]]></category><category><![CDATA[grafana]]></category><category><![CDATA[Observability]]></category><pubDate>Sun, 27 Aug 2023 06:40:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
 &lt;p&gt;사내에서 EFK-Stack(ElasticSearch+Fluent-bit+Kibana)를 이용하여 모니터링 시스템을 구축했었습니다. 하지만 AWS Opensearch를 이용하다보니 비용적인 문제와 비교적 활용도가 낮았던 fluent-bit(응답이 길면 Probe가 자꾸 문제가 발생), metirc 데이터 필요, 쿠버네티스에 맞지 않은 설정들등 다양한 이슈로 모니터링 시스템을 바꿔야 하는 요구 사항이 생겼습니다. 그러던 중 쿠버네티스 모니터링 시스템계의 또 하나의 터줏대감인 Prometheus, Loki, Grafana를 이용하여 새롭게 모니터링 시스템을 구축하였습니다.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;💡 개념적인 내용은 공식 문서와 ChatGPT를 참고하여 작성하였습니다.&lt;/p&gt;
@@ -367,24 +367,24 @@ $ &lt;span class=&quot;token function&quot;&gt;tar&lt;/span&gt; xvfz kube-promet
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; helm-charts/charts/loki-stack&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;grafana/helm-chart 레포지토리를 clone하여 받아온 후 loki-stack 디렉토리로 이동합니다.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;디렉토리 구조&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;./                                
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;./                                
 ├── Chart.yaml                    
 ├── README.md                     
 ├── charts                        
-│   ├── filebeat-7.17.3.tgz       
-│   ├── fluent-bit-2.6.0.tgz      
-│   ├── grafana-6.43.5.tgz        
-│   ├── logstash-7.17.3.tgz       
-│   ├── loki-2.16.0.tgz           
-│   ├── prometheus-15.5.4.tgz     
-│   └── promtail-6.14.1.tgz       
+│   ├── filebeat-7.17.3.tgz       
+│   ├── fluent-bit-2.6.0.tgz      
+│   ├── grafana-6.43.5.tgz        
+│   ├── logstash-7.17.3.tgz       
+│   ├── loki-2.16.0.tgz           
+│   ├── prometheus-15.5.4.tgz     
+│   └── promtail-6.14.1.tgz       
 ├── requirements.lock             
 ├── requirements.yaml             
 ├── templates                     
-│   ├── NOTES.txt                 
-│   ├── _helpers.tpl              
-│   ├── datasources.yaml          
-│   └── tests                     
+│   ├── NOTES.txt                 
+│   ├── _helpers.tpl              
+│   ├── datasources.yaml          
+│   └── tests                     
 └── values.yaml&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;loki-stack 디렉토리에서 values.yaml 파일을 수정하여 원하는 기능을 키고 끄고 추가로 설정할 수 있습니다.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
@@ -501,7 +501,7 @@ h missing dependencies: found &lt;span class=&quot;token keyword&quot;&gt;in&lt;
 &lt;li&gt;설정된 &lt;code class=&quot;language-text&quot;&gt;compaction_interval&lt;/code&gt;마다 압축과 보존을 적용하기 위해 루프를 실행합니다.&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Compactor의 알고리즘은 다음과 같습니다&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;- 각 테이블을 단일 인덱스 파일로 압축합니다.
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;- 각 테이블을 단일 인덱스 파일로 압축합니다.
 - 전체 인덱스를 순회하여 제거해야 할 청크를 식별하고 표시합니다.
 - 표시된 청크를 인덱스에서 제거하고 디스크에 있는 파일에 참조를 저장합니다.
 - 새로 수정된 인덱스 파일을 업로드합니다.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
