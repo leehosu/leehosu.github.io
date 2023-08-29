@@ -35,7 +35,7 @@ tags:
 
 <div style="width:100%">
 
-![overview](./blog-overview.gif)
+![overview](./overview.gif)
 
 </div>
 
