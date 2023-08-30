@@ -5,7 +5,7 @@ import WidgetLatestPosts from './WidgetLatestPosts';
 import WidgetLinks from './WidgetLinks';
 import WidgetSearch from './WidgetSearch';
 import config from '../../../data/SiteConfig';
-import GoogleAdvertise from '../Adsense/Adsense';
+// import GoogleAdvertise from '../Adsense/Adsense';
 
 const Sidebar = ({ tagList, categoryList, latestPostEdges, links }) => {
   return (
@@ -30,13 +30,13 @@ const Sidebar = ({ tagList, categoryList, latestPostEdges, links }) => {
           <WidgetLinks links={links} />
         </div>
       )}
-      <GoogleAdvertise
+      {/* <GoogleAdvertise
         client="ca-pub-2038621379918916"
         slot="7576233308"
         format="auto"
         responsive="true"
         layoutKey="-fz+6a+19-cg+hh"
-      />
+      /> */}
     </aside>
   );
 };

@@ -5,7 +5,7 @@ import PostShare from "./PostShare";
 import PostDate from "./PostDate";
 import PostDivider from "./PostDivider";
 import PostCategories from "./PostCategories";
-import GoogleAdvertise from "../Adsense/Adsense";
+// import GoogleAdvertise from "../Adsense/Adsense";
 import "./Post.scss";
 import "../../../content/styles/code-highlight.scss";
 
@@ -32,24 +32,24 @@ const Post = ({ postNode, config, slug }) => {
         </small>
       </div>
       <PostDivider />
-      <GoogleAdvertise
+      {/* <GoogleAdvertise
         client="ca-pub-2038621379918916"
         slot="7085564120"
         format="auto"
         responsive="true"
         layoutKey="-fz+6a+19-cg+hh"
-      />
+      /> */}
       <div 
         className="padding-top padding-bottom" 
         dangerouslySetInnerHTML={{ __html: postNode.html }} 
       />
-      <GoogleAdvertise
+      {/* <GoogleAdvertise
         client="ca-pub-2038621379918916"
         slot="7085564120"
         format="auto"
         responsive="true"
         layoutKey="-fz+6a+19-cg+hh"
-      />
+      /> */}
       <PostDivider />
       <Comment 
         postNode={postNode} 
