@@ -1,7 +1,7 @@
 ---
 template: "post"
 title: "KUBERNETES에서 POD가 생성되고 업데이트 되는 과정"
-date: "2023-09-13 10:00"
+date: "2023-09-12 23:00"
 slug: "kubernetes-apply-pod"
 keywords: "devops"
 cover : './cover.png'
