@@ -7,11 +7,11 @@ keywords: "devops"
 cover : './cover.png'
 categories: 
     - Devops
-    - kubernetes
+    - Kubernetes
     - metric
 tags:
     - Devops
-    - kubernetes
+    - Kubernetes
     - metric
 ---
 
