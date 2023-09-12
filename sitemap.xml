@@ -38,6 +38,7 @@
 <url> <loc>https://leehosu.github.io/tag/devops/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/devops/page/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/devops/page/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/tag/kubernetes</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/kubernetes/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/kubernetes/page/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/promehtues</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -53,7 +54,6 @@
 <url> <loc>https://leehosu.github.io/tag/ec2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/argocd</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/slack</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://leehosu.github.io/tag/kubernetes</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/metric</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/k8s</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/tag/storage</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -83,6 +83,7 @@
 <url> <loc>https://leehosu.github.io/category/devops/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/devops/page/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/devops/page/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leehosu.github.io/category/kubernetes</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/kubernetes/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/kubernetes/page/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/promehtues</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -96,7 +97,6 @@
 <url> <loc>https://leehosu.github.io/category/ec2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/argocd</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/slack</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://leehosu.github.io/category/kubernetes</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/metric</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/storage</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leehosu.github.io/category/linux</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
