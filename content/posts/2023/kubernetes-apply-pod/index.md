@@ -175,7 +175,7 @@ kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정�
 
 **Docker** : 가장 널리 사용되는 `Container Runtime` 중 하나이며 사용하기 쉬운 `CLI`와 `API`를 제공하고 다양한 플랫폼에서 지원됩니다.
 
-**containerd** : `Docker`의 일부로 시작되었으나 현재는 독립적인 프로젝트이며, `OCI(Open Container Initiative)` 표준을 따르고 `Docker` 엔진 위에서도 작동합니다.
+**containerd** : `Docker`사에서 개발한 오픈소스로써 현재는 독립적인 프로젝트이며, `OCI(Open Container Initiative)` 표준을 따르고 `Docker` 엔진 위에서도 작동합니다.
 
 **CRI-O** : `CRI(Container Runtime Interface)`가 구현된 `Kubernetes`를 위한 경량의 `Container Runtime`입니다. 
 
