@@ -1,7 +1,7 @@
 ---
 template: "post"
 title: "KUBERNETES에서 POD가 생성되고 업데이트 되는 과정"
-date: "2023-09-12 23:00"
+date: "2023-09-13 10:00"
 slug: "kubernetes-apply-pod"
 keywords: "devops"
 cover : './cover.png'
@@ -19,10 +19,15 @@ tags:
 kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정이 일어나는지에 대해 포스팅 해보았습니다. kubernetes를 사용 및 관리한다면 알아야 할 정말 기초적인 일련의 과정이지만 막상 kubernetes cluster object들이 무슨 일을 하는지 모를 수 있으니 이번 기회에 개념을 확! 잡고 갑니다!
 
 
+> 💡 개념적인 내용은 공식 문서와 ChatGPT를 참고하여 작성하였습니다.
+
+<br>
+
 # Overview
 ![overview](./overview_2.gif)
 
-## kubectl apply 명령어가 적용되는 순서
+
+### kubectl apply 명령어가 적용되는 순서
 
 1. client → kube-apiserver
 2. kube-apiserver → etcd
@@ -35,7 +40,7 @@ kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정�
 <br>
 <br>
 
-# 1) client → kube-apiserver
+# **1) client → kube-apiserver**
 
 `kubectl` 클라이언트는 `deployment.yaml` 파일에 정의된 `resource`를 생성하거나 수정하기 위해 `kube-apiserver`에 요청을 보냅니다.
 
@@ -57,7 +62,7 @@ kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정�
 <br>
 <br>
 
-# 2) kube-apiserver → ETCD
+# **2) kube-apiserver → ETCD**
 
 유효성 검사가 통과되면, **`kube-apiserver`**는 **`etcd`** 데이터베이스에 리소스의 상태를 저장합니다.
 
@@ -83,7 +88,7 @@ kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정�
 <br>
 <br>
 
-# 3) kube-apiserver -> kube-controller-manager
+# **3) kube-apiserver → kube-controller-manager**
 
 **`kube-apiserver`**는 리소스의 상태가 변경되었음을 **`kube-controller-manager`**에 알려주게 됩니다.
 
@@ -112,7 +117,7 @@ kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정�
 <br>
 <br>
 
-# 4) kube-apiserver → kube-scheduler
+# **4) kube-apiserver → kube-scheduler**
 
 새로 생성된 `pod`는 초기에는 `Pending` 상태입니다. 이 `pod`를 적절한 `node`에 배포하기 위해  **`kube-scheduler`** 가 동작합니다. (`kube-scheduler` 가 `pod`를 직접 배포를 하는 것이 아니라 `pod`가 배포될만한 적절한 `node`를 찾는 작업을 합니다.)
 
@@ -137,7 +142,7 @@ kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정�
 <br>
 <br>
 
-# 5) kube-apiserver → kubelet
+# **5) kube-apiserver → kubelet**
 
 `Woker Node`에서 `kubelet`과 함께 동작하는 `Container Runtime`이 `Pod`를 생성하고 실행합니다.
 
@@ -185,6 +190,6 @@ kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정�
 <br>
 <br>
 
-# 6) kube-apiserver → ETCD
+# **6) kube-apiserver → ETCD**
 
 `Pod`의 상태가 변경되면 이 정보는 다시 `kube-apiserver`를 통해 `etcd`에 업데이트됩니다.
