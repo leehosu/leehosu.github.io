@@ -17,11 +17,23 @@ slug: "about"
 ## 🌃 About l2h
 ---
 
-`AWS`를 활용한 `Cloud Engineering` 에 관심이 있으며, 현재는 `Kubernetes`를 활용한 `Container` 환경에서 서버 운영 관리를 하고 있습니다.
-정리하는 것을 중요한 가치로 여기고 있고 완성도 있는 구현을 위해 생각을 정리한 후 개발을 하는 것을 선호합니다.
+<br>
+<br>
+
+<div class="title">
+  <h1 style=" text-align:center; font-size:50px; text-transform:uppercase; color:#222; letter-spacing:1px; font-weight:400;">
+  " JUST DO IT "
+  </h1>
+</div>
 
 <br>
 <br>
+
+<br>
+
+
+***계획과 이론도 중요하지만, 실질적인 실행이 더욱 중요하다는 것을 인지하고 있습니다.***
+
 <br>
 
 ## 🛠 Stack
@@ -59,6 +71,18 @@ slug: "about"
     </li>
     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
         <img src="./icons/devops/k9s.png">
+    </li>
+     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/devops/prometheus.png">
+    </li>
+     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/devops/loki.png">
+    </li>
+     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/devops/grafana.png">
+    </li>
+     <li class="skill-icons" style="display: inline-block; margin: 7px; padding: 5px 10px;  list-style: none; cursor: default; font-size: 1.2em;">
+        <img src="./icons/devops/kube-prometheus-stack.png">
     </li>
 </ul>
 
