@@ -1,4 +1,407 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sun, 01 Oct 2023 09:01:22 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[KUBERNETES에서 POD가 생성되고 업데이트 되는 과정]]></title><description><![CDATA[들어가며 kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정이 일어나는지에 대해 포스팅 해보았습니다. kubernetes를 사용 및 관리한다면 알아야 할 정말 기초적인 일련의 과정이지만 막상 kubernetes cluster object…]]></description><link>https://leehosu.github.io/kubernetes-apply-pod</link><guid isPermaLink="false">https://leehosu.github.io/kubernetes-apply-pod</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Wed, 13 Sep 2023 01:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Sat, 30 Dec 2023 04:04:14 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[2023년 회고]]></title><description><![CDATA[들어가며 안녕하세요! 202…]]></description><link>https://leehosu.github.io/2023-review</link><guid isPermaLink="false">https://leehosu.github.io/2023-review</guid><category><![CDATA[Devops]]></category><category><![CDATA[review]]></category><pubDate>Sat, 30 Dec 2023 04:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+&lt;p&gt;안녕하세요! 2023년에는 무슨 일을 했었고, 개인적으로 어떤 변화가 있었는지, 목표했던 것을 이루었는지 회고를 한번 해보려고 합니다. &lt;/p&gt;
+&lt;p&gt;평소 개인적으로 회고를 하는 타입이어서 개인 회고는 따로 진행했는데요. 좀 다른 성격인 업무적, 커리어적 회고는 블로그를 통해 진행해보려고 합니다. (업무보단 커리어에 대한 고민이 주를 이루네요)&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 600px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 63.63636363636363%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIDBAX/xAAVAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAABnM55u0ID/8QAGxAAAwACAwAAAAAAAAAAAAAAAQIDABQEERL/2gAIAQEAAQUC2m7F6INhspJRnJUI05jx/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAHBAAAwACAwEAAAAAAAAAAAAAAAECESESM1Fh/9oACAEBAAY/AsPiinbn4dcmfWSnvQj/xAAaEAEAAwEBAQAAAAAAAAAAAAABABEhMRBB/9oACAEBAAE/ITafZtiw+WOeSUMXPsuA7G1GtP/aAAwDAQACAAMAAAAQry//xAAWEQEBAQAAAAAAAAAAAAAAAAABEQD/2gAIAQMBAT8QQLdTf//EABcRAAMBAAAAAAAAAAAAAAAAAAABESH/2gAIAQIBAT8QSs00/8QAHBABAAIDAAMAAAAAAAAAAAAAAREhAEFRMaGx/9oACAEBAAE/EC12KMMGid8MWgAVI82dWz3gll90t49zBi6neFYQ9BH3HRJPFz//2Q==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;정리&quot;
+        title=&quot;정리&quot;
+        src=&quot;/static/7a1d1bcbfefda08f7b76eaf18bd50cab/e224a/organize.jpg&quot;
+        srcset=&quot;/static/7a1d1bcbfefda08f7b76eaf18bd50cab/e4e7a/organize.jpg 165w,
+/static/7a1d1bcbfefda08f7b76eaf18bd50cab/4f5c6/organize.jpg 330w,
+/static/7a1d1bcbfefda08f7b76eaf18bd50cab/e224a/organize.jpg 600w&quot;
+        sizes=&quot;(max-width: 600px) 100vw, 600px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&quot;내가-무엇을-했지&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%82%B4%EA%B0%80-%EB%AC%B4%EC%97%87%EC%9D%84-%ED%96%88%EC%A7%80&quot; aria-label=&quot;내가 무엇을 했지 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;내가 무엇을 했지?&lt;/h1&gt;
+&lt;h2 id=&quot;업무적으로-무엇을-했지&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%97%85%EB%AC%B4%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%AC%B4%EC%97%87%EC%9D%84-%ED%96%88%EC%A7%80&quot; aria-label=&quot;업무적으로 무엇을 했지 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;업무적으로 무엇을 했지?&lt;/h2&gt;
+&lt;h3 id=&quot;kubernetes를-활용한-컨테이너-운영-환경의-서버-환경을-운영-서버에-적용&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#kubernetes%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EC%9A%B4%EC%98%81-%ED%99%98%EA%B2%BD%EC%9D%98-%EC%84%9C%EB%B2%84-%ED%99%98%EA%B2%BD%EC%9D%84-%EC%9A%B4%EC%98%81-%EC%84%9C%EB%B2%84%EC%97%90-%EC%A0%81%EC%9A%A9&quot; aria-label=&quot;kubernetes를 활용한 컨테이너 운영 환경의 서버 환경을 운영 서버에 적용 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Kubernetes를 활용한 컨테이너 운영 환경의 서버 환경을 운영 서버에 적용&lt;/h3&gt;
+&lt;p&gt;2022년에 개발서버와 스테이징 서버에는 k8s의 컨테이너 운영 환경을 적용해놓고 피드백을 받으며 운영 중이었습니다! 안정성이 충분히 증명되었고, 운영서버에 배포했을 때에 또 다른 이슈가 수집 될 것이고 하루 빨리 배포하여 그것을 수집하여 해결하는 것이 더 낫겠다 라는 판단하에 2023년 1분기에 운영 서버에도 배포하였습니다.&lt;/p&gt;
+&lt;p&gt;결과는 아주!! 성공적!!! 쿠버네티스의 여러 장점 중 재해 복구 가 너무 좋았습니다ㅜㅜㅜㅜ 기존엔 새벽에 문제 생기면 즉시 서버에 들어가서 다시 excute 시켰는데,, 쿠버네티스를 도입하고 나서는 새벽에 문제가 생겨도 다음날 업무시간에 파악 및 해결 할 수 있으니,,, 후후 (+ 다양한 오픈소스도 너무 좋았습니다!!!)&lt;/p&gt;
+&lt;h3 id=&quot;plg-stack-구축&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#plg-stack-%EA%B5%AC%EC%B6%95&quot; aria-label=&quot;plg stack 구축 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;PLG Stack 구축&lt;/h3&gt;
+&lt;p&gt;기존에 모니터링 시스템으로 AWS OpenSearch를 활용하여 EFK Stack을 구축해놓았었는데, 비용이 상당했습니다.. 그렇기에 하루 빨리 교체가 필요했는데, 개인적으로 Prometheus와 Loki, Grafana를 경험해보고 싶어 해당 Stack으로 구축했습니다. 자세한 내용은 &lt;a href=&quot;https://leehosu.github.io/kube-prometheus-stack&quot;&gt;포스팅&lt;/a&gt;을 참고해주세요! &lt;/p&gt;
+&lt;h3 id=&quot;vpn-구축&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#vpn-%EA%B5%AC%EC%B6%95&quot; aria-label=&quot;vpn 구축 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;VPN 구축&lt;/h3&gt;
+&lt;p&gt;개발팀이 워케이션을 떠나기도 하고, 호주에 계신 개발자분이 계셔서 여러 보안적인 이슈에 의해 VPN을 구축했습니다. 이것도 충분한 시간을 갖고 VPN의 원리부터 하나하나 파고들어야 하지만,, 급하게 구축을 했어야 해서 AWS에서 제공해주는 &lt;a href=&quot;https://workshops.aws/categories/AWS%20Client%20VPN&quot;&gt;Workshop&lt;/a&gt; 을 기초로 작업을 진행했습니다. &lt;/p&gt;
+&lt;h3 id=&quot;jenkins에서-github-action으로-전환&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#jenkins%EC%97%90%EC%84%9C-github-action%EC%9C%BC%EB%A1%9C-%EC%A0%84%ED%99%98&quot; aria-label=&quot;jenkins에서 github action으로 전환 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Jenkins에서 Github Action으로 전환&lt;/h3&gt;
+&lt;p&gt;사내에서 다양한 Devops 시스템을 구축해서 사용하다보니 간소화해야 할 이슈가 생겼습니다. (서버 비용 줄이자는 이슈도 있었습니다.)  그래서 여러 CI 파이프라인 솔루션을 찾던 도중 어차피 사내에서 Github을 통해 코드를 관리하고 있으니 같은 페이지에서 바로 확인할 수 있게 github action을 한번 도입해보자라는 마음으로 구축했습니다. 전환하면서 기존에 불필요했던 ci Stage도 수정하고, base imgae도 경량화 하고, 최대한 cache를 활용하여 build 시간을 줄일 수 있게 되었어요. 개발팀이 코드 병함과 리뷰는 github에서, 빌드는 jenkins에서, 배포는 argo에서 각각 다른 브라우저를 사용해야 했는데, 이번 전환으로 github에서 코드에 관해서는 이동없이 한 곳에서 진행하게 되어 매우 편리하다고 해주었습니다 흐흐 ( slack bot도 한 몫!)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;개인적으로는-무엇을-했지&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B0%9C%EC%9D%B8%EC%A0%81%EC%9C%BC%EB%A1%9C%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%84-%ED%96%88%EC%A7%80&quot; aria-label=&quot;개인적으로는 무엇을 했지 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;개인적으로는 무엇을 했지?&lt;/h2&gt;
+&lt;h3 id=&quot;독서-24권&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%8F%85%EC%84%9C-24%EA%B6%8C&quot; aria-label=&quot;독서 24권 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;독서 24권!&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;읽은 책 목록&lt;/th&gt;
+&lt;th&gt;성격&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;김미경의 마흔수업&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;데미안&lt;/td&gt;
+&lt;td&gt;인문학&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;이어령의 마지막 수업&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;태도의 말들&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;말의 품격&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;관계에도 연습이 필요합니다&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;참 괜찮은 태도&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;어떤 생각들은 나의 세계가 된다.&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;모두를 움직이는 힘&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;챗GPT 거부할 수 없는 미래&lt;/td&gt;
+&lt;td&gt;IT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;내 안의 어린 아이에게&lt;/td&gt;
+&lt;td&gt;에세이&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;테크커리어&lt;/td&gt;
+&lt;td&gt;IT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;13&lt;/td&gt;
+&lt;td&gt;매니징 쿠버네티스&lt;/td&gt;
+&lt;td&gt;IT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;모두의 네트워크&lt;/td&gt;
+&lt;td&gt;IT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;IT개발자의 영어필살기&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;K 배터리 레볼루션&lt;/td&gt;
+&lt;td&gt;경제&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;말랑말랑 생각법&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;18&lt;/td&gt;
+&lt;td&gt;한자줍기&lt;/td&gt;
+&lt;td&gt;에세이&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;19&lt;/td&gt;
+&lt;td&gt;한 권으로 끝내는 네트워크 기초&lt;/td&gt;
+&lt;td&gt;IT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;하나님의 열심&lt;/td&gt;
+&lt;td&gt;종교&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;21&lt;/td&gt;
+&lt;td&gt;소프트 스킬&lt;/td&gt;
+&lt;td&gt;IT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;22&lt;/td&gt;
+&lt;td&gt;자기만의 트랙&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;23&lt;/td&gt;
+&lt;td&gt;당신을 더 좋은 회사를 다닐 자격이 있다&lt;/td&gt;
+&lt;td&gt;자기계발&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;24&lt;/td&gt;
+&lt;td&gt;그림으로 배우는 AWS 구조&lt;/td&gt;
+&lt;td&gt;IT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;2023년에 계획했던 목표였던 25권을 못채웠네요,, 🥲 그래도 독서를 꾸준히 하자라고 목표를 세운 첫해에 만족스러운 결과라고 생각합니다!!! (무한 긍정,,)&lt;/p&gt;
+&lt;p&gt;저는 주로 주변에 좋은 사람들에게 제가 읽었던 책중 인상깊고, 선물 받을 사람에게 필요할 만한 책을 선물해주는데요. 올해에 선물을 많이 했었고, 2023년에 읽었던 책 중 올해의 책 Top3를 선정하자면 아래와 같습니다!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;이어령의 마지막 수업 (&lt;a href=&quot;https://product.kyobobook.co.kr/detail/S000001860182&quot;&gt;https://product.kyobobook.co.kr/detail/S000001860182&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;말랑말랑 생각법 (&lt;a href=&quot;https://product.kyobobook.co.kr/detail/S000201350451&quot;&gt;https://product.kyobobook.co.kr/detail/S000201350451&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;자기만의 트랙 (&lt;a href=&quot;https://product.kyobobook.co.kr/detail/S000200688253&quot;&gt;https://product.kyobobook.co.kr/detail/S000200688253&lt;/a&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;각각 링크를 걸어두었으니,, 꼭 한번은 읽어보시길,,,!&lt;/p&gt;
+&lt;h3 id=&quot;맥북-air-구매&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A7%A5%EB%B6%81-air-%EA%B5%AC%EB%A7%A4&quot; aria-label=&quot;맥북 air 구매 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;맥북 Air 구매&lt;/h3&gt;
+&lt;p&gt;드디어!!  M2 8코어, GPU 10코어, 512GB, 16GB의 스펙을 가진 개인 노트북을 구매하게 되었습니다 !! 🎉🎉&lt;/p&gt;
+&lt;p&gt;여러 컨퍼런스와 세미나를 다니면서 수집한 스티커를 붙이면서 재미를 더했어요!! &lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.36363636363636%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMFBP/EABQBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAc7B4xywJ//EABoQAAIDAQEAAAAAAAAAAAAAAAECAxETEiL/2gAIAQEAAQUCVjyrGp70hUZke5KB/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAHBAAAgICAwAAAAAAAAAAAAAAAAERMQIyQYGR/9oACAEBAAY/Alk9ieSWrOxFLw//xAAaEAEAAwEBAQAAAAAAAAAAAAABABEhMUFx/9oACAEBAAE/IWbKMgW8Pb9m2gm4iybSF9WENcPQz//aAAwDAQACAAMAAAAQ+M//xAAWEQEBAQAAAAAAAAAAAAAAAAABEBH/2gAIAQMBAT8QF2f/xAAVEQEBAAAAAAAAAAAAAAAAAAAQIf/aAAgBAgEBPxCH/8QAHBABAQACAgMAAAAAAAAAAAAAAREAITFRQWHB/9oACAEBAAE/EFhAqkj4Zo4w0hqQsd5xcBgasnzN0sdV0ZOTSiXkmCK7fsHsz//Z&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;1&quot;
+        title=&quot;1&quot;
+        src=&quot;/static/7d252a9fab6e2fb8b6e76ae9d65d782b/5ab81/notebook-sticker.jpg&quot;
+        srcset=&quot;/static/7d252a9fab6e2fb8b6e76ae9d65d782b/e4e7a/notebook-sticker.jpg 165w,
+/static/7d252a9fab6e2fb8b6e76ae9d65d782b/4f5c6/notebook-sticker.jpg 330w,
+/static/7d252a9fab6e2fb8b6e76ae9d65d782b/5ab81/notebook-sticker.jpg 660w,
+/static/7d252a9fab6e2fb8b6e76ae9d65d782b/7ed05/notebook-sticker.jpg 990w,
+/static/7d252a9fab6e2fb8b6e76ae9d65d782b/9ef87/notebook-sticker.jpg 1320w,
+/static/7d252a9fab6e2fb8b6e76ae9d65d782b/81f49/notebook-sticker.jpg 4032w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;하지만,, 어느 순간 노트북을 딱 보는데 머리가 너무 아파서 다 떼고 핵심만 붙여놨습니다 하하… (지금은 다 뗏어요!!!!)&lt;/p&gt;
+&lt;h3 id=&quot;세미나-밋업-15곳-참석&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%84%B8%EB%AF%B8%EB%82%98-%EB%B0%8B%EC%97%85-15%EA%B3%B3-%EC%B0%B8%EC%84%9D&quot; aria-label=&quot;세미나 밋업 15곳 참석 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;세미나, 밋업 15곳 참석&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 551px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 109.69696969696969%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAAACXBIWXMAAAsTAAALEwEAmpwYAAACSElEQVQ4y5WVWW/TQBDH/f2/CAIJwQNC6hsUheOFF1oEpE18X03txPcVD/Mfe620ctJkpcmuVt7f/HeOjUbjqKqSsiyluq5pv9/LXt/3dOnQ8APAm9ev6P27t3R19ZE81yW1fylUUwfKsqSmaSaVSqGycxVr6sPA98i2LUqTZPbDc5UKsGJFi8WCbm5+kW0xNE0pjmNRm2XZE6UvgQVYlDV9//mHPM8Vlfp6RZZlkuPY5Pv+E5WnbAT21PE63PXkMEyBYKZpkK6vRaXK/KkBqChsmpru//6WwzDXdWjNKrHGfHe3pM1mI8kqioLyPBcnWGPO8+xQIVHKH3z4fC0KTUMngw3qoNZ1nGmtj04QliDw6eEhlBJDqNQN5MoFw78mJVl80AaEFQIKCA4DiBBg7dg2JbvdbHKmK/f7jpJNKN4tcwBCASDwDiBmmM/lhRnOAH7eAJpMTUXl6pYV2KLM0PUJjoPYQ6wwuq6bbK74B2BbU2PeMkSXOAGARCCeAKsYYg/qVSXMddDUy49RxABDDBCoDLgGAV2v7qdYqrY81kECzDn9n758k4z6Ywsi+Jh9zxNFbdvOFveswrwo6XrxQ9pOdQsU4oqSCIYeHnoRiCujcAGSumJTsUPMpHNYcRgG4kAl5OiVsbnbbofaGxMgbTf2NODL5T9acSwRTzjA/pbPHFUYx5EoVGVijeqGYrfEsI93Ewrbtpl92SdgFD0O6kxzAouZQ+bRtwA9v+LRK8NjVVViKA0oqdjUg3D42pxMyiX/Gef8HfwHmhSb0M+xgtwAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;2&quot;
+        title=&quot;2&quot;
+        src=&quot;/static/58b5c0285a2e75589cbbc61e0398cec8/d1cfa/2023-semina.png&quot;
+        srcset=&quot;/static/58b5c0285a2e75589cbbc61e0398cec8/103f2/2023-semina.png 165w,
+/static/58b5c0285a2e75589cbbc61e0398cec8/748ba/2023-semina.png 330w,
+/static/58b5c0285a2e75589cbbc61e0398cec8/d1cfa/2023-semina.png 551w&quot;
+        sizes=&quot;(max-width: 551px) 100vw, 551px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;자칭 세미나 쟁이인 저는 올해에도 많은 세미나 및 컨퍼런스, meetup에 참석했는데요. 정말 많은 인사이트와 경험을 얻을 수 있었습니다!!&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.36363636363636%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUC/8QAFgEBAQEAAAAAAAAAAAAAAAAAAwEC/9oADAMBAAIQAxAAAAHaeQaSSxf/xAAYEAADAQEAAAAAAAAAAAAAAAAAAQIRMv/aAAgBAQABBQLqXOjvGNsqnv8A/8QAFhEBAQEAAAAAAAAAAAAAAAAAAQAC/9oACAEDAQE/AXTCt//EABYRAAMAAAAAAAAAAAAAAAAAAAEQEv/aAAgBAgEBPwGQv//EABgQAAIDAAAAAAAAAAAAAAAAAAEiACAh/9oACAEBAAY/Ag8DDK//xAAaEAEBAQADAQAAAAAAAAAAAAABABEhMVFx/9oACAEBAAE/IXBv1uWuYUGF9gHcXg3/2gAMAwEAAgADAAAAEDQf/8QAFhEBAQEAAAAAAAAAAAAAAAAAEQAB/9oACAEDAQE/EBFhN//EABcRAQEBAQAAAAAAAAAAAAAAAAEAETH/2gAIAQIBAT8QekmX/8QAGxABAAIDAQEAAAAAAAAAAAAAAQARMUFRIYH/2gAIAQEAAT8Q6MXmfDyWEBZV7pj5NjoElLKKUQkNmnhP/9k=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;industry&quot;
+        title=&quot;industry&quot;
+        src=&quot;/static/d0949ce9ec7fd728edeae687e01d687a/5ab81/aws-industry-2023.jpg&quot;
+        srcset=&quot;/static/d0949ce9ec7fd728edeae687e01d687a/e4e7a/aws-industry-2023.jpg 165w,
+/static/d0949ce9ec7fd728edeae687e01d687a/4f5c6/aws-industry-2023.jpg 330w,
+/static/d0949ce9ec7fd728edeae687e01d687a/5ab81/aws-industry-2023.jpg 660w,
+/static/d0949ce9ec7fd728edeae687e01d687a/7ed05/aws-industry-2023.jpg 990w,
+/static/d0949ce9ec7fd728edeae687e01d687a/9ef87/aws-industry-2023.jpg 1320w,
+/static/d0949ce9ec7fd728edeae687e01d687a/81f49/aws-industry-2023.jpg 4032w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;특히, 7월에 진행했던 Kubernetes Community Day는 실제로 업무적으로 도움이 되는 세션들이 많아서 유익했고, 10월에 진행했던 AWS Industry Day에서는 많은 회사에서 AWS를 사용해서 어떻게 그들만의 고민을 해결했는지에 소중한 경험을 들을 수 있었던 시간이었어요!  &lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.36363636363636%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAIFAQT/xAAVAQEBAAAAAAAAAAAAAAAAAAACA//aAAwDAQACEAMQAAAB5Nn0EkEJv//EABoQAAMBAAMAAAAAAAAAAAAAAAECEQADEyL/2gAIAQEAAQUCQrg6TtTcZ9SrAd//xAAWEQEBAQAAAAAAAAAAAAAAAAAAASH/2gAIAQMBAT8BjX//xAAYEQACAwAAAAAAAAAAAAAAAAAAEQECIf/aAAgBAgEBPwG2wxH/xAAaEAACAgMAAAAAAAAAAAAAAAAAIQEQETFB/9oACAEBAAY/AmPgs1Jo/8QAGhAAAwADAQAAAAAAAAAAAAAAAAERIUFhMf/aAAgBAQABPyFhZV9RQWe0Q6+C6M2IoSeyx1D/2gAMAwEAAgADAAAAENsv/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQARMf/aAAgBAwEBPxDbxhn/xAAVEQEBAAAAAAAAAAAAAAAAAAAQMf/aAAgBAgEBPxCkP//EAB0QAQEAAgEFAAAAAAAAAAAAAAERACExQVGBobH/2gAIAQEAAT8QmVkth8yFEGqD5e2BRO1Dv1gdFsjgI1nI64qmNnGf/9k=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;3&quot;
+        title=&quot;3&quot;
+        src=&quot;/static/ffa37f9dcf7e9c1dd54611f82fd26005/5ab81/slownight.jpg&quot;
+        srcset=&quot;/static/ffa37f9dcf7e9c1dd54611f82fd26005/e4e7a/slownight.jpg 165w,
+/static/ffa37f9dcf7e9c1dd54611f82fd26005/4f5c6/slownight.jpg 330w,
+/static/ffa37f9dcf7e9c1dd54611f82fd26005/5ab81/slownight.jpg 660w,
+/static/ffa37f9dcf7e9c1dd54611f82fd26005/7ed05/slownight.jpg 990w,
+/static/ffa37f9dcf7e9c1dd54611f82fd26005/9ef87/slownight.jpg 1320w,
+/static/ffa37f9dcf7e9c1dd54611f82fd26005/81f49/slownight.jpg 4032w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;그리고 저기에는 기록되어 있지 않지만 &lt;a href=&quot;https://www.linkedin.com/feed/update/urn:li:activity:7137592549975748608/&quot;&gt;2023 느린밤&lt;/a&gt;도 너무 좋았습니다! 매년 참석할 예정이에요 흐흐&lt;/p&gt;
+&lt;p&gt;2024년에는 더 많은 세미나를 참석하면서 트랜드를 쫒고, 제가 얻을 수 없는 귀한 경험을 간접적으로 느껴볼 수 있도록 더더욱 열정을 갖고 동향을 살피도록 하겠습니다!!&lt;/p&gt;
+&lt;h3 id=&quot;링크드인-가입&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8-%EA%B0%80%EC%9E%85&quot; aria-label=&quot;링크드인 가입 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;링크드인 가입&lt;/h3&gt;
+&lt;p&gt;처음으로 LInkedIn에 가입해서 커리어적으로 SNS 생활을 했습니다. 정말 다양한 영역에서 영향을 미치는 사람들이 있어 그들의 소식을 접할 수 있었고, 개인적으로 요 근래에 가장 많이 사용하는 APP이 되었습니다. 특히 Devops 그룹에 가입하여 올라오는 꿀팁들을 짧게나마 보는것도 상당히 도움이 많이 되더라구요! 저의 블로그 포스팅도 업데이트로 올려놓으면 반응도 꾸준히 수집되어 너무 유익헀습니다!&lt;/p&gt;
+&lt;h3 id=&quot;닌텐도-스위치-구매&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%8B%8C%ED%85%90%EB%8F%84-%EC%8A%A4%EC%9C%84%EC%B9%98-%EA%B5%AC%EB%A7%A4&quot; aria-label=&quot;닌텐도 스위치 구매 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;닌텐도 스위치 구매&lt;/h3&gt;
+&lt;p&gt;평소 게임을 그렇게 좋아하지 않지만,, 과감히 블랙프라이데이 때 구매했습니다!! 어렸을 때 정말 재밌게 했던 포켓몬스터 게임이 떠올라 포켓몬스터 스칼렛도 같이 구매했고 구매한지 2주만에 다 깻네요 ㅎㅎㅎ&lt;/p&gt;
+&lt;p&gt;가끔 취미로 한두시간씩 할 생각으로 구매했는데, 매우 만족하고 있습니다!! (게임 추천해주세요…..)&lt;/p&gt;
+&lt;h2 id=&quot;주저리주저리&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%A3%BC%EC%A0%80%EB%A6%AC%EC%A3%BC%EC%A0%80%EB%A6%AC&quot; aria-label=&quot;주저리주저리 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;주저리주저리&lt;/h2&gt;
+&lt;h3 id=&quot;권고사직&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B6%8C%EA%B3%A0%EC%82%AC%EC%A7%81&quot; aria-label=&quot;권고사직 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;권고사직&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 125.45454545454547%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAZABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAMEAgX/xAAWAQEBAQAAAAAAAAAAAAAAAAADAAL/2gAMAwEAAhADEAAAAaI+iljUbEJqbMYRY8r/xAAbEAADAQADAQAAAAAAAAAAAAABAhEAAyExMv/aAAgBAQABBQK9Eupw+2RaAJCMRlsG5PF8/8QAGBEBAQADAAAAAAAAAAAAAAAAABECEiH/2gAIAQMBAT8Bx1nURH//xAAXEQEBAQEAAAAAAAAAAAAAAAARAAIh/9oACAECAQE/AdLyZm//xAAaEAACAwEBAAAAAAAAAAAAAAAAEQECEDIh/9oACAEBAAY/AkczbGOsqT2wxnORn//EAB4QAQACAQQDAAAAAAAAAAAAAAEAETEQIVFxQYGh/9oACAEBAAE/ISqA2zagPNmJbL7DDO5ZnOPUQUfXEQgDA9sxn1af/9oADAMBAAIAAwAAABBH0wD/xAAZEQEBAQADAAAAAAAAAAAAAAABABEhMXH/2gAIAQMBAT8QOmvJU5FI4d3/xAAYEQADAQEAAAAAAAAAAAAAAAAAAREhMf/aAAgBAgEBPxBpQQLcHrh//8QAHxABAAICAQUBAAAAAAAAAAAAAQARITFREHGBkaGx/9oACAEBAAE/EFQmNTjiGrI0gDL5jmWZupas1wtR4OCTT4uHo1HcFyKOgsbbQlJT7lTy2xIZs6Ho7v7P/9k=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;3&quot;
+        title=&quot;3&quot;
+        src=&quot;/static/10734e3f8cc2d419f0b8c6e7f8638c39/5ab81/2.jpg&quot;
+        srcset=&quot;/static/10734e3f8cc2d419f0b8c6e7f8638c39/e4e7a/2.jpg 165w,
+/static/10734e3f8cc2d419f0b8c6e7f8638c39/4f5c6/2.jpg 330w,
+/static/10734e3f8cc2d419f0b8c6e7f8638c39/5ab81/2.jpg 660w,
+/static/10734e3f8cc2d419f0b8c6e7f8638c39/a24e6/2.jpg 800w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;2023년에는 2022년의 성과를 토대로 성공적인 연봉협상을 이루어내어 만족스러운 보상에 이어 Devops Engineer로서 전문성을 키우기로 목표했던 해 인데요. 하지만 회사의 재정적인 문제로 인해 더이상 함께 하지 못하게 되었습니다. (이직 준비를 Start,,,)&lt;/p&gt;
+&lt;h3 id=&quot;이직-준비-하지만-연이은-불합격&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9D%B4%EC%A7%81-%EC%A4%80%EB%B9%84-%ED%95%98%EC%A7%80%EB%A7%8C-%EC%97%B0%EC%9D%B4%EC%9D%80-%EB%B6%88%ED%95%A9%EA%B2%A9&quot; aria-label=&quot;이직 준비 하지만 연이은 불합격 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;이직 준비,, 하지만 연이은 불합격&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 604px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 70.30303030303031%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAOABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBP/EABYBAQEBAAAAAAAAAAAAAAAAAAEAA//aAAwDAQACEAMQAAABu8sbDGN//8QAGhAAAwEAAwAAAAAAAAAAAAAAAAECEwMREv/aAAgBAQABBQLjnMufQ4fehsjdI//EABgRAAMBAQAAAAAAAAAAAAAAAAABAhJR/9oACAEDAQE/AXMtmY6f/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERAv/aAAgBAgEBPwGtF0f/xAAbEAABBAMAAAAAAAAAAAAAAAAAAREhQRAxUf/aAAgBAQAGPwKGVR4XhrFln//EABsQAQACAgMAAAAAAAAAAAAAAAEAESExYYGR/9oACAEBAAE/ITQ0GLjbC9EfFPMy0yb1+p//2gAMAwEAAgADAAAAEOff/8QAGREBAAIDAAAAAAAAAAAAAAAAAQAhETHh/9oACAEDAQE/EEmGubgtsf/EABcRAQEBAQAAAAAAAAAAAAAAAAEAIUH/2gAIAQIBAT8QFD2Ay//EAB0QAQEAAQQDAAAAAAAAAAAAAAERACExQdFRkaH/2gAIAQEAAT8QA9iuYOi+sCYJAKlN0ectG9AJxkmkqRQ3+5SIBtA7w6BPKO8//9k=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;fail&quot;
+        title=&quot;fail&quot;
+        src=&quot;/static/2040edef7c2d1c098a36f1accaffb9d6/8f4fd/fail.jpg&quot;
+        srcset=&quot;/static/2040edef7c2d1c098a36f1accaffb9d6/e4e7a/fail.jpg 165w,
+/static/2040edef7c2d1c098a36f1accaffb9d6/4f5c6/fail.jpg 330w,
+/static/2040edef7c2d1c098a36f1accaffb9d6/8f4fd/fail.jpg 604w&quot;
+        sizes=&quot;(max-width: 604px) 100vw, 604px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;회사에서 이야기를 해주기 전에 이력서를 최신화하면서 시험(?)삼아 몇 군데를 지원해보기 시작했었는데요. 운좋게 서류 통과하고, 과제전형도 통과하고 면접을 보게 된 곳도 꽤 많았습니다. 하지만 1차 면접에서 대부분 탈락하게 되었는데, 제 능력이 너무나도 부족하다는 것을 새삼깨닫게 되었습니다. 그래도 꾸준히 2023년에 이직을 하기 위해 면접을 보고 있었는데, 결과는 ALL Failed!&lt;/p&gt;
+&lt;h3 id=&quot;원인은-전문성&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9B%90%EC%9D%B8%EC%9D%80-%EC%A0%84%EB%AC%B8%EC%84%B1&quot; aria-label=&quot;원인은 전문성 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;원인은 전문성&lt;/h3&gt;
+&lt;p&gt;회사의 규모상 하나를 구축하기 위해 개념 정리를 탄탄하게 하고 구축하는 것보다 빠른 실행에 의해 피드백을 받고 보다 빨리 구축을 해야했습니다.(그래도 어느정도 개념은 잡고 했습니다!) 그래서 제가 생각했던 계획은 빨리 구축을 하고, 안정화를 거쳐 고도화를 진행하면서 Deep하게 파고들어가보자! 였습니다. 이런 생각에 의해 하나의 시스템을 구축할 때에 생각보다 얕게, 기능에만 문제 없을 정도로만 개념 정리를 하고 구축하게 되었습니다. 그러다 보니 면접에서 제가 구축한 시스템에 대해 꼬리물기식으로 질문을 이어가게 되면 머리속으로는 그려지는데 말로 설명하지 못하는 상태가 되었습니다.(제가 생각하는 제것으로 만든 지식은 남들에게 해당 내용에 대해, 개념에 대해 처음 접하는 사람들도 쉽게 이해할 수 있게 설명하는 것이라고 생각하는데… 이것을 못하니 제것이 아니었습니다.) &lt;/p&gt;
+&lt;h3 id=&quot;그래서&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B7%B8%EB%9E%98%EC%84%9C&quot; aria-label=&quot;그래서 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;그래서?&lt;/h3&gt;
+&lt;p&gt;2023년 12월부로 저는 다시 백수로 돌아갑니다. 하지만 이직에 급하게 달려들진 않으려고 합니다. 저에 대해 먼저 탐구를 해보고, 제가 지원해보고 싶은 회사가 무엇인지 목록화 해보려고 합니다. (이미 완료!) 그 다음 전문성을 기르기 위해 제가 구축했던 시스템들에 대해 공부를 하고, 자격증을 공부하면서 1~2월을 보내려고 합니다. 하지만 공백기를 길게 갖진 않고, 꾸준히 지원해보려고 합니다! (좋은 기회가 있을 수 있으니…ㅎㅎ)&lt;/p&gt;
+&lt;h3 id=&quot;하지만-시작이-좋지-않다&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%95%98%EC%A7%80%EB%A7%8C-%EC%8B%9C%EC%9E%91%EC%9D%B4-%EC%A2%8B%EC%A7%80-%EC%95%8A%EB%8B%A4&quot; aria-label=&quot;하지만 시작이 좋지 않다 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;하지만,, 시작이 좋지 않다,,,&lt;/h3&gt;
+&lt;p&gt;자격증 취득을 목표로 하고 12월에 공부를 제대로 시작하고 12월 28일에 CKA 시험을 보게 되었습니다! 사실 14일에도 시험을 응시했었는데, 예약한 스터디룸의 문제로 인해 시험을 못보게 되었습니다.. 억울하지만 다시 멘탈을 붙잡고 28일에 응시를 하고 보게 되었는데 결과는 탈락이었습니다ㅜㅜ (제 점수 : 57 / 통과 점수 :66) &lt;/p&gt;
+&lt;h3 id=&quot;2023년-정리&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2023%EB%85%84-%EC%A0%95%EB%A6%AC&quot; aria-label=&quot;2023년 정리 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2023년 정리&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 400px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.36363636363636%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAwABBP/EABYBAQEBAAAAAAAAAAAAAAAAAAIAA//aAAwDAQACEAMQAAABJjaPDZHT/8QAGxAAAwACAwAAAAAAAAAAAAAAAQIDACEREiP/2gAIAQEAAQUCSPtWCrE9yZ7TnCd//8QAGBEAAgMAAAAAAAAAAAAAAAAAAgMQERL/2gAIAQMBAT8BYzJVH//EABgRAAMBAQAAAAAAAAAAAAAAAAACEQEh/9oACAECAQE/AUW5Tp//xAAcEAACAgIDAAAAAAAAAAAAAAAAAQIREEESITH/2gAIAQEABj8Cipr0tQ4ytbOkK9MWP//EABoQAQEBAQEBAQAAAAAAAAAAAAERACExYYH/2gAIAQEAAT8hsklU/NaeEWtS6BzJcuzPnMqqvpmfTv/aAAwDAQACAAMAAAAQa+//xAAZEQEAAgMAAAAAAAAAAAAAAAABABEhMbH/2gAIAQMBAT8QAK7rtRRyz//EABcRAQEBAQAAAAAAAAAAAAAAAAEAETH/2gAIAQIBAT8QZ08gBhf/xAAcEAEBAAICAwAAAAAAAAAAAAABEQAhMUGBocH/2gAIAQEAAT8Qe+wknJZx4yipKraz76yzqEIMZ2axQClbsdMaxkkrezLR1E0zP//Z&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;최악&quot;
+        title=&quot;최악&quot;
+        src=&quot;/static/74087b0b9f6f3b192024410804220074/a6407/worst.jpg&quot;
+        srcset=&quot;/static/74087b0b9f6f3b192024410804220074/e4e7a/worst.jpg 165w,
+/static/74087b0b9f6f3b192024410804220074/4f5c6/worst.jpg 330w,
+/static/74087b0b9f6f3b192024410804220074/a6407/worst.jpg 400w&quot;
+        sizes=&quot;(max-width: 400px) 100vw, 400px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;한 마디로 “최악의 해” 였습니다. &lt;/p&gt;
+&lt;p&gt;회사의 권고사직, 자격증 불합격, 2023년에는 이직 실패.. 최고의 스타트로 시작했던 해를 최악의 결과로 마무리 짓게 되었습니다 😢&lt;/p&gt;
+&lt;p&gt;하지만, 늘 그렇듯 시련은 저를 더 단단하게 만들어 준다는 것을 믿어 의심치 않기에!!! 저는 잘 될것임을 믿기에!!&lt;/p&gt;
+&lt;p&gt;2024년는 기똥찬 한 해가 될 것을 기대해 봅니다!&lt;/p&gt;
+&lt;h1 id=&quot;그래서-2024년엔-뭐-할건데&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B7%B8%EB%9E%98%EC%84%9C-2024%EB%85%84%EC%97%94-%EB%AD%90-%ED%95%A0%EA%B1%B4%EB%8D%B0&quot; aria-label=&quot;그래서 2024년엔 뭐 할건데 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;그래서 2024년엔 뭐 할건데?&lt;/h1&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 73.93939393939394%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAQBAgP/xAAXAQADAQAAAAAAAAAAAAAAAAAAAQID/9oADAMBAAIQAxAAAAFjZSJ1aKiP/8QAGhAAAgMBAQAAAAAAAAAAAAAAAQIAAxETIf/aAAgBAQABBQLIQMllwSdPWcKf/8QAFREBAQAAAAAAAAAAAAAAAAAAEBL/2gAIAQMBAT8Bs//EABgRAQADAQAAAAAAAAAAAAAAAAEAAhFS/9oACAECAQE/AWrZGOcz/8QAGRABAQADAQAAAAAAAAAAAAAAAQAQETFR/9oACAEBAAY/As+sLxtLf//EABsQAAMAAgMAAAAAAAAAAAAAAAABESFRQWGB/9oACAEBAAE/IUnJMaiK9kNSiwiNcTowZeH/2gAMAwEAAgADAAAAEKg//8QAFhEBAQEAAAAAAAAAAAAAAAAAAQBh/9oACAEDAQE/EHUJl//EABcRAQEBAQAAAAAAAAAAAAAAAAERAJH/2gAIAQIBAT8QIozIMrm//8QAGxAAAgMBAQEAAAAAAAAAAAAAAREAITGRQVH/2gAIAQEAAT8QQYV7BgCsUHxciVs2Axg5CJym402ZcvoEMAEa5P/Z&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;1&quot;
+        title=&quot;1&quot;
+        src=&quot;/static/76307bb31e07a1b76946cd98419e9eae/5ab81/simson.jpg&quot;
+        srcset=&quot;/static/76307bb31e07a1b76946cd98419e9eae/e4e7a/simson.jpg 165w,
+/static/76307bb31e07a1b76946cd98419e9eae/4f5c6/simson.jpg 330w,
+/static/76307bb31e07a1b76946cd98419e9eae/5ab81/simson.jpg 660w,
+/static/76307bb31e07a1b76946cd98419e9eae/d0f75/simson.jpg 750w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&quot;자격증-따보자&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9E%90%EA%B2%A9%EC%A6%9D-%EB%94%B0%EB%B3%B4%EC%9E%90&quot; aria-label=&quot;자격증 따보자 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;자격증 따보자!&lt;/h2&gt;
+&lt;p&gt;2024년엔 개인적으로 전문성을 더하기 위해 자격증을 공부하려고 해요! &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CKA&lt;/li&gt;
+&lt;li&gt;AWS Cloud Practitioner&lt;/li&gt;
+&lt;li&gt;AWS Solutions Architect&lt;/li&gt;
+&lt;li&gt;Terraform Associate (003)&lt;/li&gt;
+&lt;li&gt;Linux System Administration(LFCS) : 큰 도전!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;취득을 해보면서 계속 추가할 예정입니다!! &lt;/p&gt;
+&lt;h3 id=&quot;독서&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%8F%85%EC%84%9C&quot; aria-label=&quot;독서 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;독서&lt;/h3&gt;
+&lt;p&gt;2023년보다 더 많이!! 최소 24권 이상 독서를 해보려고 합니다! 기록의 중요성을 알기 때문에 읽은 책은 제때 제때 느낌점과 인상깊었던 부분을 따로 기록하려고 합니다! (좋은 책이 있다면 언제든 추천해주세요!!)&lt;/p&gt;
+&lt;h3 id=&quot;운동&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9A%B4%EB%8F%99&quot; aria-label=&quot;운동 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;운동&lt;/h3&gt;
+&lt;p&gt;2024년엔 운동을 좀 꾸준히 해보려고 합니다… 제발….&lt;/p&gt;
+&lt;h2 id=&quot;일단-이직이-최우선&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9D%BC%EB%8B%A8-%EC%9D%B4%EC%A7%81%EC%9D%B4-%EC%B5%9C%EC%9A%B0%EC%84%A0&quot; aria-label=&quot;일단 이직이 최우선 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;일단 이직이 최우선!&lt;/h2&gt;
+&lt;p&gt;내년 계획을 세우기 위해서는 아무래도 이직을 진행한 후에 주어진 업무에 맞게 계획을 해야하니, 이직한 후에 계획하려고 합니다.
+11월, 12월의 시간을 투자하여 나는 어떤 사람인가? 어떤 커리어를 쌓고 싶은가? 그래서 내가 어떤 회사를 원하는가? 에 대해 정리를 해보았습니다. 그러니 조급하게 이직을 하려고 하지 않고 최선을 다해서 원하는 회사에 이직을 하려고 합니다! 조만간 좋은 소식으로 돌아오겠습니다!&lt;/p&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[KUBERNETES에서 POD가 생성되고 업데이트 되는 과정]]></title><description><![CDATA[들어가며 kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정이 일어나는지에 대해 포스팅 해보았습니다. kubernetes를 사용 및 관리한다면 알아야 할 정말 기초적인 일련의 과정이지만 막상 kubernetes cluster object…]]></description><link>https://leehosu.github.io/kubernetes-apply-pod</link><guid isPermaLink="false">https://leehosu.github.io/kubernetes-apply-pod</guid><category><![CDATA[Devops]]></category><category><![CDATA[Kubernetes]]></category><pubDate>Wed, 13 Sep 2023 01:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
 &lt;p&gt;kubectl 명령을 통해 pod를 생성하거나 수정할 때에 무슨 과정이 일어나는지에 대해 포스팅 해보았습니다. kubernetes를 사용 및 관리한다면 알아야 할 정말 기초적인 일련의 과정이지만 막상 kubernetes cluster object들이 무슨 일을 하는지 모를 수 있으니 이번 기회에 개념을 확! 잡고 갑니다!&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;💡 개념적인 내용은 공식 문서와 ChatGPT를 참고하여 작성하였습니다.&lt;/p&gt;
