@@ -54,11 +54,9 @@ tags:
 ##### Unknown
 - 어떤 이유로 포드의 상태를 알 수 없으며, 포드 호스트와의 통신 오류로 인해 발생했을 가능성이 높습니다.
 
+
 <br>
-
-
-> Pod를 삭제할 때 gracefully하게 종료되도록 약간의 시간(기본값 30초)이 존재하는데, 그 상태가 Terminated 입니다.
-
+<br>
 
 pod의 phase는 pod 객체의 `status` 필드 중 하나입니다. 그렇기에 pod의 phase를 확인하려면 아래와 같이 명령하면 확인할 수 있습니다.
 
@@ -187,6 +185,49 @@ Containers:
 
 ##### InvalidImageName
 - 지정된 컨테이너 이미지 이름이 잘못되었거나 존재하지 않아 이미지를 가져올 수 없는 상태입니다.
+
+
+# Pod lifecycle
+
+### 초기화
+Pod가 생성되고, 필요한 리소스 할당 및 스케줄링을 기다립니다. 이때는 Pod가 아직 실행 준비가 완료되지 않았고, 초기화 컨테이너가 아직 실행되지 않았으므로 컨테이너가 아직 준비되지 않았습니다. 
+
+- pod phase : `pending`
+- pod condition :`PodScheduled: True`, `Ready: False`, `Initialized: False`,`ContainersReady: False`
+- container status: `Waiting`
+
+
+### 실행 준비 (Running Phase)
+Pod가 노드에 스케줄링되고, 컨테이너가 시작됩니다. 이때는 Pod가 노드에 스케줄링되었고, 초기화 컨테이너도 실행되었지만 모든 컨테이너가 아직 준비되지 않았습니다.
+
+- pod phase : `running`
+- pod condition :`PodScheduled: True`, `Ready: False`, `Initialized: True`, `ContainersReady: False`
+- container status: `running`
+
+
+### 정상 운영 (Running Phase)
+Pod가 정상적으로 작동하고, 모든 컨테이너가 정상적으로 실행 중입니다. 이때는 Pod가 노드에 스케줄링되었고, 모든 초기화 컨테이너가 성공적으로 시작되었고, 모든 컨테이너가 준비 상태로 서비스 요청을 처리할 준비가 되었습니다.
+
+- pod phase : `running`
+- pod condition : `PodScheduled: True`, `Ready: True`, `Initialized: True`, `ContainersReady: True`
+- container status: `running`
+
+
+
+### 종료 (Succeeded/Failed Phase
+Pod 내의 모든 컨테이너가 작업을 완료하고 종료합니다. 이때는 Pod가 노드에 이미 스케줄링되었고, 초기화 단계도 이미 완료되었지만 Pod가 종료되었으므로 컨테이너가 준비 상태가 아니므로 더 이상 요청을 처리할 수 없습니다.
+
+- pod phase : `succeeded`, `failed`
+- pod condition : `PodScheduled: True`, `Ready: False`, `Initialized: True`, `ContainersReady: False`
+- container status: `terminated`
+
+
+### 오류 상황 (Running Phase with Errors)
+컨테이너가 실패하거나 (CrashLoopBackOff), 이미지를 가져오지 못하는 경우 (ImagePullBackOff, ErrImagePull) 등의 오류가 발생하면, Pod는 여전히 Running 상태일 수 있지만, Container Status는 Waiting 상태를 보여줍니다. 이때는 Pod가 노드에 이미 스케줄링되었고, 컨티에너 초기화가 안되거나 되었는데 오류가 있는 컨테이너가 있거나 Pod가 정상적으로 작동하지 않았습니다.
+
+- pod phase : `running`
+- pod condition : `PodScheduled: True`, `Ready: False`, `Initialized: False`, `ContainersReady: False`
+- container status: `waiting`
 
 
 # 요약
