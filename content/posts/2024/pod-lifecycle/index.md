@@ -193,6 +193,10 @@ Containers:
 
 
 ### 초기화
+
+
+![pending](./pod-pending.png)
+
 Pod가 생성되고, 필요한 리소스 할당 및 스케줄링을 기다립니다. 이때는 Pod가 아직 실행 준비가 완료되지 않았고, 초기화 컨테이너가 아직 실행되지 않았으므로 컨테이너가 아직 준비되지 않았습니다. 
 
 - pod phase : `pending`
@@ -200,7 +204,10 @@ Pod가 생성되고, 필요한 리소스 할당 및 스케줄링을 기다립니
 - container status: `Waiting`
 
 
-### 실행 준비 (Running Phase)
+### 실행 준비
+
+![running](./pod-running-pre.png)
+
 Pod가 노드에 스케줄링되고, 컨테이너가 시작됩니다. 이때는 Pod가 노드에 스케줄링되었고, 초기화 컨테이너도 실행되었지만 모든 컨테이너가 아직 준비되지 않았습니다.
 
 - pod phase : `running`
@@ -208,7 +215,10 @@ Pod가 노드에 스케줄링되고, 컨테이너가 시작됩니다. 이때는 
 - container status: `running`
 
 
-### 정상 운영 (Running Phase)
+### 정상 운영
+
+![running](./pod-running.png)
+
 Pod가 정상적으로 작동하고, 모든 컨테이너가 정상적으로 실행 중입니다. 이때는 Pod가 노드에 스케줄링되었고, 모든 초기화 컨테이너가 성공적으로 시작되었고, 모든 컨테이너가 준비 상태로 서비스 요청을 처리할 준비가 되었습니다.
 
 - pod phase : `running`
@@ -217,7 +227,10 @@ Pod가 정상적으로 작동하고, 모든 컨테이너가 정상적으로 실�
 
 
 
-### 종료 (Succeeded/Failed Phase
+### 종료
+
+![complete](./pod-complete.png)
+
 Pod 내의 모든 컨테이너가 작업을 완료하고 종료합니다. 이때는 Pod가 노드에 이미 스케줄링되었고, 초기화 단계도 이미 완료되었지만 Pod가 종료되었으므로 컨테이너가 준비 상태가 아니므로 더 이상 요청을 처리할 수 없습니다.
 
 - pod phase : `succeeded`, `failed`
@@ -225,7 +238,10 @@ Pod 내의 모든 컨테이너가 작업을 완료하고 종료합니다. 이때
 - container status: `terminated`
 
 
-### 오류 상황 (Running Phase with Errors)
+### 오류 상황
+
+![error](./pod-error.png)
+
 컨테이너가 실패하거나 (CrashLoopBackOff), 이미지를 가져오지 못하는 경우 (ImagePullBackOff, ErrImagePull) 등의 오류가 발생하면, Pod는 여전히 Running 상태일 수 있지만, Container Status는 Waiting 상태를 보여줍니다. 이때는 Pod가 노드에 이미 스케줄링되었고, 컨티에너 초기화가 안되거나 되었는데 오류가 있는 컨테이너가 있거나 Pod가 정상적으로 작동하지 않았습니다.
 
 - pod phase : `running`
