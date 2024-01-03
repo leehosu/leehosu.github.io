@@ -124,7 +124,7 @@ $ kubectl get po my-app -o json | jq .status.conditions
 [
   {
     "lastProbeTime": null,
-    "lastTransitionTime": "2020-02-02T11:42:59Z",
+    "lastTransitionTime": "2024-01-03T11:42:59Z",
     "status": "True",
     "type": "Initialized"
   },
@@ -162,7 +162,7 @@ Containers:
     Port:           8080/TCP
     Host Port:      0/TCP
     State:          Running                                     # 컨테이너의 현재 상태
-      Started:      Sun, 02 Feb 2020 12:43:03 +0100             # 컨테이너의 시작 시기
+      Started:      Web, 03 Jan 2023 12:43:03 +0100             # 컨테이너의 시작 시기
     Ready:          True                                        # 컨테이너가 서비스를 제공할 준비가 되었는지 여부
     Restart Count:  0                                           # 컨테이너가 다시 시작된 횟수
     Environment:    <none>
@@ -188,6 +188,9 @@ Containers:
 
 
 # Pod lifecycle
+
+![pod-lifecycle](./pod-lifecycle.png)
+
 
 ### 초기화
 Pod가 생성되고, 필요한 리소스 할당 및 스케줄링을 기다립니다. 이때는 Pod가 아직 실행 준비가 완료되지 않았고, 초기화 컨테이너가 아직 실행되지 않았으므로 컨테이너가 아직 준비되지 않았습니다. 
