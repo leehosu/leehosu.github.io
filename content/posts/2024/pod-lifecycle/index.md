@@ -83,7 +83,7 @@ my-app   1/1     Running   0          40m
 
 # Pod Conditions (Pod 조건/상태)
 
-![pod-condition](./pod-condition.png)
+![pod-condition](./pod-conditions.png)
 
 ##### PodScheduled 
 - 포드가 노드에 예약되었는지 여부를 표시합니다.
