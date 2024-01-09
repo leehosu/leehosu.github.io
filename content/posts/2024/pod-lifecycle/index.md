@@ -29,7 +29,7 @@ tags:
 
 # Pod phase (Pod 단계)
 
-![Pod-phase](./Pod-phase.png)
+![Pod-phase](./pod-phase.png)
 
 ##### Pending
 
@@ -83,7 +83,7 @@ my-app   1/1     Running   0          40m
 
 # Pod Conditions (Pod 조건/상태)
 
-![Pod-condition](./Pod-conditions.png)
+![Pod-condition](./pod-conditions.png)
 
 ##### PodScheduled 
 - Pod가 노드에 예약되었는지 여부를 표시합니다.
@@ -189,12 +189,12 @@ Containers:
 
 # Pod lifecycle
 
-![Pod-lifecycle](./Pod-lifecycle.png)
+![Pod-lifecycle](./pod-lifecycle.png)
 
 
 ### 초기화
 
-![pending](./Pod-pending.png)
+![pending](./pod-pending.png)
 
 
 Pod가 생성되고, 필요한 리소스 할당 및 스케줄링을 기다립니다. 이때는 Pod가 아직 실행 준비가 완료되지 않았고, 초기화 컨테이너가 아직 실행되지 않았으므로 컨테이너가 아직 준비되지 않았습니다. 
@@ -217,7 +217,7 @@ Pod가 노드에 스케줄링되고, 컨테이너가 시작됩니다. 이때는 
 
 ### 정상 운영
 
-![running](./Pod-running.png)
+![running](./pod-running.png)
 
 Pod가 정상적으로 작동하고, 모든 컨테이너가 정상적으로 실행 중입니다. 이때는 Pod가 노드에 스케줄링되었고, 모든 초기화 컨테이너가 성공적으로 시작되었고, 모든 컨테이너가 준비 상태로 서비스 요청을 처리할 준비가 되었습니다.
 
@@ -229,7 +229,7 @@ Pod가 정상적으로 작동하고, 모든 컨테이너가 정상적으로 실�
 
 ### 종료
 
-![complete](./Pod-complete.png)
+![complete](./pod-complete.png)
 
 Pod 내의 모든 컨테이너가 작업을 완료하고 종료합니다. 이때는 Pod가 노드에 이미 스케줄링되었고, 초기화 단계도 이미 완료되었지만 Pod가 종료되었으므로 컨테이너가 준비 상태가 아니므로 더 이상 요청을 처리할 수 없습니다.
 
@@ -240,7 +240,7 @@ Pod 내의 모든 컨테이너가 작업을 완료하고 종료합니다. 이때
 
 ### 오류 상황
 
-![error](./Pod-error.png)
+![error](./pod-error.png)
 
 컨테이너가 실패하거나 (`CrashLoopBackOff`), 이미지를 가져오지 못하는 경우 (`ImagePullBackOff`, `ErrImagePull`) 등의 오류가 발생하면, Pod는 여전히 `Running` 상태일 수 있지만, Container Status는 `Waiting` 상태를 보여줍니다. 이때는 Pod가 노드에 이미 스케줄링되었고, 컨티에너 초기화가 안되거나 되었는데 오류가 있는 컨테이너가 있거나 Pod가 정상적으로 작동하지 않았습니다.
 
@@ -268,7 +268,7 @@ Pod 내의 모든 컨테이너가 작업을 완료하고 종료합니다. 이때
 
 # Reference
 
-- https://kubernetes.io/ko/docs/concepts/workloads/Pods/Pod-lifecycle/
-- https://bobcares.com/blog/kubernetes-Pod-states/
-- https://wangwei1237.github.io/Kubernetes-in-Action-Second-Edition/docs/Understanding_the_Pods_status.html
+- https://kubernetes.io/ko/docs/concepts/workloads/pods/pod-lifecycle/
+- https://bobcares.com/blog/kubernetes-pod-states/
+- https://wangwei1237.github.io/Kubernetes-in-Action-Second-Edition/docs/Understanding_the_pods_status.html
 - https://qiita.com/umkyungil/items/5f784bd9ba085414647f
