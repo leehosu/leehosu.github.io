@@ -1,58 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Wed, 03 Jan 2024 08:03:12 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[쿠버네티스에서 pod의 생애주기]]></title><description><![CDATA[들어가며 최근에 면접을 본 곳에서 한가지 질문을 받았습니다.  🗣 : "Pod의 LifeCycle에 대하여 설명해주세요."   여태 K8s Cluster나 Controle Plane의 구성 요소, Pod가 생성되는 과정에 대해서만 질문을 받았었는데 막상 쿠버네티스에서 가장 작은 컴퓨팅 단위인 Pod…]]></description><link>https://leehosu.github.io/k8s-pod-lifecycle</link><guid isPermaLink="false">https://leehosu.github.io/k8s-pod-lifecycle</guid><category><![CDATA[Devops]]></category><category><![CDATA[kubernetes]]></category><category><![CDATA[k8s]]></category><category><![CDATA[pod]]></category><pubDate>Wed, 03 Jan 2024 04:50:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Tue, 09 Jan 2024 07:59:59 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[쿠버네티스에서 Pod의 생애주기]]></title><description><![CDATA[들어가며 최근에 면접을 본 곳에서 한가지 질문을 받았습니다.  🗣 : "Pod의 LifeCycle에 대하여 설명해주세요."   여태 K8s Cluster나 Controle Plane의 구성 요소, Pod가 생성되는 과정에 대해서만 질문을 받았었는데 막상 쿠버네티스에서 가장 작은 컴퓨팅 단위인 Pod…]]></description><link>https://leehosu.github.io/k8s-pod-lifecycle</link><guid isPermaLink="false">https://leehosu.github.io/k8s-pod-lifecycle</guid><category><![CDATA[Devops]]></category><category><![CDATA[kubernetes]]></category><category><![CDATA[k8s]]></category><category><![CDATA[Pod]]></category><pubDate>Wed, 03 Jan 2024 04:50:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
 &lt;p&gt;최근에 면접을 본 곳에서 한가지 질문을 받았습니다. &lt;br&gt;&lt;/p&gt;
 &lt;p&gt;🗣 : &quot;Pod의 LifeCycle에 대하여 설명해주세요.&quot;  &lt;br&gt;&lt;/p&gt;
 &lt;p&gt;여태 K8s Cluster나 Controle Plane의 구성 요소, Pod가 생성되는 과정에 대해서만 질문을 받았었는데 막상 쿠버네티스에서 가장 작은 컴퓨팅 단위인 Pod에 대해서는 나름 공부하지 못했던 것 같다는 생각이 들게 되었습니다. 그렇기에 이번에 정리를 해보았습니다.&lt;/p&gt;
 &lt;h1 id=&quot;pod-phase-pod-단계&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#pod-phase-pod-%EB%8B%A8%EA%B3%84&quot; aria-label=&quot;pod phase pod 단계 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Pod phase (Pod 단계)&lt;/h1&gt;
-&lt;p&gt;&lt;span
-      class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
-    &gt;
-      &lt;span
-    class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 45.45454545454545%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsTAAALEwEAmpwYAAABQUlEQVQoz3WRTUvDQBCG96969Td49+BB8B948CYI3jzZg3gQCqZEETypJSlumjZp9yv78TrbtCVp48DLJjM7z8zOsBACdjo051vfQ6JxP1Y9X9e6DHYY9N5v5EjRNAEUAnTUFuatQWgkPCkE38tnTdMgTVNYayGEAOccWZaBLxYAxc61BqtXYKsVzoyhCgbF6BL5zQn47Slk/g5LdSZJAqUUWOxmvV5vuopQKeXmXxGIyuPNOVwTKOqV4rGIKT4hv1+gp2NYVVGe2zOOnryzuq7xS92KsgQiqB0WTARWVJAvoecEo44dFd0/uTvQrqqqwizPwYsCkiAxxZO/IXg5STAbPaJ4foKguO8shg1tbMgO/Y6a7u5jF2dDSUNn+x1PgpkSsvqCERlBTe/Ov8AhbccIOb3DPL3A8uMKVvxs/W27f7f1uZ39f78jAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
-  &gt;&lt;/span&gt;
-  &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;pod-phase&quot;
-        title=&quot;pod-phase&quot;
-        src=&quot;/static/d7fcb9792a578ff21241fbf7ba99dfe1/7c811/pod-phase.png&quot;
-        srcset=&quot;/static/d7fcb9792a578ff21241fbf7ba99dfe1/103f2/pod-phase.png 165w,
-/static/d7fcb9792a578ff21241fbf7ba99dfe1/748ba/pod-phase.png 330w,
-/static/d7fcb9792a578ff21241fbf7ba99dfe1/7c811/pod-phase.png 660w,
-/static/d7fcb9792a578ff21241fbf7ba99dfe1/d28e0/pod-phase.png 990w,
-/static/d7fcb9792a578ff21241fbf7ba99dfe1/bb51b/pod-phase.png 1320w,
-/static/d7fcb9792a578ff21241fbf7ba99dfe1/7f46a/pod-phase.png 1646w&quot;
-        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
-        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
-        loading=&quot;lazy&quot;
-      /&gt;
-    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./Pod-phase.png&quot; alt=&quot;Pod-phase&quot;&gt;&lt;/p&gt;
 &lt;h5 id=&quot;pending&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#pending&quot; aria-label=&quot;pending permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Pending&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;파드가 쿠버네티스 클러스터에서 생성되는 것에 승인되었지만 Pod에 정의된 하나 이상의 컨테이너가 아직 실행되지 않았음을 뜻하는 상태입니다.&lt;/li&gt;
+&lt;li&gt;Pod가 쿠버네티스 클러스터에서 생성되는 것에 승인되었지만 Pod에 정의된 하나 이상의 컨테이너가 아직 실행되지 않았음을 뜻하는 상태입니다.&lt;/li&gt;
 &lt;li&gt;Pod가 Schedule되기 이전까지의 시간 뿐만 아니라 네트워크를 통한 컨테이너 이미지 다운로드 시간도 포함됩니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;running&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#running&quot; aria-label=&quot;running permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Running&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;파드가 노드에 바인딩되었고, 모든 컨테이너가 생성되었다는 상태입니다. &lt;/li&gt;
+&lt;li&gt;Pod가 노드에 바인딩되었고, 모든 컨테이너가 생성되었다는 상태입니다. &lt;/li&gt;
 &lt;li&gt;적어도 하나의 컨테이너가 여전히 활성 상태이거나 시작 또는 다시 시작되는 중입니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;succeeded&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#succeeded&quot; aria-label=&quot;succeeded permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Succeeded&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;파드에 있는 모든 컨테이너들이 성공적으로 종료되었고, 재시작되지 않을 것임을 알려주는 상태입니다.&lt;/li&gt;
+&lt;li&gt;Pod에 있는 모든 컨테이너들이 성공적으로 종료되었고, 재시작되지 않을 것임을 알려주는 상태입니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;failed&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#failed&quot; aria-label=&quot;failed permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Failed&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;파드에 있는 모든 컨테이너가 종료되었고, 적어도 하나 이상의 컨테이너가 실패로 Pod가 종료되었다는 상태입니다.&lt;/li&gt;
-&lt;li&gt;즉, 해당 컨테이너가 non-zero 상태로 빠져나왔거나(exited) 시스템에 의해서 종료(terminated)되었음을 뜻합니다.&lt;/li&gt;
+&lt;li&gt;Pod에 있는 모든 컨테이너가 종료되었고, 적어도 하나 이상의 컨테이너가 실패로 Pod가 종료되었다는 상태입니다.&lt;/li&gt;
+&lt;li&gt;즉, 해당 컨테이너가 non-zero 상태로 빠져나왔거나(&lt;code class=&quot;language-text&quot;&gt;exited&lt;/code&gt;) 시스템에 의해서 종료(&lt;code class=&quot;language-text&quot;&gt;terminated&lt;/code&gt;)되었음을 뜻합니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;unknown&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#unknown&quot; aria-label=&quot;unknown permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Unknown&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;어떤 이유로 포드의 상태를 알 수 없으며, 포드 호스트와의 통신 오류로 인해 발생했을 가능성이 높습니다.&lt;/li&gt;
+&lt;li&gt;어떤 이유로 Pod의 상태를 알 수 없으며, Pod 호스트와의 통신 오류로 인해 발생했을 가능성이 높습니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;br&gt;
 &lt;br&gt;
-&lt;p&gt;pod의 phase는 pod 객체의 &lt;code class=&quot;language-text&quot;&gt;status&lt;/code&gt; 필드 중 하나입니다. 그렇기에 pod의 phase를 확인하려면 아래와 같이 명령하면 확인할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;Pod의 phase는 Pod 객체의 &lt;code class=&quot;language-text&quot;&gt;status&lt;/code&gt; 필드 중 하나입니다. 그렇기에 Pod의 phase를 확인하려면 아래와 같이 명령하면 확인할 수 있습니다.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl get po my-app &lt;span class=&quot;token parameter variable&quot;&gt;-o&lt;/span&gt; yaml &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;grep&lt;/span&gt; phase
 phase: Running&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl describe po my-app
@@ -65,37 +42,14 @@ Status:       Running
 NAME    READY   STATUS    RESTARTS   AGE
 my-app   &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;/1     Running   &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;          40m&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h1 id=&quot;pod-conditions-pod-조건상태&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#pod-conditions-pod-%EC%A1%B0%EA%B1%B4%EC%83%81%ED%83%9C&quot; aria-label=&quot;pod conditions pod 조건상태 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Pod Conditions (Pod 조건/상태)&lt;/h1&gt;
-&lt;p&gt;&lt;span
-      class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
-    &gt;
-      &lt;span
-    class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 45.45454545454545%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtUlEQVQoz21SO07DQBR0h0RFhxCKEL+COyAhQQcVLQeAGolbUNFwAcQFoESR6NJGSZGKJBIBr+3YFnbsXdtxhnlOjPitNHq/fbPzdteazWaQJbb2f686b4zBZDLBdDr9U6t96wcR7TTLkLGxLMuqUVDXPc9Dr9dDxj2+7yMMwyovNoqiyrdq9qIoYGgTov/6iixNEYzHsG37S4E0DgYD5HmOfr+P4XBY5UejEZRSc8KSCoQsJ+JWC/njI9KXF+gFecIRDcl1klQqBHEcI2Es48eMpZYwZ7SGJfcio0zYpE5PES8tIbi4gPv0BP/hAe882WGj+viAchy4jBVVu+xxxOfortRJ7NNaBeXLKJrE7tkZou1tpHt7yDY2oHd3Yd/dwX9+xpgHvL+9QVGNTTKX5I5cSbtdHe4RYbcLS2QHQYCYG0VhtLqKZGcHenMT6dYW0kYDZm0Nen0d9u0tvGYTdqdT3ZmiiNHVFcLlZZiVFaTn5/NHEdKSLxlcXiI9PIQ5OUF+fIyM0ETOOCMM/WJ/H/79PTwKCEg4vrlBcnCA4ugI5vp6/m2+/0OJyoX94y/sf3+33vMJIjKCZbGU9DcAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
-  &gt;&lt;/span&gt;
-  &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;pod-condition&quot;
-        title=&quot;pod-condition&quot;
-        src=&quot;/static/6f1bfeaf65a4e15ef78699a28c29b77e/7c811/pod-conditions.png&quot;
-        srcset=&quot;/static/6f1bfeaf65a4e15ef78699a28c29b77e/103f2/pod-conditions.png 165w,
-/static/6f1bfeaf65a4e15ef78699a28c29b77e/748ba/pod-conditions.png 330w,
-/static/6f1bfeaf65a4e15ef78699a28c29b77e/7c811/pod-conditions.png 660w,
-/static/6f1bfeaf65a4e15ef78699a28c29b77e/d28e0/pod-conditions.png 990w,
-/static/6f1bfeaf65a4e15ef78699a28c29b77e/bb51b/pod-conditions.png 1320w,
-/static/6f1bfeaf65a4e15ef78699a28c29b77e/eb183/pod-conditions.png 1851w&quot;
-        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
-        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
-        loading=&quot;lazy&quot;
-      /&gt;
-    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./Pod-conditions.png&quot; alt=&quot;Pod-condition&quot;&gt;&lt;/p&gt;
 &lt;h5 id=&quot;podscheduled&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#podscheduled&quot; aria-label=&quot;podscheduled permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;PodScheduled&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;포드가 노드에 예약되었는지 여부를 표시합니다.&lt;/li&gt;
+&lt;li&gt;Pod가 노드에 예약되었는지 여부를 표시합니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;initialized&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#initialized&quot; aria-label=&quot;initialized permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Initialized&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;포드의 초기화 컨테이너가 모두 성공적으로 완료되었음을 표시합니다.&lt;/li&gt;
+&lt;li&gt;Pod의 초기화 컨테이너가 모두 성공적으로 완료되었음을 표시합니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;containersready&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#containersready&quot; aria-label=&quot;containersready permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;ContainersReady&lt;/h5&gt;
 &lt;ul&gt;
@@ -103,9 +57,9 @@ my-app   &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;/1     Running
 &lt;/ul&gt;
 &lt;h5 id=&quot;ready&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#ready&quot; aria-label=&quot;ready permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Ready&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;포드가 클라이언트에게 서비스를 제공할 준비가 되었음을 표시합니다.&lt;/li&gt;
+&lt;li&gt;Pod가 클라이언트에게 서비스를 제공할 준비가 되었음을 표시합니다.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;위의 조건은 모두 충족되거나 충족되지 않습니다. &lt;code class=&quot;language-text&quot;&gt;PodScheduled&lt;/code&gt; &lt;code class=&quot;language-text&quot;&gt;Initialized&lt;/code&gt;은 처음부터 충족되지 않고 실행되지만 곧 충족되고 Pod가 실행되는 동안 유지됩니다. 반면 &lt;code class=&quot;language-text&quot;&gt;ContainersReady&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready&lt;/code&gt; 조건은 pod가 실행되는 동안 여러 번 변경될 수 있습니다.&lt;/p&gt;
+&lt;p&gt;위의 조건은 모두 충족되거나 충족되지 않습니다. &lt;code class=&quot;language-text&quot;&gt;PodScheduled&lt;/code&gt; &lt;code class=&quot;language-text&quot;&gt;Initialized&lt;/code&gt;은 처음부터 충족되지 않고 실행되지만 곧 충족되고 Pod가 실행되는 동안 유지됩니다. 반면 &lt;code class=&quot;language-text&quot;&gt;ContainersReady&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready&lt;/code&gt; 조건은 Pod가 실행되는 동안 여러 번 변경될 수 있습니다.&lt;/p&gt;
 &lt;p&gt;Pod의 condition을 보려면 &lt;code class=&quot;language-text&quot;&gt;kubectl describe&lt;/code&gt; 명령어로 확인할 수 있습니다.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl describe po my-app &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;grep&lt;/span&gt; Conditions: &lt;span class=&quot;token parameter variable&quot;&gt;-A5&lt;/span&gt;
 Conditions:
@@ -114,7 +68,7 @@ Conditions:
   Ready             True            &lt;span class=&quot;token comment&quot;&gt;# Pod와 Container가 준비되었다.&lt;/span&gt;
   ContainersReady   True            &lt;span class=&quot;token comment&quot;&gt;# Pod와 Container가 준비되었다.&lt;/span&gt;
   PodScheduled      True            &lt;span class=&quot;token comment&quot;&gt;# Pod가 Node에 Schedule되었다.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;하지만 &lt;code class=&quot;language-text&quot;&gt;kubectl describe&lt;/code&gt; 명령은 결과값이 boolean 입니다. false인 이유를 찾으려면 pod의 manifast를 확인해야 합니다.&lt;/p&gt;
+&lt;p&gt;하지만 &lt;code class=&quot;language-text&quot;&gt;kubectl describe&lt;/code&gt; 명령은 결과값이 boolean 입니다. false인 이유를 찾으려면 Pod의 manifast를 확인해야 합니다.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ kubectl get po my-app &lt;span class=&quot;token parameter variable&quot;&gt;-o&lt;/span&gt; json &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; jq .status.conditions
 &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
@@ -152,17 +106,17 @@ Conditions:
 &lt;h5 id=&quot;waiting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#waiting&quot; aria-label=&quot;waiting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Waiting&lt;/h5&gt;
 &lt;ul&gt;
 &lt;li&gt;컨테이너가 시작되기를 기다리고 있음을 나타내는 상태입니다. &lt;/li&gt;
-&lt;li&gt;reason 및 message 필드에서 컨테이너가 이 상태에 있는 이유에 대해 명시합니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;reason&lt;/code&gt; 및 &lt;code class=&quot;language-text&quot;&gt;message&lt;/code&gt; 필드에서 컨테이너가 이 상태에 있는 이유에 대해 명시합니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;running-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#running-1&quot; aria-label=&quot;running 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Running&lt;/h5&gt;
 &lt;ul&gt;
 &lt;li&gt;컨테이너가 생성되었으며 컨테이너에서 프로세스가 실행 중임을 나타내는 상태입니다. &lt;/li&gt;
-&lt;li&gt;startAt 필드는 이 컨테이너가 시작된 시간을 나타냅니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;startAt&lt;/code&gt; 필드는 이 컨테이너가 시작된 시간을 나타냅니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;terminated&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#terminated&quot; aria-label=&quot;terminated permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Terminated&lt;/h5&gt;
 &lt;ul&gt;
 &lt;li&gt;컨테이너에서 실행 중이던 프로세스가 종료되었음을 나타내는 상태입니다. &lt;/li&gt;
-&lt;li&gt;startAt 및 doneAt 필드는 컨테이너가 시작된 시기와 종료된 시기를 나타냅니다. 기본 프로세스가 종료되는 종료 코드는 exitCode 필드에 있습니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;startAt&lt;/code&gt; 및 &lt;code class=&quot;language-text&quot;&gt;doneAt&lt;/code&gt; 필드는 컨테이너가 시작된 시기와 종료된 시기를 나타냅니다. 기본 프로세스가 종료되는 종료 코드는 &lt;code class=&quot;language-text&quot;&gt;exitCode&lt;/code&gt; 필드에 있습니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;unknown-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#unknown-1&quot; aria-label=&quot;unknown 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Unknown&lt;/h5&gt;
 &lt;ul&gt;
@@ -185,183 +139,60 @@ Containers:
       &lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h5 id=&quot;crashloopbackoff&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#crashloopbackoff&quot; aria-label=&quot;crashloopbackoff permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;CrashLoopBackOff&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;컨테이너가 시작한 후 실패하고, Kubernetes가 재시작을 시도하고 있지만, 반복적으로 실패하는 상태입니다.&lt;/li&gt;
+&lt;li&gt;컨테이너가 시작한 후 실패하였고 Kubernetes가 재시작을 시도하고 있지만 반복적으로 실패하는 상태입니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;imagepullbackoff&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#imagepullbackoff&quot; aria-label=&quot;imagepullbackoff permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;ImagePullBackOff&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;Kubernetes가 컨테이너 이미지를 가져오려고 시도하고 있지만 실패하는 상태입니다. &lt;/li&gt;
+&lt;li&gt;Kubernetes가 컨테이너 이미지를 가져오려고 시도하고 있지만 실패한 상태입니다. &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;errimagepull&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#errimagepull&quot; aria-label=&quot;errimagepull permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;ErrImagePull&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;ErrImagePull은 첫 번째 시도에서 실패했을 때 나타나고, ImagePullBackOff는 지속적인 시도와 실패 후 나타납니다.&lt;/li&gt;
+&lt;li&gt;ErrImagePull은 첫 번째 시도에서 실패했을 때 나타나고, ImagePullBackOff는 계속해서 시했지만 실패했음을 나타냅니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;invalidimagename&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#invalidimagename&quot; aria-label=&quot;invalidimagename permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;InvalidImageName&lt;/h5&gt;
 &lt;ul&gt;
 &lt;li&gt;지정된 컨테이너 이미지 이름이 잘못되었거나 존재하지 않아 이미지를 가져올 수 없는 상태입니다.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&quot;pod-lifecycle&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#pod-lifecycle&quot; aria-label=&quot;pod lifecycle permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Pod lifecycle&lt;/h1&gt;
-&lt;p&gt;&lt;span
-      class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
-    &gt;
-      &lt;span
-    class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 58.18181818181818%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAAAsTAAALEwEAmpwYAAACE0lEQVQoz32Tz2sTQRTH1z8h90APIoIm2qTEW0Gkd5FFCVgitWjxBy34o0ZTK4IHoUYwXpqKoCcRS7yLJniyphbBphU0DaSQQkjsoXtIdrO7H2d3svnRVt8yO2/em/nOe+/7RrFtG096daut5jcMFr822n7o2Qx9S7lWHEXXdQzDcI3eMC3L3ZDdaPByRcN2PmGzbDk7501Dp6n9EXOzA6q0Wi2q1Sr1eh1LbDRNE8dmiCF+zDQ0hps7lMSFwoku7C0BZAoAbfM7W++naZTzEtAyUSanphgbu0g0GiWZTMp029EtpNOcOT+KKvyXJiao1WqdFL8sLRGLxbg8foFzZ1WyuZxMeeTUScKDQXw+H6qq9gFO377J4JFDHBwYwO/387tY7ABmMhnCwcMcCxxFUQ6Qnp+XgFduPSB29Q6T16+RSqXahMgCv3j1htPjce4l7nM3HndL40lhbR31xnNmnyzwdO4xy8vfJODiqsXrFRGRqYvamW50Es+iuA3P8o5GJ3J5le12wdt1+LXdJd3xK5Ixy2VIgtmdFtiqVPi5tkqhUKAo0nXIknBeWQRRtiBQkOeVSaGnVbzhOROJGQLB44SHhohEIpTL5b4am7bXjna3bex9AL0IHz2cZWT4BKFQiEAgQKlU6qb+jzMKu8SNsO18l/3B6FyWDx8/kctl0TRtz4vaLfsCemlUduDz5t7n9T/Av2MhVZOXtzjoAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
-  &gt;&lt;/span&gt;
-  &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;pod-lifecycle&quot;
-        title=&quot;pod-lifecycle&quot;
-        src=&quot;/static/8125ba7900b539804f49bc3e6aff38f7/7c811/pod-lifecycle.png&quot;
-        srcset=&quot;/static/8125ba7900b539804f49bc3e6aff38f7/103f2/pod-lifecycle.png 165w,
-/static/8125ba7900b539804f49bc3e6aff38f7/748ba/pod-lifecycle.png 330w,
-/static/8125ba7900b539804f49bc3e6aff38f7/7c811/pod-lifecycle.png 660w,
-/static/8125ba7900b539804f49bc3e6aff38f7/d28e0/pod-lifecycle.png 990w,
-/static/8125ba7900b539804f49bc3e6aff38f7/bb51b/pod-lifecycle.png 1320w,
-/static/8125ba7900b539804f49bc3e6aff38f7/7c9ce/pod-lifecycle.png 1749w&quot;
-        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
-        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
-        loading=&quot;lazy&quot;
-      /&gt;
-    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./Pod-lifecycle.png&quot; alt=&quot;Pod-lifecycle&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;초기화&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%B4%88%EA%B8%B0%ED%99%94&quot; aria-label=&quot;초기화 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;초기화&lt;/h3&gt;
-&lt;p&gt;&lt;span
-      class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 504px; &quot;
-    &gt;
-      &lt;span
-    class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 113.33333333333333%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAXCAYAAAALHW+jAAAACXBIWXMAAAsTAAALEwEAmpwYAAADUElEQVQ4y5WVy08TURTG+TNICI8EDO+XrUgMMUB5lEZcuPIf0I2JiVsTdKFrFoCPuCJqiBFCfMaNiZSnMS4IQSBBeZlIm7ZAS2dK596Zz3vOzLSgFHHIx7kzd+ab3znTe24eLMCyLEglYaqoRH+g/9Y/xPfh0L1AHp9a7oR9mIYtyJNlCRXSFkzpmipDNjOBj4sGrjzax4svB3Bfous6K5VKIaWnOLrXNE2DEMIBsGwAOITLPyVq7sbQNxZFdV8Ek6vqlaaOX9shxGJRbG9vIxQKsSKRCKLRKMLhMHZ3dzMpk6klHcNPSwbO3I7i3dcYzt+PYHhOvU4mEdvZg2EY2NrawszMDILBIObn55kwmUzahk61TGGnnieFxRfvvNbQdC+Ga8NxGILS1ZiMiFwRmUtJ0SWkj0OGTEgDOEXVBf77sD8oGSpKaamPosyYUh2xSBgLCwtYXPymtIilpaWcovn19fVDhLBTJleRZkQMDT1AaWkZPB4PGhoaMqqvr/9r7Ma5uc/8LHkw4WHDwcFBFBYWoqqqChUVFSgvL2dVVlbyOcXq6mqer6urQ0FBAUZGRvhZ4yCHodfrRW9vL7q6uhAIBFg+n4/Pm5ub2ay2tpYJS0pKMDY2djIhpUsPt7a2orOzkyOl5paBCGtqapiwqKgIo6OjuQkHBgbR1NTEhO3t7UzW0dHBRETmmlE8lSERUip+vx/d3d1oaWlhYyJ160qRTOm+4uLijGGOlIecGl6GvyeAHqVLauzWkWJbWxsTUvo5aoiMYX9/P7/1nKcR3sZ6eBrr4D1r/zwobUqT6MrKypg2Pz//j6/srBT6cQthYGVlBZOTQYx/COLl+wmMOppQa3hmeprXM2l2dpY1NTWFtbU1SCnZg7w4ZWpfSdWOaECr76rKwvcU8D8Hup4Bm8ncS08Iya2MPI4YaqqDyLSOjR0TvidpXHho4OJjA96BNGY3VDoH+1j9/gObm5tMlUgk2FDTqF/qtiHXUGQJjQMdMTV3663AjVcSN99IXB8XWA6bzprNNgTTNB1DjTtTxpAn0wrdkIjH40goGdoehJ5VMhHHnroeP0ZEKoXJHtQk7D3FdLqFs5eI9FFJIzt3rER2X8rLblCn2OVyyC0GjX8DRuT1nZfoF9sAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
-  &gt;&lt;/span&gt;
-  &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;pending&quot;
-        title=&quot;pending&quot;
-        src=&quot;/static/970c0f34d5c8f78aaece25898c6f2555/7f322/pod-pending.png&quot;
-        srcset=&quot;/static/970c0f34d5c8f78aaece25898c6f2555/103f2/pod-pending.png 165w,
-/static/970c0f34d5c8f78aaece25898c6f2555/748ba/pod-pending.png 330w,
-/static/970c0f34d5c8f78aaece25898c6f2555/7f322/pod-pending.png 504w&quot;
-        sizes=&quot;(max-width: 504px) 100vw, 504px&quot;
-        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
-        loading=&quot;lazy&quot;
-      /&gt;
-    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./Pod-pending.png&quot; alt=&quot;pending&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Pod가 생성되고, 필요한 리소스 할당 및 스케줄링을 기다립니다. 이때는 Pod가 아직 실행 준비가 완료되지 않았고, 초기화 컨테이너가 아직 실행되지 않았으므로 컨테이너가 아직 준비되지 않았습니다. &lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;pod phase : &lt;code class=&quot;language-text&quot;&gt;pending&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;pod condition :&lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: False&lt;/code&gt;,&lt;code class=&quot;language-text&quot;&gt;ContainersReady: False&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod phase : &lt;code class=&quot;language-text&quot;&gt;pending&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod condition :&lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: False&lt;/code&gt;,&lt;code class=&quot;language-text&quot;&gt;ContainersReady: False&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;container status: &lt;code class=&quot;language-text&quot;&gt;Waiting&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&quot;실행-준비&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%8B%A4%ED%96%89-%EC%A4%80%EB%B9%84&quot; aria-label=&quot;실행 준비 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;실행 준비&lt;/h3&gt;
-&lt;p&gt;&lt;span
-      class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 509px; &quot;
-    &gt;
-      &lt;span
-    class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 109.09090909090911%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAAACXBIWXMAAAsTAAALEwEAmpwYAAADn0lEQVQ4y52Vy28bVRTG539INlnkoSiiyvudOjQpeSkvRWqQCHZJHB4VEmzYdAFiCQsiRQ6LhjwVkgoJCdQVGyQ2gKBCbNg5wYGGCqGoOHHqGdvjedy5H+fcO05dSFSJkT/P8b2en7977vgbQ0oJPgSf+RVICCHV2Sd5/5JfNi4C/h5frRmMMLgIQmjg8Rv0JNcilF8m8bSEJ9V1IQKGCKvvDzwMLWdx4xMTRycBPOnjM8vCdj6HHdvGjuNgxyUVbXxKYxu5HFJUKyPs1g0d8tL4l0YTWXz01SnevnuCt3YLeAAbRt5WSzDoYiOdhvHoEQzThEHXGELgvWxWAX1ackDuA1EC0ocX1yy8unWK8cQJ3v/Sxq+yCKPoaODZGYxUCsbBAYyjIz1Guk3wEpD3gpdu8Abw8TAj8M7nObx7z0KhKJB2bLyZOcMr5CJODhcKBSzQ0heoXqSxlx4/xtehwwB6ExWQd0l4T3bq/xzsjjkhUKqd4uPv9CnW1jewtbVN2sL6JdrY3sba5iZ2dndxRu0obcy5Q98RajCZTKKqqgo1NTWorq6+UDzHqqurQ0VFBVZXV3UfPb8cqG++A2p6W1sb+vr60Nvbi56eHqXu7m6lzs5ONd/e3q7q+vp6LC8vXwTUDvf39xVoampKaXp6GpOTkxgdHcXExAQGBwfR2NiIlpYWBa6trUUikbgcmExqIIOGh4eVGMyQEojV3Nz8DKD7xGFXV5dyMz4+jqGhIYyMjChnra2tCtrU1PQsh/K8hwzknvEyS8sdGxvDzMwMIpGI6i3PM7yjo0P1cGVlpQwo/7vLV648h/7nr+FqpB99VyO4NnCdNKCAA3Rm8Q43NDSgsrISS0tLFzh0tcPDw0PMzc3h9fhN3FqM4Y14DLfiUSwu3EQ0FkM0+jIpihjV8/PzmJ2dxd7eno4/EYQOOfvIoOu6MK2cmvzmd+CDb4GV+8CH3wGp08v/JYJCwqJUUnU50KFoyucLaiL+hY8XNj3cuOuhd9XDxz/yChw8/PMvpCl1jo+PkclkdCAEwTkw7KGOL8cpIhcCX7sn0b8uMbUn0XlH4s5P2k3WytOP5pGjgChBGGpy6sgQyBU3k5vKE3Yhj1/+sHD/NxM/PzDxw6GJ1LEFx87DprQpFllFVTPcskz1WaV2IPUjoBQ9fD86jqvjh58BgT5L36NxDy7NPS0PnuuprwVCJ5ZRekipCKJBSn7FK5fi+pdIaENQIQv8A1nnmM7vh8ptAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
-  &gt;&lt;/span&gt;
-  &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;running&quot;
-        title=&quot;running&quot;
-        src=&quot;/static/bf8845af79d3e9143772424655703fe5/98235/pod-running-pre.png&quot;
-        srcset=&quot;/static/bf8845af79d3e9143772424655703fe5/103f2/pod-running-pre.png 165w,
-/static/bf8845af79d3e9143772424655703fe5/748ba/pod-running-pre.png 330w,
-/static/bf8845af79d3e9143772424655703fe5/98235/pod-running-pre.png 509w&quot;
-        sizes=&quot;(max-width: 509px) 100vw, 509px&quot;
-        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
-        loading=&quot;lazy&quot;
-      /&gt;
-    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./Pod-running-pre.png&quot; alt=&quot;running&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Pod가 노드에 스케줄링되고, 컨테이너가 시작됩니다. 이때는 Pod가 노드에 스케줄링되었고, 초기화 컨테이너도 실행되었지만 모든 컨테이너가 아직 준비되지 않았습니다.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;pod phase : &lt;code class=&quot;language-text&quot;&gt;running&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;pod condition :&lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady: False&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod phase : &lt;code class=&quot;language-text&quot;&gt;running&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod condition :&lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady: False&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;container status: &lt;code class=&quot;language-text&quot;&gt;running&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&quot;정상-운영&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%A0%95%EC%83%81-%EC%9A%B4%EC%98%81&quot; aria-label=&quot;정상 운영 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;정상 운영&lt;/h3&gt;
-&lt;p&gt;&lt;span
-      class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 538px; &quot;
-    &gt;
-      &lt;span
-    class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 104.84848484848483%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAAACXBIWXMAAAsTAAALEwEAmpwYAAADaElEQVQ4y5WVW0tcVxTHD+Qxn0Dw7oN3RUTUUVFnvCuUqRQqVEE/QEIeEkI+QF5SIxKDINFS+pCXto9CA6GlMU+h9E2k0lLbQo0zZs51Zs6effa/a+1zjjNe8tA9LPbtrN/6r73ZawylFLgF1LPxXMqwLwUK4iPGe7EvwONwZOhpPOMuCIeBiMYyslJksmyK5tInWOTDGCOIYP+eB1jZdZB6auLXvyT4941t40Xew16xgF3fx67wsVcoYMfz8J3rkMpAi5CiDDVYOrdH33tY2clgfT+L9KaNEyVg2A4MCmicn8M4PQ3NCdduU7AzX4TZECMQEVBGwL03RSQeZzH55Rnuv/Twp/JhuJ4+Ew08PoZxdAQjm9Vrtwj8nlRfAEsXZ1imf/tLEds/5ZEvKhTogJ5bNtZdFxuU5oYQodH4Ca19RQqLpZCiNFCVL4XpQRDf2P9vqjJlVsiHys2hFO/cvYfl5WWsra1heXX1mn1BtkJ7ny0tYWtrq+IMKxTy1WugY2NgYABVVVWoq6tDbW0tampqdM9WX1+PhoYGNDY2orq6Gv39/bAp9UpGCIzovDk3N4ehoSGkUimMjo4imUzqfnx8HL29vejs7ER3dzfa2tr0N7YTAW9SaNkWFhYWMDU1henpaczMzOi+r69PB+np6dEghjY3N+sgNwOvKBwbG9MfDw8PI5FIoLW1FS0tLRrW0dFxM7CcsroEnJ+f16nESpM0Zsf29nYNYuvq6tIBNNCuVKiuAxkymBjC6HhSWzI1gYmJSa2Wz5MVsrqmpiaMjIzQRToVCtXllC3LxOLiIqZSY/h0YRLpuRQ+mU1iZnpSw+IL4iPhAOl0GqZpXj3D8NkEMiCgDc8xcXCYwdbrDF78nMH2jxkcnWTg2iZMy9JZsKpcLqdhPJfkGz69KGVFpUjQQzcdV0d5+APQvgnMfg20bACvfudVH9kPOQpq4Zzedtxceobsy4wykOhClGDaIfDBfoDBbYnPX0r0PpPYP+JVgQ85S6vLUoEQQkSvyyFgSTMugDplety8mfccHP5j4+2xhXd/WDj4zcLfZ1QI8i68PBUOsgIVCNdz9ctyyYd9g1hhWF9DKN+UX+SBhP6CjXJRQkLQ+iXzw54vg30VokuJy7+K/he48jJHli73vK7kFQvCsh/DmPUfrWVyJUL+snUAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
-  &gt;&lt;/span&gt;
-  &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;running&quot;
-        title=&quot;running&quot;
-        src=&quot;/static/47c1fef7c81d7c58f19678cf58169939/32ca7/pod-running.png&quot;
-        srcset=&quot;/static/47c1fef7c81d7c58f19678cf58169939/103f2/pod-running.png 165w,
-/static/47c1fef7c81d7c58f19678cf58169939/748ba/pod-running.png 330w,
-/static/47c1fef7c81d7c58f19678cf58169939/32ca7/pod-running.png 538w&quot;
-        sizes=&quot;(max-width: 538px) 100vw, 538px&quot;
-        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
-        loading=&quot;lazy&quot;
-      /&gt;
-    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./Pod-running.png&quot; alt=&quot;running&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Pod가 정상적으로 작동하고, 모든 컨테이너가 정상적으로 실행 중입니다. 이때는 Pod가 노드에 스케줄링되었고, 모든 초기화 컨테이너가 성공적으로 시작되었고, 모든 컨테이너가 준비 상태로 서비스 요청을 처리할 준비가 되었습니다.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;pod phase : &lt;code class=&quot;language-text&quot;&gt;running&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;pod condition : &lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady: True&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod phase : &lt;code class=&quot;language-text&quot;&gt;running&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod condition : &lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady: True&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;container status: &lt;code class=&quot;language-text&quot;&gt;running&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&quot;종료&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%A2%85%EB%A3%8C&quot; aria-label=&quot;종료 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;종료&lt;/h3&gt;
-&lt;p&gt;&lt;span
-      class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 510px; &quot;
-    &gt;
-      &lt;span
-    class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 106.66666666666667%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAAACXBIWXMAAAsTAAALEwEAmpwYAAADq0lEQVQ4y41VWW9TRxTOn8hrpKzKnmAHkwQlzkbSYFtB8IBaAQ8FHvgFkRoeeAQhliCFKIbCAxTSSkXwgEAJZGuRABVVVSUwKgg7MQ7Z7Pj6epm7fcw595pglrZjf3funJn57vnmzJwpgiyW/NE/XwxdNg1pNcx/hcljbAZ+yqooT5bLWpj6W8OGYvEAUw6ksXIOdILpwLJtBEu2TWkwhE1GpYgemYyFA5cVVI+so/t0HMspQGyEsfbwDOJz55BcOA/191Goj0ah/DaKhLStzZxFen2RSUzyVvuI8MkrHVWS7EU4jt5TK/jxsTTGniBx8yDEnaN4fflb/HlhL56e3YN/gvvZtjl5AMk3f9hSpZwtQul2WsrdN56E68QaOk6uI7IJqJFniP9yGOnbx7AyeQSvrx7CqyuHEL3+PduoLxn5yyEkD23NRYZuvySzJuZf6oht2m1N5JCKvYD69jkyyyGIlZeM7LsQ21KxkByTdYJB6+gQUpQMLR9i6bqeQyabgxAaNNlHEJ9Ak6qEvrUtiPCDZAq9Ljj2uHFzEl5vF4aGhuD3++H37Wb48vVuGwG/D329vRgeHoau67YreclEqOVswvGL4yguLkZlZSXKyspQWlrKKC8v53ZFRQX3VVVVcbupqQmLi3ak9ZyZl7zlYTAYRGNjIwYGBtDZ2Ynu7m5GR0cHurq60NzcjPr6eh5TW1uL9vZ2RKPRQsKPPZyYmEBLSwsCgQD6+vpYNtUej4dJyaO6ujo0NDSguroara2tWFpa+m9Cn8/HBD09PVzX1NQwAXmXx/8kDLIsktzf38+y6Z3kEgGBpJKH9JECQmHykS2IMq2h2+2Gzx+AX8r+ZnBQRnwPe+z1enkJiIQ8JOK2trZP1tAqDMrY2BhKSkqwY7sbHvc2bHc1w9OyDS6Xi70i72kNKcoUebJ/FmXKFry5Zc4KhUKYnp7CjdvTuHZr6gMePniA2dlZzMzMYG5uDvPz81wvLCxgdXXV3ofCciTTjpfkalqlvAHa8Pt+BgavA76fgO9+lcfSxFdLKpWCaeazjbOGnCAyGWnMIhw30XRew85xDb1BDbsuaXj+zkBibRlL0bcchEgkgnA4LFUZUBTlC4QGEaaRy6jYUE0M3xX44Z7AyH2B4xKxTZ0HGzTRgSWzKxEmEgn7LAuHkLOzRmfRhKqqUElCTn41q8BwkJY2RUkhpRTW5F1WJhKaT8F1CO07xaR7RII6deHAeScbQ3fgtC1njk1mXwPvAe7lVSCBKS30AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
-  &gt;&lt;/span&gt;
-  &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;complete&quot;
-        title=&quot;complete&quot;
-        src=&quot;/static/36bc71ebf70311b6910165461716eb3c/1b7d6/pod-complete.png&quot;
-        srcset=&quot;/static/36bc71ebf70311b6910165461716eb3c/103f2/pod-complete.png 165w,
-/static/36bc71ebf70311b6910165461716eb3c/748ba/pod-complete.png 330w,
-/static/36bc71ebf70311b6910165461716eb3c/1b7d6/pod-complete.png 510w&quot;
-        sizes=&quot;(max-width: 510px) 100vw, 510px&quot;
-        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
-        loading=&quot;lazy&quot;
-      /&gt;
-    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./Pod-complete.png&quot; alt=&quot;complete&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Pod 내의 모든 컨테이너가 작업을 완료하고 종료합니다. 이때는 Pod가 노드에 이미 스케줄링되었고, 초기화 단계도 이미 완료되었지만 Pod가 종료되었으므로 컨테이너가 준비 상태가 아니므로 더 이상 요청을 처리할 수 없습니다.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;pod phase : &lt;code class=&quot;language-text&quot;&gt;succeeded&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;failed&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;pod condition : &lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady: False&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod phase : &lt;code class=&quot;language-text&quot;&gt;succeeded&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;failed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod condition : &lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady: False&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;container status: &lt;code class=&quot;language-text&quot;&gt;terminated&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&quot;오류-상황&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%98%A4%EB%A5%98-%EC%83%81%ED%99%A9&quot; aria-label=&quot;오류 상황 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;오류 상황&lt;/h3&gt;
-&lt;p&gt;&lt;span
-      class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 493px; &quot;
-    &gt;
-      &lt;span
-    class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 112.72727272727272%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAXCAYAAAALHW+jAAAACXBIWXMAAAsTAAALEwEAmpwYAAADsklEQVQ4y52V20tcVxTG5x/wD2gUJWq8zXipF8QGBPGG8ULtYx/7IMSXoOYlEaEgBMFbzMW0HUdn0FToS6E0DUgCIUjISyhYNJIZJ9R0RjtR58wMiTNzzj5f1tr7HMckKqUbv1lz9rh/51t7nb2OAyboz4Qh6JOkGxxpzqRoiLMlSLSeCZJCwWEqohpCBVM3IXT8pyHSZCYFaYKHg6mCJjxPD3FxTMPMo/eSa+hpRINBaIEAYltbiAeVYiRtK4Co/xXi4bAyIBiqMnPwxHO/jgvX9+B+vI/S6xE8fEmT0R28mpzGzuws/r51C4HpaQRv3sTrmRmE7t5FiOL28jKSukpF0FaJtAX84680iof38MuzfZSPRLD0gmzvh/B6YgoxtxuByUk8vnYNqyMjeDI8jB0CHpDC9+/jMJVSLk0LyFZ5fP/bO3x14wBXfo7JLU28jSDg9eHN4iLeLC0hRItZ23QttbCA7QcPoAtxMpArI/D/hnwiCMPFcTBVCAWN/LuLtbU1rK+vS21sbJyqddLm5iatPcGhrhtycnJqCgUFBaiurkZlZWVGFRUyVlC0VVVVhcLCQsxS0SCfCsMGIgOkzc/JyUFJSQmKi4ulioqKjr7zvNPpRFlZmYTy//b398u1OlX7KGUbODExgdraWvT09KC9vR0tLS3o7OxEc3MzWltb0dDQIIEul0s6zsvLw+Dg4MfA4w7Hx8dRU1MjYU1NTRLEkW9SV1cnt8IGssPc3FwMDAycDayvr0dvb68Esau2tjaZIsuGcTwJ+FlRbIcMYTG0sbFROmYQ72NpaempDvlcf1xlKgo77OrqInWjo+MSurt7SN0yfXtfGcbp5+fnY2ho6FjKpl0UdR5HR0fxxblzqCgvJ7ngcrIbJ8rpmp3ZqWdnZ8uCZGVloa+v79M9NK0n3cTq6io87p/gnvPgzr053PlhDvd+dGNhfg6e+XnMW/J6vfD5fHDTOV9ZWYFhGHK9YafM4yAaPTpKVx8B3/0OXH4IfPsrEHx39tGLWmtlyjZQ02I8hc3dNFrdSXR4kuj1JXF+LIXlP2lfkIR/Kwi/3y8Vpl7IzjjVeDyeAQpddeyopskGEabfvl4UuOQ18c2SwJe3Taz41U11avs2JGW1LWVGywC523Jhkqmk/CEai+OfiIbdPaUQfd87iCGRiCNOSkglpNiZFtNwePheMrjJOo66Ld3QSJODtPHZy0jQY6WnTxevFYZqgQ5TvbastxzUnfRjsq5N/ZN5S7zGFJm33gfH89JGJc6VbwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
-  &gt;&lt;/span&gt;
-  &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;error&quot;
-        title=&quot;error&quot;
-        src=&quot;/static/8160368f3f187dccf299e6e0b9ee76c9/cf20c/pod-error.png&quot;
-        srcset=&quot;/static/8160368f3f187dccf299e6e0b9ee76c9/103f2/pod-error.png 165w,
-/static/8160368f3f187dccf299e6e0b9ee76c9/748ba/pod-error.png 330w,
-/static/8160368f3f187dccf299e6e0b9ee76c9/cf20c/pod-error.png 493w&quot;
-        sizes=&quot;(max-width: 493px) 100vw, 493px&quot;
-        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
-        loading=&quot;lazy&quot;
-      /&gt;
-    &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;컨테이너가 실패하거나 (CrashLoopBackOff), 이미지를 가져오지 못하는 경우 (ImagePullBackOff, ErrImagePull) 등의 오류가 발생하면, Pod는 여전히 Running 상태일 수 있지만, Container Status는 Waiting 상태를 보여줍니다. 이때는 Pod가 노드에 이미 스케줄링되었고, 컨티에너 초기화가 안되거나 되었는데 오류가 있는 컨테이너가 있거나 Pod가 정상적으로 작동하지 않았습니다.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./Pod-error.png&quot; alt=&quot;error&quot;&gt;&lt;/p&gt;
+&lt;p&gt;컨테이너가 실패하거나 (&lt;code class=&quot;language-text&quot;&gt;CrashLoopBackOff&lt;/code&gt;), 이미지를 가져오지 못하는 경우 (&lt;code class=&quot;language-text&quot;&gt;ImagePullBackOff&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ErrImagePull&lt;/code&gt;) 등의 오류가 발생하면, Pod는 여전히 &lt;code class=&quot;language-text&quot;&gt;Running&lt;/code&gt; 상태일 수 있지만, Container Status는 &lt;code class=&quot;language-text&quot;&gt;Waiting&lt;/code&gt; 상태를 보여줍니다. 이때는 Pod가 노드에 이미 스케줄링되었고, 컨티에너 초기화가 안되거나 되었는데 오류가 있는 컨테이너가 있거나 Pod가 정상적으로 작동하지 않았습니다.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;pod phase : &lt;code class=&quot;language-text&quot;&gt;running&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;pod condition : &lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady: False&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod phase : &lt;code class=&quot;language-text&quot;&gt;running&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pod condition : &lt;code class=&quot;language-text&quot;&gt;PodScheduled: True&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized: False&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady: False&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;container status: &lt;code class=&quot;language-text&quot;&gt;waiting&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&quot;요약&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9A%94%EC%95%BD&quot; aria-label=&quot;요약 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;요약&lt;/h1&gt;
@@ -373,7 +204,7 @@ Containers:
 &lt;h5 id=&quot;pod-conditions&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#pod-conditions&quot; aria-label=&quot;pod conditions permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Pod Conditions&lt;/h5&gt;
 &lt;ul&gt;
 &lt;li&gt;Pod가 생성되어 실행되는 상태를 나타내는 값.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;podScheduled&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready&lt;/code&gt; 가 존재&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;PodScheduled&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Initialized&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;ContainersReady&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Ready&lt;/code&gt; 가 존재&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&quot;container-status&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#container-status&quot; aria-label=&quot;container status permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Container Status&lt;/h5&gt;
 &lt;ul&gt;
@@ -383,9 +214,9 @@ Containers:
 &lt;hr&gt;
 &lt;h1 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h1&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/ko/docs/concepts/workloads/pods/pod-lifecycle/&quot;&gt;https://kubernetes.io/ko/docs/concepts/workloads/pods/pod-lifecycle/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://bobcares.com/blog/kubernetes-pod-states/&quot;&gt;https://bobcares.com/blog/kubernetes-pod-states/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://wangwei1237.github.io/Kubernetes-in-Action-Second-Edition/docs/Understanding_the_pods_status.html&quot;&gt;https://wangwei1237.github.io/Kubernetes-in-Action-Second-Edition/docs/Understanding_the_pods_status.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/ko/docs/concepts/workloads/Pods/Pod-lifecycle/&quot;&gt;https://kubernetes.io/ko/docs/concepts/workloads/Pods/Pod-lifecycle/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://bobcares.com/blog/kubernetes-Pod-states/&quot;&gt;https://bobcares.com/blog/kubernetes-Pod-states/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://wangwei1237.github.io/Kubernetes-in-Action-Second-Edition/docs/Understanding_the_Pods_status.html&quot;&gt;https://wangwei1237.github.io/Kubernetes-in-Action-Second-Edition/docs/Understanding_the_Pods_status.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://qiita.com/umkyungil/items/5f784bd9ba085414647f&quot;&gt;https://qiita.com/umkyungil/items/5f784bd9ba085414647f&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[2023년 회고]]></title><description><![CDATA[들어가며 안녕하세요! 202…]]></description><link>https://leehosu.github.io/2023-review</link><guid isPermaLink="false">https://leehosu.github.io/2023-review</guid><category><![CDATA[Devops]]></category><category><![CDATA[review]]></category><pubDate>Sat, 30 Dec 2023 04:00:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
 &lt;p&gt;안녕하세요! 2023년에는 무슨 일을 했었고, 개인적으로 어떤 변화가 있었는지, 목표했던 것을 이루었는지 회고를 한번 해보려고 합니다. &lt;/p&gt;
