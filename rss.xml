@@ -1,4 +1,395 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Wed, 10 Jan 2024 04:36:05 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[쿠버네티스에서 Pod의 생애주기]]></title><description><![CDATA[들어가며 최근에 면접을 본 곳에서 한가지 질문을 받았습니다.  🗣 : "Pod의 LifeCycle에 대하여 설명해주세요."   여태 K8s Cluster나 Control Plane의 구성 요소, Pod가 생성되는 과정에 대해서만 질문을 받았었는데 막상 쿠버네티스에서 가장 작은 컴퓨팅 단위인 Pod…]]></description><link>https://leehosu.github.io/k8s-pod-lifecycle</link><guid isPermaLink="false">https://leehosu.github.io/k8s-pod-lifecycle</guid><category><![CDATA[Devops]]></category><category><![CDATA[kubernetes]]></category><category><![CDATA[k8s]]></category><category><![CDATA[Pod]]></category><pubDate>Wed, 03 Jan 2024 04:50:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[LakeScript]]></title><description><![CDATA[기억을 위한 블로그]]></description><link>https://leehosu.github.io</link><image><url>https://leehosu.github.io/logos/logo-512x512.png</url><title>LakeScript</title><link>https://leehosu.github.io</link></image><generator>Gatsby Blog Template</generator><lastBuildDate>Fri, 23 Feb 2024 08:27:59 GMT</lastBuildDate><atom:link href="https://leehosu.github.io/rss.xml" rel="self" type="application/rss+xml"/><copyright><![CDATA[Copyright © 2021 leehosu. Unless otherwise noted, all code MIT license.]]></copyright><item><title><![CDATA[CKA, CKAD 취득 후기]]></title><description><![CDATA[사내에서 Kubernetes를 도입하기 위해 공부하던 찰나 쿠버네티스 관련 자격증이 있다는 것을 알게 되었습니다. 하지만 당시에 자격증 취득을 위한 공부보단 하루 빨리 실무에 적용하기 급급했던터라 수박겉핥기 식으로 공부를 했었습니다. 그렇게 오직 이론보단 실무를 위하여 Kubernetes…]]></description><link>https://leehosu.github.io/cka-ckad-review</link><guid isPermaLink="false">https://leehosu.github.io/cka-ckad-review</guid><category><![CDATA[Devops]]></category><category><![CDATA[kubernetes]]></category><category><![CDATA[k8s]]></category><category><![CDATA[Certification]]></category><pubDate>Fri, 23 Feb 2024 08:20:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 77.57575757575758%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAABYlAAAWJQFJUiTwAAADCUlEQVQ4y31SW0tUURQ+v8OH6OJ11DHx7mRaINlLRAkVJNRrPWRqqHPGmcZbY16oQJNKCAwrKCJ60BISii4PRUQ3KAiyepBEnZnO2fuMs8/X2nvPYIK1YZ21z1p7ffv71tqG67oQQmxogLaF6Nr+X2fTZmCD5ab89yUXsx9cNN8UuP/GxddfLlaT+O8yZLFkmTb6ICk05NwnFycmk7gwK9B6W+D6M6HiQrjratIm44qh/FkVGih9WK7z0wJDMwL3XguMzwm03BLgCUUBInXxanLtvGK4bP8tcm0xKnz03sWpKYGRhwJtxHDqpUDUdjc8b3EXH38Sw8pehmMTDoamHcy8S+LH0ppkuSafC0w8ERh7LNYBLMZdPP0s4wmcnHRQG2HID9gwsjs5NrdZyDjNsOWMBW+QY99FBvNuAjdeJPF2Xk/h26LAnVdJ9D1I4Mi4g5Iww7Z2GxktDJtaLWR1MOT5CTA/IJEZtgdtlHczFIdsBZrVbiHXz1HWbWPXAEdVH1cMsjo4PKZFgDJHdSGq76IcxTwBDsNjauQCAi2n4ooeDl+fjep+7Wsj5PsZdpKkagKt6bcJ3EFVr43KXg5vl673mBx5pi0B5Y22Cub6GXI6LWQSfclwaztDBV2yg8CrqNfZHbbKZVIuh1qV00l1RChNyhNwYMiADkpAG4V0o6+PjEBqU6wkm9qIQ8BMgUvWhV10XpLxW0hjqB5KVE1ZT6koyFBHPds7wsg46gdt7Bl20DDM0DCi43UDjAA5tUn3LV0vQQ0llzaFBHZgdBVNVxiOX7PROOrQnuMg+aPk91/iOHSZo+mqQ1PmOEz7xjGHephiampQQ94gp5YvA81f4GmdhzcQV0OSA6oj2VKilC1ZebssNfH6QaZy+QEt25OSb+TQ0/CGHOyO/Ibv7IKabM25BD0HridPoKVh/TSyaQhZnY56KuU9jno2BVKyqWXnmTQUbyCKokAMxcE4KsJxVHXHURleQXk4hrJQFCVkcu/ricLXq311TwzV3Svk4ygNRlFoxkgVmbmMP+qr38ioi/JZAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;CKA-certification.png&quot;
+        title=&quot;CKA-certification.png&quot;
+        src=&quot;/static/4fb22048cad3a598ef4fe89224e43842/7c811/CKA-certification.png&quot;
+        srcset=&quot;/static/4fb22048cad3a598ef4fe89224e43842/103f2/CKA-certification.png 165w,
+/static/4fb22048cad3a598ef4fe89224e43842/748ba/CKA-certification.png 330w,
+/static/4fb22048cad3a598ef4fe89224e43842/7c811/CKA-certification.png 660w,
+/static/4fb22048cad3a598ef4fe89224e43842/d28e0/CKA-certification.png 990w,
+/static/4fb22048cad3a598ef4fe89224e43842/bb51b/CKA-certification.png 1320w,
+/static/4fb22048cad3a598ef4fe89224e43842/1bc59/CKA-certification.png 2476w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 77.57575757575758%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAABYlAAAWJQFJUiTwAAAC4ElEQVQ4y31SXUuUQRR+f0cR9OHX7ppm6SqWVlJWQhcFUhT2C5KoSPdD13XX/EoNyUozCCpvKgiCLOjzIrsI6kIIL4TKvsBkvSh3Zl73nfdpzsyrG7U0MJyZM+c885zzHMtxHOTamYyxgIO0yGCJZ/RZyuxbrm0hx3I9+5MDH34Al5+76H8k8f6bi9QS/rss6bpwc2yCdaSLxAOJ/kmJkWcSobsScynzJuW/OYRlrXCi5IxjAmnTmvnu4uSExI1XEjenJJonHDycNm8UTwA6T4N7DL8uytXL34V/XHBx6anE4GOpbZ9i+m7OfJwrPrWkGG6JMRwesRG7v4w7bzKaFV/OJnxZdDH8xJQ8NZv1E7PPqvzJaUe1xMaJcRvBBINVGBHY2JLG2jMM684y+KIcu/sEmm8LjL108GLGwS9h+vb2k4Nbrx2E79k4OGyjpJ1hQwvHmtMM688xFIQ5LH80jUCbQHEbw9Y4R1kHw+Z2joIQUx8xlMYE6voY6gdtlHcy5Ic4NrVy+KMMZXHhxZt88ilA8+iLCmyLM1SfF9jRzVHby5WlM0N5wnvrtlGj7jt7BbZ7b5VdAr5IWmEIXZ3lj5gy/cpZpMovDBsW+YphXitT7Blqe+gDAep3XkhoP8UUqhKLwsyAeaCaoc8DJScxpdIqk0JtjpoeoQHr+g1oZdIwJQE0kT/yyBpAr+ziNo6A6mmFKvHAEEfDRYH9gxx7LnDUDwh159inetkwxBBM2pqIfxXUtM0iIKJOfTk6aqPpuoPGkTSOjwm9G68INVYcx0YFmsaN75AaM/IduarirwnsHRAawxNFaHRS2t+6AN+pWQRCKTUSaZR2CCWSEadGCVWlBCiNcZTETEt29TLVElv5suVbK2JQUm1iHtvj8/pMatNHpHB1F9NtIAYFSoyiCEdFp5mIqqQplcbPqOzVXxKz1RwK1ZtlnUzCrMwZWRIhmDCikFjBBNeWYgNRIwpNzG+XvOHI2eAleAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;CKAD-certification.png&quot;
+        title=&quot;CKAD-certification.png&quot;
+        src=&quot;/static/5cdb7bed2b5f729e1270e97903c99209/7c811/CKAD-certification.png&quot;
+        srcset=&quot;/static/5cdb7bed2b5f729e1270e97903c99209/103f2/CKAD-certification.png 165w,
+/static/5cdb7bed2b5f729e1270e97903c99209/748ba/CKAD-certification.png 330w,
+/static/5cdb7bed2b5f729e1270e97903c99209/7c811/CKAD-certification.png 660w,
+/static/5cdb7bed2b5f729e1270e97903c99209/d28e0/CKAD-certification.png 990w,
+/static/5cdb7bed2b5f729e1270e97903c99209/bb51b/CKAD-certification.png 1320w,
+/static/5cdb7bed2b5f729e1270e97903c99209/5c3fb/CKAD-certification.png 2274w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;사내에서 Kubernetes를 도입하기 위해 공부하던 찰나 쿠버네티스 관련 자격증이 있다는 것을 알게 되었습니다. 하지만 당시에 자격증 취득을 위한 공부보단 하루 빨리 실무에 적용하기 급급했던터라 수박겉핥기 식으로 공부를 했었습니다. 그렇게 오직 이론보단 실무를 위하여 Kubernetes를 도입하여 운영했었고, 어느정도 시간이 지남에 따라 안정화가 되어 자격증을 공부를 하기 시작했습니다. (시기로 보자면 23년 11월부터 준비를 했습니다.) 23년 12월에 2번의 시험을 본 후 연달아 불합격했고 24년 1월에 한 번 더 결제를 하여 2번을 보아 합격했습니다!(총 4번을 보았네요…) 그리고 바로 2주 뒤 45% 설날 세일이 가능해져 이때다 싶어 CKAD까지 1번의 불합격에 이어 결국 합격을 했습니다..! (저만큼 불합격 받은 사람 없을 겁니다… 🤣🤣) &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;시험을 많이 보면서 노하우도 생겼고, 문제 유형도 많이 알게 되었고 무엇보다 시험 환경에 익숙해졌습니다. 이런 저의 경험을 후기로 남겨 봅니다. (많은 분들에게 도움이 되었으면 좋겠습니다!)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;cka&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cka&quot; aria-label=&quot;cka permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;CKA&lt;/h1&gt;
+&lt;h2 id=&quot;첫-번째-시험&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%B2%AB-%EB%B2%88%EC%A7%B8-%EC%8B%9C%ED%97%98&quot; aria-label=&quot;첫 번째 시험 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;첫 번째 시험&lt;/h2&gt;
+&lt;p&gt;첫 번째 시험은 Udemy의 강의만 수강하고 덤프도 풀어보지 않은채 ‘어차피 한번 더 기회있으니까 한번 봐 보자!’ 라는 생각으로 시험을 보았습니다. &lt;/p&gt;
+&lt;h3 id=&quot;결과-처참한-결과&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%B0%EA%B3%BC-%EC%B2%98%EC%B0%B8%ED%95%9C-%EA%B2%B0%EA%B3%BC&quot; aria-label=&quot;결과 처참한 결과 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;결과 (처참한 결과…)&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 53.93939393939393%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAABQ0lEQVQoz41Ti26DMAzs///MfmMfUWmVCpQSHgUChAS4cu5MmbZui3S1jfH1YpsD1uOGAWVZ4na7oSgKVFWFPM/Fp2VMn+9kWfb53CCKYnRtjaYuUJQVqXCwDrBdD2MyKWYBrTFGwJh/RDRNg77v0XUdhlWEtRbejwgrxnF8EL69O3zENXKToq7rTSGhRCwkgfcev51lWXAIExV2SPMWSTXDugXzAoT5CR8WDM5vRa8gCvnjfViv4jCtxSRjjmkFdvZPhXR4pev1Kr3hgB79adfYCtq2lXcI7SHBWHPTND0VMklCIk1TAXunRQrGJFTs898IoyhCkiRi4ziWCXNNnHP479muzJGzWNeE0yZ0B5nTnVRLUOV+UKJQnRACTqcTjscjzuezqJ7nWZ7rdV6p2p8vhNrHy+WyfRFUSF8X96dV2ft3m5hVk3kVHn8AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;스크린샷 2024-02-06 오후 2.11.39.png&quot;
+        title=&quot;스크린샷 2024-02-06 오후 2.11.39.png&quot;
+        src=&quot;/static/f5ad499239e51e4e622019d84b304dac/7c811/CKA-fail-1.png&quot;
+        srcset=&quot;/static/f5ad499239e51e4e622019d84b304dac/103f2/CKA-fail-1.png 165w,
+/static/f5ad499239e51e4e622019d84b304dac/748ba/CKA-fail-1.png 330w,
+/static/f5ad499239e51e4e622019d84b304dac/7c811/CKA-fail-1.png 660w,
+/static/f5ad499239e51e4e622019d84b304dac/d28e0/CKA-fail-1.png 990w,
+/static/f5ad499239e51e4e622019d84b304dac/bb51b/CKA-fail-1.png 1320w,
+/static/f5ad499239e51e4e622019d84b304dac/f0e87/CKA-fail-1.png 1554w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;66%가 커트라인인데 저는 49%였습니다. 하하… 이 결과를 보고 충격을 먹기도 했지만 왠지 모를 자신감도 있었습니다.. (&lt;del&gt;dump도 풀어보지 않고 봤는데 49점이라고?!&lt;/del&gt;)&lt;/p&gt;
+&lt;h2 id=&quot;두-번째-시험&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%91%90-%EB%B2%88%EC%A7%B8-%EC%8B%9C%ED%97%98&quot; aria-label=&quot;두 번째 시험 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;두 번째 시험&lt;/h2&gt;
+&lt;p&gt;두번째 시험은 Udemy의 CKA 강의에 수록되어있는 Mock Exam과  killer.sh를 어느정도 풀어본 후 도전했습니다. 이때 떨어지면 진짜 $395가 공중분해 되는 것이라… 어느 정도 마음의 부담감을 느끼며 준비를 하였고 시험을 보았습니다.&lt;/p&gt;
+&lt;h3 id=&quot;결과&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%B0%EA%B3%BC&quot; aria-label=&quot;결과 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;결과&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 53.93939393939393%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAABMUlEQVQoz41SW3aFIAx0/5vpNroK/bG+nxdEBHXK0OLV9trTnDMGTBiSMBGc6XlG13UYhgFt26LvezRN69C4fYfNKjR1hdnl0fZ9x51FUgNyUqjdARJU1Zev6/rANAk8HuOF8I40envXSD5GV0GBcRyPCglWTAghPdmyLAfRLaFdWeGEohHI+g1S79hcrt2eMHbHrM2lulfwhPwYY6GUxuoOk4wxhgNw8n8ZST2hlBJlWbpZTb41Qkrh9tJDCOFzCKXUsWY+PePruj4rZICEAUVR+NmFA2cCXhb+n+O/CNM0RZ7n3mdZ9i2ZFlpr/NeOlvl61GGQCYkCwotzHS4JsmL7P2UUhYUxBkmSII5jD7ZOGRG8zFp7W9VFNuEHZ0BRs13OjwRsl9VzbmFGr6RyXn8CD8lYALeSciAAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;스크린샷 2024-02-06 오후 2.11.48.png&quot;
+        title=&quot;스크린샷 2024-02-06 오후 2.11.48.png&quot;
+        src=&quot;/static/e74d4684cd004226313f1fdbd07acc38/7c811/CKA-fail-2.png&quot;
+        srcset=&quot;/static/e74d4684cd004226313f1fdbd07acc38/103f2/CKA-fail-2.png 165w,
+/static/e74d4684cd004226313f1fdbd07acc38/748ba/CKA-fail-2.png 330w,
+/static/e74d4684cd004226313f1fdbd07acc38/7c811/CKA-fail-2.png 660w,
+/static/e74d4684cd004226313f1fdbd07acc38/d28e0/CKA-fail-2.png 990w,
+/static/e74d4684cd004226313f1fdbd07acc38/bb51b/CKA-fail-2.png 1320w,
+/static/e74d4684cd004226313f1fdbd07acc38/f0e87/CKA-fail-2.png 1554w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이때까지도 대체 무엇이 틀렸는지 문제 자체는 알려 주지 않고 틀린 유형에 대해서만 알려 주어 난감했습니다. 하지만 2번의 기회가 없어진 터라 새로 자격증 응시를 구매해야 했고, 무엇보다 어떤 것이 틀렸는지 감을 잡을 수 없어 이성미 강사님의 &lt;a href=&quot;https://www.youtube.com/watch?v=KdATmTulf7s&amp;#x26;list=PLApuRlvrZKojqx9-wIvWP3MPtgy2B372f&amp;#x26;ab_channel=TTABAE-LEARN&quot;&gt;따배씨&lt;/a&gt; 를 수강하였습니다.&lt;/p&gt;
+&lt;h2 id=&quot;세-번째-시험&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%84%B8-%EB%B2%88%EC%A7%B8-%EC%8B%9C%ED%97%98&quot; aria-label=&quot;세 번째 시험 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;세 번째 시험&lt;/h2&gt;
+&lt;p&gt;$395(한화로 53만원)의 가격을 자랑하는 CKA를 어떠한 할인도 없이 응시하기엔 부담이 되서 할인하는 타이밍을 기다렸습니다. 그러던 중 24년 연초 세일로 25% 세일 쿠폰을 뿌려 바로 구매했고, 시험 날짜까지 바로 예약했습니다. 이때부터는 강의도 다시 들었고, Mock Exam도 완벽하게 외울 정도로 준비를 하였습니다. 그 후 &lt;a href=&quot;http://killer.sh&quot;&gt;killer.sh&lt;/a&gt; 도 풀어 보았는데, 난이도가 정말 어려워 하나의 session만 풀고 초기화 하고를 반복해서 풀어 보았고 해당 문제들의 오답 정리 수준으로 준비를 했었습니다.&lt;/p&gt;
+&lt;h3 id=&quot;결과-역시나-탈락&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%B0%EA%B3%BC-%EC%97%AD%EC%8B%9C%EB%82%98-%ED%83%88%EB%9D%BD&quot; aria-label=&quot;결과 역시나 탈락 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;결과 (역시나 탈락..)&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 53.93939393939393%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAABRUlEQVQoz41Si3KDIBD0/3+mv9G/0MwYX/gGFUHZuKSYtNOkZWY97uSWu2MjHEsvC9q2Rd/3aJoGXdehrmu/p6XPPc9UVfUVF0jTK5TsocYOWZZj1RqR0oCaZghR+WQm0AohPOjzImIcR8zzjGmasBxFKKVgzAprVx/ftg3Rx6dGfB1QiwLDMJwVEoGIiSQwxuCvFdmNFU4oaoms26G0w+4Auz9grMOi72TOubeIeMgYe5SssR3JJHMEHsCTfbdOQrZUluU5m/t85OErDymlP0NwVkSI0TKPZL5lfhggIR+AtigKPzvGAxFBn2ThQei/JEzTFHmee5tl2SkbfUjhv+tseV1Xr7EgFRIFhBcPmgyW51jt80P5CsOGkojjGJfLBUmS+NYpI4KXWWtfVvVNNiFAUbJlzobJrJrt0nJm/P+bbH5WeAPdRFW28N7iOgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;스크린샷 2024-02-06 오후 2.15.20.png&quot;
+        title=&quot;스크린샷 2024-02-06 오후 2.15.20.png&quot;
+        src=&quot;/static/9e0aeeac86ddf79e99bbf019a8846153/7c811/CKA-fail-3.png&quot;
+        srcset=&quot;/static/9e0aeeac86ddf79e99bbf019a8846153/103f2/CKA-fail-3.png 165w,
+/static/9e0aeeac86ddf79e99bbf019a8846153/748ba/CKA-fail-3.png 330w,
+/static/9e0aeeac86ddf79e99bbf019a8846153/7c811/CKA-fail-3.png 660w,
+/static/9e0aeeac86ddf79e99bbf019a8846153/d28e0/CKA-fail-3.png 990w,
+/static/9e0aeeac86ddf79e99bbf019a8846153/bb51b/CKA-fail-3.png 1320w,
+/static/9e0aeeac86ddf79e99bbf019a8846153/f0e87/CKA-fail-3.png 1554w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이번 탈락으로 보니 공통적으로 제가 틀렸던 카테고리가 있었습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Service &amp;#x26; Networking&lt;/li&gt;
+&lt;li&gt;Cluster Architecture, Installation &amp;#x26; Configuratoin&lt;/li&gt;
+&lt;li&gt;Storage&lt;/li&gt;
+&lt;li&gt;TroubleShooting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;이 점을 지독하게 파고 들었고, 이때부터 &lt;a href=&quot;http://Killer.sh&quot;&gt;Killer.sh&lt;/a&gt; 도 완벽하게 풀어보기로 했습니다. &lt;a href=&quot;http://killer.sh&quot;&gt;killer.sh&lt;/a&gt; 가 정말 도움이 많이 되었는데, 특히 2번의 session 에서 첫 번째 session은 시간 제한 없이 풀어 보았고 어느 정도 감을 잡은 후에 2번째 session은 시간 제한을 염두에 두고 풀어 보았습니다. 이때 느낀 건, 이 문제에서 원하는 것이 무엇인가를 명확히 인지하느냐가 문제를 푸는 데에 있어 크게 작용한다는 것이었습니다.&lt;/p&gt;
+&lt;h2 id=&quot;네-번째-시험&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%84%A4-%EB%B2%88%EC%A7%B8-%EC%8B%9C%ED%97%98&quot; aria-label=&quot;네 번째 시험 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;네 번째 시험&lt;/h2&gt;
+&lt;p&gt;틀린 문제에 해당하는 문제 유형을 강의 노트에서 따로 정리해서 유형을 파악했고, killer.sh도 체계적으로 풀어 보았습니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 52.72727272727272%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAABNElEQVQoz4VRy07DMBD0/wvEEVGJG/wF3JC4IYE4cHdezqNNnDeJM3jdOnXSVDhajbOeHe+OGU5rmiaDwzCgaRoTdV0v9u5/27Zzna2lxeAs90ApNZPXscW/EHTJfd8jSRJkWQYhhNmnaTrnqEO35qJDm1gf2vHdcbe47p5ttU97EqOxKcivcRxNnpDi2tjMVSdiWZaI4xie5yEMQwRBAM65QQqbl1Iaa9ajLwSpE+sZFfm+P4sQ2gvoPIoi5Hm+FNTf4pXty1Kn5FlVVQu0frp2mGbs1BpZUUjs97kmt4ZgPVLqeKuLR5Fp5qlRoR96yK5E0Up0vx3Y7uEZtzc7vL68na85W341p2UNfmU/uP9+wt3nI97FBxjnQnsktDeJ9ibXcTjhf3HkhSKFH8XgoUCUpPgDd0dVRfxWJ4IAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;스크린샷 2024-02-06 오후 1.55.47.png&quot;
+        title=&quot;스크린샷 2024-02-06 오후 1.55.47.png&quot;
+        src=&quot;/static/c8e36efebff81dfbbcf8841e7a147090/7c811/CKA-success-killer.png&quot;
+        srcset=&quot;/static/c8e36efebff81dfbbcf8841e7a147090/103f2/CKA-success-killer.png 165w,
+/static/c8e36efebff81dfbbcf8841e7a147090/748ba/CKA-success-killer.png 330w,
+/static/c8e36efebff81dfbbcf8841e7a147090/7c811/CKA-success-killer.png 660w,
+/static/c8e36efebff81dfbbcf8841e7a147090/d28e0/CKA-success-killer.png 990w,
+/static/c8e36efebff81dfbbcf8841e7a147090/bb51b/CKA-success-killer.png 1320w,
+/static/c8e36efebff81dfbbcf8841e7a147090/699cd/CKA-success-killer.png 2232w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;2시간 동안 25문제 중 23문제 정도 풀어 본 것 같네요. 시간이 지난 후 score 확인 창에서 101점이라는 점수를 받고나서야 마음이 안심되었고 바로 다음날 시험을 보았습니다. (이때 시험 환경에 완벽히 적응하였습니다. 그래서 실제 시험을 볼 때 시간도 여유로웠고 무엇보다 긴장이 덜했습니다!!)&lt;/p&gt;
+&lt;h3 id=&quot;결과-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%B0%EA%B3%BC-1&quot; aria-label=&quot;결과 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;결과&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 55.757575757575765%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAABZ0lEQVQoz31S226DMAzl/39rL3va0zoJOlEol3LrhRYqEghnOe6CuraapYON7ZzYsb15BiZjcDgcsN/v0TQNqqpaQB9jtMuysLpG352hhw5FUUi+secpsyXz8Cvt+YzT6SQJN4JaNH0Ox+MRdX0jnPRV4m3b/iV8+9J49xXqMsV2u5UDcRQhz3PsdjukaWorK5FlmRD0fSeXK6VxLySjeB/fCp+RxrVvcemu0KOxmDBODmaxJ7GNVESCezy1nOUFkqpHWCg0rYayxIN+xqUfoPS4EDzCM/ZDaJs02spmSXR4PADM+F+kQrbAYXCitF+1dINteRyfcib7HNSMea50knEAXAUOhprD4GAI2m6laBO0mevWi/GFkGvhCBhgIpPo43QdidtXF7sn52YsLcdxjPV6jciuTBiGAv6z6tVqJXYQBBKn9n1fyF++IStki5vNBkmSyM4RvIS7SU0/K+AFBP8Jkronov0DoDxLIOKf6/4AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;스크린샷 2024-02-06 오후 2.27.09.png&quot;
+        title=&quot;스크린샷 2024-02-06 오후 2.27.09.png&quot;
+        src=&quot;/static/36885cf1acc84cf7fa3087b4d5747412/7c811/CKA-success.png&quot;
+        srcset=&quot;/static/36885cf1acc84cf7fa3087b4d5747412/103f2/CKA-success.png 165w,
+/static/36885cf1acc84cf7fa3087b4d5747412/748ba/CKA-success.png 330w,
+/static/36885cf1acc84cf7fa3087b4d5747412/7c811/CKA-success.png 660w,
+/static/36885cf1acc84cf7fa3087b4d5747412/d28e0/CKA-success.png 990w,
+/static/36885cf1acc84cf7fa3087b4d5747412/30373/CKA-success.png 1256w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 40.60606060606061%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAzElEQVQoz5WR2w6CMAyGeWh9FB+JJzBeGiHBKJhw2GTn7XdlgXCBCTRru3Tdt+ZfFkIAZwycc7CY2WrvvQcZ9ez1jMKoNER0Ywy0TpmcgEdgC3DQDl+TplnbUdgCJBhBO2nRSoNB2V2Xtx5OwFFglArWB8QFv3NCoySsUgjOLv0TsGlqPKsKfd9DCoGuaycN56YtKcjKV43bvUDx/sA4N9UyCi6Kb62d3MWD+UP+2Qy8XN845QXOeYkHUwm4pcfeDzFRH+0ClPNxgFT7ASIXdReyq+WBAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;스크린샷 2024-02-06 오후 2.31.42.png&quot;
+        title=&quot;스크린샷 2024-02-06 오후 2.31.42.png&quot;
+        src=&quot;/static/31bd4b0baafd6bb767220ff663f54761/7c811/CKA-success-score.png&quot;
+        srcset=&quot;/static/31bd4b0baafd6bb767220ff663f54761/103f2/CKA-success-score.png 165w,
+/static/31bd4b0baafd6bb767220ff663f54761/748ba/CKA-success-score.png 330w,
+/static/31bd4b0baafd6bb767220ff663f54761/7c811/CKA-success-score.png 660w,
+/static/31bd4b0baafd6bb767220ff663f54761/d28e0/CKA-success-score.png 990w,
+/static/31bd4b0baafd6bb767220ff663f54761/bb51b/CKA-success-score.png 1320w,
+/static/31bd4b0baafd6bb767220ff663f54761/7e99c/CKA-success-score.png 1580w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;90%의 정답률로 합격!&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&quot;ckad&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#ckad&quot; aria-label=&quot;ckad permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;CKAD&lt;/h1&gt;
+&lt;h2 id=&quot;첫번째-시험&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%B2%AB%EB%B2%88%EC%A7%B8-%EC%8B%9C%ED%97%98&quot; aria-label=&quot;첫번째 시험 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;첫번째 시험&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 56.36363636363636%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAe7Ngo//xAAWEAEBAQAAAAAAAAAAAAAAAAARICH/2gAIAQEAAQUCdZ//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAY/Al//xAAZEAADAQEBAAAAAAAAAAAAAAAAAREhMRD/2gAIAQEAAT8hcQxdzRWb0aos8//aAAwDAQACAAMAAAAQxA//xAAVEQEBAAAAAAAAAAAAAAAAAAAQQf/aAAgBAwEBPxCH/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPxA//8QAGxABAAMAAwEAAAAAAAAAAAAAAQARIRBBUWH/2gAIAQEAAT8QEgoRbhOi7QDZgx6qEN6+1ACgzj//2Q==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;CKA VS CKAD.jpeg&quot;
+        title=&quot;CKA VS CKAD.jpeg&quot;
+        src=&quot;/static/8d93f859d06c4a579765b6dab85b2e28/5ab81/CKA-CKAD.jpg&quot;
+        srcset=&quot;/static/8d93f859d06c4a579765b6dab85b2e28/e4e7a/CKA-CKAD.jpg 165w,
+/static/8d93f859d06c4a579765b6dab85b2e28/4f5c6/CKA-CKAD.jpg 330w,
+/static/8d93f859d06c4a579765b6dab85b2e28/5ab81/CKA-CKAD.jpg 660w,
+/static/8d93f859d06c4a579765b6dab85b2e28/7ed05/CKA-CKAD.jpg 990w,
+/static/8d93f859d06c4a579765b6dab85b2e28/74984/CKA-CKAD.jpg 1041w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://lifeoncloud.kr/entry/ckad&quot;&gt;(CKAD 후기 (Certified Kubernetes Application Developer) - 라온클)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;CKAD는 CKA의 연장선이라고 들어서 별도로 공부하지 않았습니다. 시험에 출제된다는 커리큘럼을 보니 Job, CronJob, 배포 방식등 CKA에 해당 하지 않은 내용들은 시험을 보면서 직접 Doc에서 검색하여 풀었습니다. 왠지 모를 자신이 있었고 &lt;a href=&quot;http://killer.sh&quot;&gt;killer.sh&lt;/a&gt; 를 풀었을 때도 60점이라는 스코어가 나왔어서 더욱 자신이 있었습니다…&lt;/p&gt;
+&lt;h3 id=&quot;결과-2&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%B0%EA%B3%BC-2&quot; aria-label=&quot;결과 2 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;결과&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 44.242424242424235%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAABYlAAAWJQFJUiTwAAABGElEQVQoz5WRCY+CMBCF/f8/EsOCQAXkKkdb2mffbDAajZud5NGZHh9znJw16PseXddhGAbcbje0bSsxfZ41TSN7jMuyhNm0xFpr0EIIOOxUNRNqVUKpClVVRlWi61UJbBxHbNsGY4xoXVf43YnvnHsH5krHzEboxWLdDDZjHzLWYd93fLNnmACtWaFajX4JcB7Yw698lN09vA9/wl4yZAmznqLrEbyXjFiKjb111kbfRv9VLPfI/C3DaZqQ5zl+sgxpmsZeKhnOGPfZ9ClqnmcsyyIr7/Oc0I9APrpcLiiKQoZR17VMksM4IBTvMf7WPwHywweEEMgM+fAo7dAxaR/bQtCn/j2A/HuSJDifz8hi6YT9Z7LPdgex873IL1HqsQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;CKAD-fail.png&quot;
+        title=&quot;CKAD-fail.png&quot;
+        src=&quot;/static/bad1f11a956f05d7dc87a94a65f7cb77/7c811/CKAD-fail.png&quot;
+        srcset=&quot;/static/bad1f11a956f05d7dc87a94a65f7cb77/103f2/CKAD-fail.png 165w,
+/static/bad1f11a956f05d7dc87a94a65f7cb77/748ba/CKAD-fail.png 330w,
+/static/bad1f11a956f05d7dc87a94a65f7cb77/7c811/CKAD-fail.png 660w,
+/static/bad1f11a956f05d7dc87a94a65f7cb77/d28e0/CKAD-fail.png 990w,
+/static/bad1f11a956f05d7dc87a94a65f7cb77/bb51b/CKAD-fail.png 1320w,
+/static/bad1f11a956f05d7dc87a94a65f7cb77/de412/CKAD-fail.png 1868w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;하지만 정말 아쉽게도 66%를 맞아야 합격인데, 65%를 받아 1% 차이로 탈락했습니다. (후우….) 멘탈이 정말 많이 흔들렸고 “그냥 올해 후반기에 시험볼까” 싶었지만 시험에 대한 내용들을 잊을까 바로 1주일 후 시험 날짜를 예약해서 틀렸던 항목들, 풀면서 고민했던 부분들을 주로 공부하고 다시 응시하였습니다.&lt;/p&gt;
+&lt;h2 id=&quot;두번째-시험&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%91%90%EB%B2%88%EC%A7%B8-%EC%8B%9C%ED%97%98&quot; aria-label=&quot;두번째 시험 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;두번째 시험&lt;/h2&gt;
+&lt;p&gt;killer.sh를 정말 열심히 풀었고, 스스로 시간 제한을 두고 풀었을 때 120점중 100점을 받았습니다. 또, 후기 글을 많이 찾아보고 첫번째 시험때 나왔었던 내용들을 복기해서 오답노트 식으로 만들어 숙지하고 시험을 봤습니다.&lt;/p&gt;
+&lt;h3 id=&quot;결과-3&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%B0%EA%B3%BC-3&quot; aria-label=&quot;결과 3 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;결과&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 30.303030303030305%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAvUlEQVQY05WQ6w6DIAyFef8H3ANoIhdRweG8cDmjuC1Gtx9r8uXQFEpPGZDg7g7WWgx9j3Ec9/Mw4DG5XLNwzoEipXQBL945u9Ub2lah0y2UUtBaF6jhNE3wfsv4nw3PMG08uuEObVfMy4Zl9YU540PAv8HIsrEj1i0gxpSJB70Swq4phi+1AEaPpRQQgmfru+0zUsqDEhpc2ZJzzktNCFFWxcg3JU3TfKiqqmhd1zDGlN3Q78RnmojLhHTvCQGR0f2tt4AgAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;스크린샷 2024-02-23 오후 3.59.28.png&quot;
+        title=&quot;스크린샷 2024-02-23 오후 3.59.28.png&quot;
+        src=&quot;/static/bdadf89cbf866e6bd6e5f73b291e1a7e/7c811/CKAD-success.png&quot;
+        srcset=&quot;/static/bdadf89cbf866e6bd6e5f73b291e1a7e/103f2/CKAD-success.png 165w,
+/static/bdadf89cbf866e6bd6e5f73b291e1a7e/748ba/CKAD-success.png 330w,
+/static/bdadf89cbf866e6bd6e5f73b291e1a7e/7c811/CKAD-success.png 660w,
+/static/bdadf89cbf866e6bd6e5f73b291e1a7e/d28e0/CKAD-success.png 990w,
+/static/bdadf89cbf866e6bd6e5f73b291e1a7e/bb51b/CKAD-success.png 1320w,
+/static/bdadf89cbf866e6bd6e5f73b291e1a7e/f97d7/CKAD-success.png 2000w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 660px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 30.303030303030305%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAzUlEQVQY04VRywrCMBDs/3vxHzwI/ogn6UFPIp6E0hrbJpEm7WYzJrE+EKtDhizDMpndZNZ5NINH3TNqSxCGoAcGvA/nD/ECj1pmug6iqqBkC3YEH+hoADOnximzCOotrqKCaevQ6JKWGWNQFAXKsoTWGkopNE0LInoafoJH7Sgklps9VvkB61N9N8QUfozq+G6Yiw6zbYX57ozF/pIeSoZ+5BfXaX5JnnZopUQfRrVKItYm0LYNOqVxJQ4f5KB6l+5I+VZHnULamOyxhhum4dUNXwvGAQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;CKAD-success-score.png&quot;
+        title=&quot;CKAD-success-score.png&quot;
+        src=&quot;/static/1c66d143ea1ebffe4fbd71a9f95cf1a0/7c811/CKAD-success-score.png&quot;
+        srcset=&quot;/static/1c66d143ea1ebffe4fbd71a9f95cf1a0/103f2/CKAD-success-score.png 165w,
+/static/1c66d143ea1ebffe4fbd71a9f95cf1a0/748ba/CKAD-success-score.png 330w,
+/static/1c66d143ea1ebffe4fbd71a9f95cf1a0/7c811/CKAD-success-score.png 660w,
+/static/1c66d143ea1ebffe4fbd71a9f95cf1a0/d28e0/CKAD-success-score.png 990w,
+/static/1c66d143ea1ebffe4fbd71a9f95cf1a0/bb51b/CKAD-success-score.png 1320w,
+/static/1c66d143ea1ebffe4fbd71a9f95cf1a0/4d326/CKAD-success-score.png 1486w&quot;
+        sizes=&quot;(max-width: 660px) 100vw, 660px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;86점의 득점으로 시험을 통과했습니다.. 길고 긴, 멀고 먼 시험 여정이 드디어 막을 내렸습니다…!&lt;/p&gt;
+&lt;h1 id=&quot;시험-후기-꿀팁-대방출&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%8B%9C%ED%97%98-%ED%9B%84%EA%B8%B0-%EA%BF%80%ED%8C%81-%EB%8C%80%EB%B0%A9%EC%B6%9C&quot; aria-label=&quot;시험 후기 꿀팁 대방출 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;시험 후기 (!!꿀팁 대방출!!)&lt;/h1&gt;
+&lt;h2 id=&quot;cka-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cka-1&quot; aria-label=&quot;cka 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;CKA&lt;/h2&gt;
+&lt;h3 id=&quot;강의&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B0%95%EC%9D%98&quot; aria-label=&quot;강의 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;강의&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Udemy - certified kubernetes administrator with practice tests&lt;/li&gt;
+&lt;li&gt;Youtube - 따배씨 (따라 배우는 CKA)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;dump&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#dump&quot; aria-label=&quot;dump permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Dump&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Udemy- certified kubernetes administrator with practice tests (Mock Exam)&lt;/li&gt;
+&lt;li&gt;killer.sh&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;문제-유형&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%AC%B8%EC%A0%9C-%EC%9C%A0%ED%98%95&quot; aria-label=&quot;문제 유형 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;문제 유형&lt;/h3&gt;
+&lt;p&gt;최대한 기억나는 것만 적어 보면 아래와 같습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;notReady 상태인 Node를 ready 상태로 변경 (&lt;code class=&quot;language-text&quot;&gt;kubelet restart&lt;/code&gt; )&lt;/li&gt;
+&lt;li&gt;Pod의 log 확인 후 특정 경로에 저장하기 (&lt;code class=&quot;language-text&quot;&gt;kubectl logs&lt;/code&gt; )&lt;/li&gt;
+&lt;li&gt;특정 node를 drain 후 uncordon 하기 (&lt;code class=&quot;language-text&quot;&gt;kubectl drain&lt;/code&gt; , &lt;code class=&quot;language-text&quot;&gt;kubectl uncordon&lt;/code&gt; )&lt;/li&gt;
+&lt;li&gt;run 상태인 특정 파드에 sidecar container 생성 하여 로그 저장하기 (volumes mount)&lt;/li&gt;
+&lt;li&gt;각각 다른 ENV를 가진 multi container pod 생성하기&lt;/li&gt;
+&lt;li&gt;문제에 정의된 상황에 맞는 network policy 생성하기 (namespace selector, pod selector, ports)&lt;/li&gt;
+&lt;li&gt;CPU 가장 많이 할당된 Pod 이름 특정 경로에 저장하기 (&lt;code class=&quot;language-text&quot;&gt;kubectl top&lt;/code&gt; )&lt;/li&gt;
+&lt;li&gt;ETCD Backup &amp;#x26; Restore&lt;/li&gt;
+&lt;li&gt;kubeadm version 업그레이드 &amp;#x26; kubelet, kubectl 업그레이드&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;ckad-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#ckad-1&quot; aria-label=&quot;ckad 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;CKAD&lt;/h2&gt;
+&lt;h3 id=&quot;강의-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B0%95%EC%9D%98-1&quot; aria-label=&quot;강의 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;강의&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;따로 듣지 않음&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;dump-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#dump-1&quot; aria-label=&quot;dump 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Dump&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;killer.sh&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;문제-유형-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%AC%B8%EC%A0%9C-%EC%9C%A0%ED%98%95-1&quot; aria-label=&quot;문제 유형 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;문제 유형&lt;/h3&gt;
+&lt;p&gt;최대한 기억나는 것만 적어 보면 아래와 같습니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;canary 배포&lt;/li&gt;
+&lt;li&gt;sidecar container (&lt;code class=&quot;language-text&quot;&gt;kubect edit&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;netowrk policy를 건들지 않고 network 설정 (&lt;code class=&quot;language-text&quot;&gt;kubectl label&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;주어진 조건에 따른 cronJob 생성&lt;/li&gt;
+&lt;li&gt;pod 생성 (&lt;code class=&quot;language-text&quot;&gt;kubectl run&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;deployment 생성 (&lt;code class=&quot;language-text&quot;&gt;kubectl create deploy&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;nodePort type의 service 생성 (&lt;code class=&quot;language-text&quot;&gt;kubectl expose&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;replicas를 늘리고, 이미지를 바꾼 후 다시 undo (&lt;code class=&quot;language-text&quot;&gt;kubectl rollout&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;service account 생성 (&lt;code class=&quot;language-text&quot;&gt;kubectl create serviceaccount generic&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;resource 설정 (&lt;code class=&quot;language-text&quot;&gt;request, limit&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;readinessProbe, livenessProbe 설정&lt;/li&gt;
+&lt;li&gt;Docker file 핸들링&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;메일&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A9%94%EC%9D%BC&quot; aria-label=&quot;메일 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;메일&lt;/h2&gt;
+&lt;p&gt;시험에 떨어지면 하나의 메일이 오게 되고, 합격하게 되면 3개의 메일이 오게 됩니다. (그래서 시험을 보고 24시간이 지난 후 메일이 왔다는 알림이 올 때에 한번만 진동이 느껴지면 불합격임을 인지했고, 2번 이상온다 하면 합격임을 인지하고 결과를 확인했습니다..)&lt;/p&gt;
+&lt;h3 id=&quot;불합격시-메일-제목&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%B6%88%ED%95%A9%EA%B2%A9%EC%8B%9C-%EB%A9%94%EC%9D%BC-%EC%A0%9C%EB%AA%A9&quot; aria-label=&quot;불합격시 메일 제목 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;&lt;strong&gt;불합격시 메일 제목&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Your score for the CKA Exam &amp;#x26; How to Claim your Retake&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;합격시-메일-제목&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%95%A9%EA%B2%A9%EC%8B%9C-%EB%A9%94%EC%9D%BC-%EC%A0%9C%EB%AA%A9&quot; aria-label=&quot;합격시 메일 제목 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;합격시 메일 제목&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Your Exam Results for the CKA Exam&lt;/li&gt;
+&lt;li&gt;&apos;Certified Kubernetes Administrator (CKA)&apos; certificate granted!&lt;/li&gt;
+&lt;li&gt;Lee! You just earned a badge from The Linux Foundation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;reference&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#reference&quot; aria-label=&quot;reference permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Reference&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://lifeoncloud.kr/entry/ckad&quot;&gt;https://lifeoncloud.kr/entry/ckad&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded><author>hosu4549@gmail.com</author></item><item><title><![CDATA[쿠버네티스에서 Pod의 생애주기]]></title><description><![CDATA[들어가며 최근에 면접을 본 곳에서 한가지 질문을 받았습니다.  🗣 : "Pod의 LifeCycle에 대하여 설명해주세요."   여태 K8s Cluster나 Control Plane의 구성 요소, Pod가 생성되는 과정에 대해서만 질문을 받았었는데 막상 쿠버네티스에서 가장 작은 컴퓨팅 단위인 Pod…]]></description><link>https://leehosu.github.io/k8s-pod-lifecycle</link><guid isPermaLink="false">https://leehosu.github.io/k8s-pod-lifecycle</guid><category><![CDATA[Devops]]></category><category><![CDATA[kubernetes]]></category><category><![CDATA[k8s]]></category><category><![CDATA[Pod]]></category><pubDate>Wed, 03 Jan 2024 04:50:00 GMT</pubDate><content:encoded>&lt;h1 id=&quot;들어가며&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0&quot; aria-label=&quot;들어가며 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;들어가며&lt;/h1&gt;
 &lt;p&gt;최근에 면접을 본 곳에서 한가지 질문을 받았습니다. &lt;br&gt;&lt;/p&gt;
 &lt;p&gt;🗣 : &quot;Pod의 LifeCycle에 대하여 설명해주세요.&quot;  &lt;br&gt;&lt;/p&gt;
 &lt;p&gt;여태 K8s Cluster나 Control Plane의 구성 요소, Pod가 생성되는 과정에 대해서만 질문을 받았었는데 막상 쿠버네티스에서 가장 작은 컴퓨팅 단위인 Pod에 대해서는 나름 공부하지 못했던 것 같다는 생각이 들게 되었습니다. 그렇기에 이번에 정리를 해보았습니다.&lt;/p&gt;
