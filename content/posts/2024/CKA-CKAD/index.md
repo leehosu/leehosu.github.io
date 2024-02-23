@@ -4,6 +4,7 @@ title: "CKA, CKAD 취득 후기"
 date: "2024-02-23 17:20"
 slug: "CKA-CKAD-REVIEW"
 keywords: "personal"
+cover : './cover.png'
 categories: 
     - Devops
     - kubernetes
@@ -16,6 +17,7 @@ tags:
     - Certification
 ---
 
+# 들어가며
 
 ![CKA-certification.png](./CKA-certification.png)
 
