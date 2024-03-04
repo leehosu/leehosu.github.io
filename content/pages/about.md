@@ -191,9 +191,9 @@ slug: "about"
 ## 💼 Career
 ### 주식회사 외식인
 
-📅 2020.04 - 재직중
+📅 2020.04 - 2023.12
 
-`Jquery` 및 `Vue.js`를 이용한 Front-end 개발과 `Spring`을 이용한 Back-end 개발 하였습니다. 그리고 현재는 `AWS`를 이용한 `Cloud` 환경에서의 인프라 구축 및 개발과 운영의 효율적인 환경을 제공하기 위한 **Devops Engineer** 로 재직중입니다.
+`Jquery` 및 `Vue.js`를 이용한 Front-end 개발과 `Spring`을 이용한 Back-end 개발 하였습니다. 그리고 최근에는`AWS`를 이용한 `Cloud` 환경에서의 인프라 구축 및 개발과 Kubernetes를 활용한 컨테이너 운영 환경을 구축 및 운영하였고, 개발 생산성과 운영 효율성을 위한 **Devops Engineer** 로 재직하였습니다.
 
 
 
